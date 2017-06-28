@@ -32,10 +32,13 @@ class ViewController: NSViewController {
 		super.viewDidLoad()
 		fetchIssues()
 		
-		CKContainer.default().discoverAllIdentities { (userIdentity, error) in
+		let operation = CKDiscoverAllUserIdentitiesOperation()
+		operation.userIdentityDiscoveredBlock = { userIdentity in
 			
 		}
+		CKContainer.default().add(operation)
 	}
+	
 	
 	var newIssueSelector: (() -> Void)?
 	

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6310C87D1F03A5B000490EF4 /* RecordSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6310C87C1F03A5B000490EF4 /* RecordSaver.swift */; };
+		635BF7951F03E7140020F0E0 /* RexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635BF7941F03E7140020F0E0 /* RexUITests.swift */; };
 		63ADAABB1F02FD9D00DEA2FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ADAABA1F02FD9D00DEA2FD /* AppDelegate.swift */; };
 		63ADAABD1F02FD9D00DEA2FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ADAABC1F02FD9D00DEA2FD /* ViewController.swift */; };
 		63ADAABF1F02FD9D00DEA2FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63ADAABE1F02FD9D00DEA2FD /* Assets.xcassets */; };
@@ -17,8 +18,21 @@
 		63F3E4A01F03135100D191CF /* IssueDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F3E49F1F03135100D191CF /* IssueDetailsVC.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		635BF7971F03E7140020F0E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63ADAAAF1F02FD9D00DEA2FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63ADAAB61F02FD9D00DEA2FD;
+			remoteInfo = Rex;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		6310C87C1F03A5B000490EF4 /* RecordSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSaver.swift; sourceTree = "<group>"; };
+		635BF7921F03E7140020F0E0 /* RexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		635BF7941F03E7140020F0E0 /* RexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RexUITests.swift; sourceTree = "<group>"; };
+		635BF7961F03E7140020F0E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63ADAAB71F02FD9D00DEA2FD /* Rex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63ADAABA1F02FD9D00DEA2FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63ADAABC1F02FD9D00DEA2FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -32,6 +46,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		635BF78F1F03E7140020F0E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63ADAAB41F02FD9D00DEA2FD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -43,10 +64,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		635BF7931F03E7140020F0E0 /* RexUITests */ = {
+			isa = PBXGroup;
+			children = (
+				635BF7941F03E7140020F0E0 /* RexUITests.swift */,
+				635BF7961F03E7140020F0E0 /* Info.plist */,
+			);
+			path = RexUITests;
+			sourceTree = "<group>";
+		};
 		63ADAAAE1F02FD9D00DEA2FD = {
 			isa = PBXGroup;
 			children = (
 				63ADAAB91F02FD9D00DEA2FD /* Rex */,
+				635BF7931F03E7140020F0E0 /* RexUITests */,
 				63ADAAB81F02FD9D00DEA2FD /* Products */,
 				63ADAACA1F02FDAB00DEA2FD /* Frameworks */,
 			);
@@ -56,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				63ADAAB71F02FD9D00DEA2FD /* Rex.app */,
+				635BF7921F03E7140020F0E0 /* RexUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,6 +119,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		635BF7911F03E7140020F0E0 /* RexUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 635BF79B1F03E7140020F0E0 /* Build configuration list for PBXNativeTarget "RexUITests" */;
+			buildPhases = (
+				635BF78E1F03E7140020F0E0 /* Sources */,
+				635BF78F1F03E7140020F0E0 /* Frameworks */,
+				635BF7901F03E7140020F0E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				635BF7981F03E7140020F0E0 /* PBXTargetDependency */,
+			);
+			name = RexUITests;
+			productName = RexUITests;
+			productReference = 635BF7921F03E7140020F0E0 /* RexUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		63ADAAB61F02FD9D00DEA2FD /* Rex */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63ADAAC71F02FD9D00DEA2FD /* Build configuration list for PBXNativeTarget "Rex" */;
@@ -114,6 +164,10 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = splyshka;
 				TargetAttributes = {
+					635BF7911F03E7140020F0E0 = {
+						CreatedOnToolsVersion = 9.0;
+						TestTargetID = 63ADAAB61F02FD9D00DEA2FD;
+					};
 					63ADAAB61F02FD9D00DEA2FD = {
 						CreatedOnToolsVersion = 9.0;
 						SystemCapabilities = {
@@ -141,11 +195,19 @@
 			projectRoot = "";
 			targets = (
 				63ADAAB61F02FD9D00DEA2FD /* Rex */,
+				635BF7911F03E7140020F0E0 /* RexUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		635BF7901F03E7140020F0E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63ADAAB51F02FD9D00DEA2FD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -158,6 +220,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		635BF78E1F03E7140020F0E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				635BF7951F03E7140020F0E0 /* RexUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63ADAAB31F02FD9D00DEA2FD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -172,6 +242,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		635BF7981F03E7140020F0E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63ADAAB61F02FD9D00DEA2FD /* Rex */;
+			targetProxy = 635BF7971F03E7140020F0E0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		63ADAAC01F02FD9D00DEA2FD /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -184,6 +262,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		635BF7991F03E7140020F0E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 53SA4N65K2;
+				INFOPLIST_FILE = RexUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sobolev.RexUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_TARGET_NAME = Rex;
+			};
+			name = Debug;
+		};
+		635BF79A1F03E7140020F0E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 53SA4N65K2;
+				INFOPLIST_FILE = RexUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sobolev.RexUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_TARGET_NAME = Rex;
+			};
+			name = Release;
+		};
 		63ADAAC51F02FD9D00DEA2FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -323,6 +429,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		635BF79B1F03E7140020F0E0 /* Build configuration list for PBXNativeTarget "RexUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				635BF7991F03E7140020F0E0 /* Debug */,
+				635BF79A1F03E7140020F0E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		63ADAAB21F02FD9D00DEA2FD /* Build configuration list for PBXProject "Rex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
