@@ -42,20 +42,24 @@ class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate
 	@objc dynamic var issue: Issue? {
 		didSet {
 			recordSaver.value = issue
-			
-			comboBox.reloadData()
-			
-			guard let assignee = issue?.assignee,
-				let index = identities.index(where: { $0.userRecordID == assignee }) else {
-				return comboBox.selectItem(at: 0)
-			}
-			comboBox.selectItem(at: index + 1)
+			reloadComboBox()
 		}
+	}
+	
+	func reloadComboBox() {
+		comboBox.reloadData()
+		
+		guard let assignee = issue?.assignee,
+			let index = identities.index(where: { $0.userRecordID == assignee }) else {
+				return comboBox.selectItem(at: 0)
+		}
+		comboBox.selectItem(at: index + 1)
 	}
 	
 	@objc dynamic var identities = [CKUserIdentity]() {
 		didSet {
 			comboBox.reloadData()
+			reloadComboBox()
 		}
 	}
 	

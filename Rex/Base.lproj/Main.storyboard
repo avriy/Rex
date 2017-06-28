@@ -774,17 +774,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6gY-h9-9oN">
-                                <rect key="frame" x="-6" y="-7" width="81" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSAddTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QDd-x6-iga">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="addIssueButtonPressed:" target="XfG-lQ-9wD" id="hZr-HV-VCU"/>
-                                </connections>
-                            </button>
                             <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FFt-zt-c81">
                                 <rect key="frame" x="166" y="0.0" width="314" height="270"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -793,7 +782,7 @@
                                 </connections>
                             </containerView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1eS-sZ-0Re">
-                                <rect key="frame" x="75" y="-7" width="81" height="32"/>
+                                <rect key="frame" x="83" y="-7" width="62" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Eh5-aA-xoL">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -803,8 +792,22 @@
                                     <action selector="removeButtonPressed:" target="XfG-lQ-9wD" id="sIn-4L-bhq"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6gY-h9-9oN">
+                                <rect key="frame" x="2" y="-7" width="66" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSAddTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QDd-x6-iga">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="addIssueButtonPressed:" target="XfG-lQ-9wD" id="hZr-HV-VCU"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="issuesArrayController" destination="fva-Wo-ziW" id="2bq-w0-27Z"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <arrayController objectClassName="Issue" id="fva-Wo-ziW" userLabel="Issues">
@@ -889,9 +892,8 @@
                                     <binding destination="NcH-hA-0cL" name="selectedIndex" keyPath="self.issue.resolution" id="aXd-Iu-nmu"/>
                                 </connections>
                             </popUpButton>
-                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vm-bh-NxN">
-                                <rect key="frame" x="21" y="44" width="209" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Vm-bh-NxN">
+                                <rect key="frame" x="134" y="226" width="299" height="26"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="1Px-8P-qx8">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -904,12 +906,15 @@
                             </comboBox>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9Vm-bh-NxN" secondAttribute="trailing" constant="20" symbolic="YES" id="1jd-J8-xgU"/>
                             <constraint firstItem="1nl-P1-Tbn" firstAttribute="top" secondItem="2jd-0h-QID" secondAttribute="bottom" constant="8" id="7a6-W5-ZXc"/>
+                            <constraint firstItem="9Vm-bh-NxN" firstAttribute="centerY" secondItem="1nl-P1-Tbn" secondAttribute="centerY" id="Ivt-kZ-rC8"/>
                             <constraint firstItem="1nl-P1-Tbn" firstAttribute="leading" secondItem="2jd-0h-QID" secondAttribute="leading" id="PIr-Ui-UmW"/>
                             <constraint firstItem="2jd-0h-QID" firstAttribute="top" secondItem="rsA-cm-hIt" secondAttribute="top" constant="20" id="PXk-GT-DNP"/>
                             <constraint firstItem="m5h-dZ-FaW" firstAttribute="top" secondItem="1nl-P1-Tbn" secondAttribute="bottom" constant="8" symbolic="YES" id="XEd-kU-GGg"/>
                             <constraint firstItem="m5h-dZ-FaW" firstAttribute="leading" secondItem="rsA-cm-hIt" secondAttribute="leading" constant="20" id="cTu-Qf-zOi"/>
                             <constraint firstAttribute="trailing" secondItem="2jd-0h-QID" secondAttribute="trailing" constant="20" id="cbz-dm-Hzp"/>
+                            <constraint firstItem="9Vm-bh-NxN" firstAttribute="leading" secondItem="1nl-P1-Tbn" secondAttribute="trailing" constant="20" id="fkC-os-8Vx"/>
                             <constraint firstItem="2jd-0h-QID" firstAttribute="leading" secondItem="rsA-cm-hIt" secondAttribute="leading" constant="20" id="rZg-rk-fPA"/>
                             <constraint firstAttribute="trailing" secondItem="m5h-dZ-FaW" secondAttribute="trailing" constant="20" id="x8E-um-C6z"/>
                         </constraints>

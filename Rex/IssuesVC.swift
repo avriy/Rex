@@ -21,6 +21,7 @@ final class IssuesVC: NSViewController {
 	@objc dynamic var userIdentities = [CKUserIdentity]()
 	@objc dynamic var sortDescriptors = [NSSortDescriptor(key: #keyPath(Issue.creationDate), ascending: false)]
 	
+	@IBOutlet var issuesArrayController: NSArrayController!
 	@objc class func keyPathsForValuesAffectingSelectedIssue() -> Set<String> {
 		return Set([#keyPath(selectionIndexes)])
 	}
@@ -29,7 +30,7 @@ final class IssuesVC: NSViewController {
 		guard selectionIndexes.count > 0 else {
 			return nil
 		}
-		return issues[selectionIndexes.firstIndex]
+		return (issuesArrayController.arrangedObjects as! [Issue])[selectionIndexes.firstIndex]
 	}
 	
 	@objc dynamic var selectionIndexes = NSIndexSet()
@@ -41,6 +42,7 @@ final class IssuesVC: NSViewController {
 		CKContainer.default().requestPermissionsIfNeeded(errorHandler: defaultErrorHandler) { [weak self] in
 			var identities = [CKUserIdentity]()
 			let operation = CKDiscoverAllUserIdentitiesOperation()
+			operation.qualityOfService = .userInitiated
 			operation.userIdentityDiscoveredBlock = { userIdentity in
 				identities.append(userIdentity)
 			}
