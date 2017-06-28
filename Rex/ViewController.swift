@@ -32,6 +32,13 @@ class ViewController: NSViewController {
 		super.viewDidLoad()
 		fetchIssues()
 		
+		CKContainer.default().accountStatus { (status, error) in
+			CKContainer.default().requestApplicationPermission(.userDiscoverability) { (status, error) in
+				
+			}
+			
+		}
+		
 		let operation = CKDiscoverAllUserIdentitiesOperation()
 		operation.userIdentityDiscoveredBlock = { userIdentity in
 			
