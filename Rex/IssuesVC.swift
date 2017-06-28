@@ -9,11 +9,17 @@
 import Cocoa
 import CloudKit
 
-class ViewController: NSViewController {
+let defaultErrorHandler: (Error) -> Void = { error in
+	debugPrint("Error happened \(error)")
+}
+
+final class IssuesVC: NSViewController {
 	
-	let database = CKContainer.default().publicCloudDatabase
+	private let database = CKContainer.default().publicCloudDatabase
 	
 	@objc dynamic var issues = [Issue]()
+	@objc dynamic var userIdentities = [CKUserIdentity]()
+	@objc dynamic var sortDescriptors = [NSSortDescriptor(key: #keyPath(Issue.creationDate), ascending: false)]
 	
 	@objc class func keyPathsForValuesAffectingSelectedIssue() -> Set<String> {
 		return Set([#keyPath(selectionIndexes)])
@@ -32,18 +38,23 @@ class ViewController: NSViewController {
 		super.viewDidLoad()
 		fetchIssues()
 		
-		CKContainer.default().accountStatus { (status, error) in
-			CKContainer.default().requestApplicationPermission(.userDiscoverability) { (status, error) in
+		CKContainer.default().requestPermissionsIfNeeded(errorHandler: defaultErrorHandler) { [weak self] in
+			var identities = [CKUserIdentity]()
+			let operation = CKDiscoverAllUserIdentitiesOperation()
+			operation.userIdentityDiscoveredBlock = { userIdentity in
+				identities.append(userIdentity)
+			}
+			operation.discoverAllUserIdentitiesCompletionBlock = { errorOrNil in
 				
 			}
 			
+			let updateProperties = BlockOperation { [weak self] in
+				self?.userIdentities = identities
+			}
+			updateProperties.addDependency(operation)
+			OperationQueue.main.addOperation(updateProperties)
+			CKContainer.default().add(operation)
 		}
-		
-		let operation = CKDiscoverAllUserIdentitiesOperation()
-		operation.userIdentityDiscoveredBlock = { userIdentity in
-			
-		}
-		CKContainer.default().add(operation)
 	}
 	
 	
@@ -54,6 +65,7 @@ class ViewController: NSViewController {
 		for vc in childViewControllers {
 			if let vc = vc as? IssueDetailsVC {
 				vc.bind(NSBindingName(rawValue: #keyPath(IssueDetailsVC.issue)), to: self, withKeyPath: #keyPath(selectedIssue))
+				vc.bind(NSBindingName(rawValue: #keyPath(IssueDetailsVC.identities)), to: self, withKeyPath: #keyPath(userIdentities))
 				newIssueSelector = vc.performSelection
 			}
 		}

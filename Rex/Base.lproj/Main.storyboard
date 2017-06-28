@@ -699,10 +699,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--View Controller-->
+        <!--IssuesVC-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="IssuesVC" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -807,10 +807,11 @@
                     </view>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <arrayController id="fva-Wo-ziW" userLabel="Issues">
+                <arrayController objectClassName="Issue" id="fva-Wo-ziW" userLabel="Issues">
                     <connections>
                         <binding destination="XfG-lQ-9wD" name="selectionIndexes" keyPath="selectionIndexes" id="rPZ-E6-h87"/>
                         <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.issues" id="LB8-CL-RG9"/>
+                        <binding destination="XfG-lQ-9wD" name="sortDescriptors" keyPath="self.sortDescriptors" previousBinding="rPZ-E6-h87" id="utL-Lg-cGS"/>
                     </connections>
                 </arrayController>
             </objects>
@@ -888,6 +889,19 @@
                                     <binding destination="NcH-hA-0cL" name="selectedIndex" keyPath="self.issue.resolution" id="aXd-Iu-nmu"/>
                                 </connections>
                             </popUpButton>
+                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vm-bh-NxN">
+                                <rect key="frame" x="21" y="44" width="209" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="1Px-8P-qx8">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <outlet property="dataSource" destination="NcH-hA-0cL" id="dG6-M7-h6r"/>
+                                    <outlet property="delegate" destination="NcH-hA-0cL" id="uJy-zB-lg1"/>
+                                </connections>
+                            </comboBox>
                         </subviews>
                         <constraints>
                             <constraint firstItem="1nl-P1-Tbn" firstAttribute="top" secondItem="2jd-0h-QID" secondAttribute="bottom" constant="8" id="7a6-W5-ZXc"/>
@@ -901,6 +915,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="comboBox" destination="9Vm-bh-NxN" id="kaN-Ts-rV4"/>
                         <outlet property="titleTextField" destination="2jd-0h-QID" id="xBh-PK-28g"/>
                     </connections>
                 </viewController>

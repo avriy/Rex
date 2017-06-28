@@ -23,14 +23,21 @@ class Issue: NSObject, RecordRepresentable {
 	@objc dynamic var details: String
 	
 	@objc dynamic var resolution: Resolution
+	@objc dynamic var assignee: CKRecordID?
+	
+	@objc var creationDate: Date? {
+		return record.creationDate
+	}
+	
 	private var systemFields: Data
 	
 	private enum CodingKeys: String {
-		case name, description, resolution
+		case name, description, resolution, assignee
 	}
 	
 	override var hashValue: Int {
-		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolution.hashValue
+		let assigneeHash = assignee?.hashValue ?? 0
+		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolution.hashValue ^ assigneeHash
 	}
 	
 	init(name: String, description: String, resolution: Resolution) {
@@ -52,6 +59,7 @@ class Issue: NSObject, RecordRepresentable {
 		self.name = name
 		self.details = description
 		self.resolution = resolution
+		self.assignee = (record[CodingKeys.assignee.rawValue] as? CKReference)?.recordID
 	}
 	
 	var record: CKRecord {
@@ -62,11 +70,11 @@ class Issue: NSObject, RecordRepresentable {
 		result[CodingKeys.name.rawValue] = name as CKRecordValue
 		result[CodingKeys.description.rawValue] = details as CKRecordValue
 		result[CodingKeys.resolution.rawValue] = resolution.rawValue as CKRecordValue
+		result[CodingKeys.assignee.rawValue] = assignee.map { CKReference(recordID: $0, action: .deleteSelf) }
 		systemFields = result.archivedSystemFields()
 		return result
 	}
 }
-
 
 private
 extension CKRecord {
