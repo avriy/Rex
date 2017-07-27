@@ -59,7 +59,6 @@ final class IssuesVC: NSViewController {
 		}
 	}
 	
-	
 	var newIssueSelector: (() -> Void)?
 	
 	override func viewDidAppear() {
@@ -74,7 +73,9 @@ final class IssuesVC: NSViewController {
 	}
 	
 	@IBAction func addIssueButtonPressed(_ sender: NSButton) {
-		let newIssue = Issue(name: "New issue", description: "", resolution: .open)
+		//	FIXME:
+		let project = Project(name: "Empty for now")
+		let newIssue = Issue(name: "New issue", description: "", resolution: .open, project: project)
 		issues.append(newIssue)
 		selectionIndexes = NSIndexSet(index: issues.count - 1)
 		newIssueSelector?()
@@ -90,7 +91,7 @@ final class IssuesVC: NSViewController {
 	}
 	
 	func fetchIssues() {
-		let query = CKQuery(recordType: "Issue", predicate: NSPredicate(value: true))
+		let query = Issue.query()
 		let op = CKQueryOperation(query: query)
 		op.recordFetchedBlock = { [weak self] record in
 			

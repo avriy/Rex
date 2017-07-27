@@ -49,7 +49,7 @@ class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate
 	func reloadComboBox() {
 		comboBox.reloadData()
 		
-		guard let assignee = issue?.assignee,
+		guard let assignee = issue?.assigneeID,
 			let index = identities.index(where: { $0.userRecordID == assignee }) else {
 				return comboBox.selectItem(at: 0)
 		}
@@ -66,9 +66,9 @@ class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate
 	func comboBoxSelectionDidChange(_ notification: Notification) {
 		switch comboBox.indexOfSelectedItem {
 		case 0:
-			issue?.assignee = nil
+			issue?.assigneeID = nil
 		default:
-			issue?.assignee = identities[comboBox.indexOfSelectedItem - 1].userRecordID
+			issue?.assigneeID = identities[comboBox.indexOfSelectedItem - 1].userRecordID
 		}
 	}
 	
