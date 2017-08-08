@@ -74,6 +74,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6319C91F1F2B80CA006260D2 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				63ADAACD1F02FF9800DEA2FD /* Issue.swift */,
+				63CB0CB11F27985700781998 /* Project.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		635BF7931F03E7140020F0E0 /* RexUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,8 +118,7 @@
 				6395BACB1F28F0FA002210B9 /* ProjectsVC.swift */,
 				63ADAABC1F02FD9D00DEA2FD /* IssuesVC.swift */,
 				6310C87C1F03A5B000490EF4 /* RecordSaver.swift */,
-				63ADAACD1F02FF9800DEA2FD /* Issue.swift */,
-				63CB0CB11F27985700781998 /* Project.swift */,
+				6319C91F1F2B80CA006260D2 /* Core */,
 				632AA8C11F0435E500D0C2AD /* CloudKit.swift */,
 				63ADAABE1F02FD9D00DEA2FD /* Assets.xcassets */,
 				63ADAAC01F02FD9D00DEA2FD /* Main.storyboard */,

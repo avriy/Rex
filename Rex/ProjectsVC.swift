@@ -29,26 +29,69 @@ extension CKQueryOperation {
 	}
 }
 
-class ProjectsVC: NSViewController {
+extension NSNib.Name {
+	static let projectCollectionItem = NSNib.Name(rawValue: "ProjectCollectionItem")
+}
+
+extension NSUserInterfaceItemIdentifier {
+	static let projectItemID = NSUserInterfaceItemIdentifier(rawValue: "ProjectCollectionItem")
+}
+
+extension NSStoryboardSegue.Identifier {
+	static let openProject = NSStoryboardSegue.Identifier(rawValue: "OpenProjectSID")
+}
+
+class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 	
-	@objc dynamic var projects = [Project]()
-	@IBOutlet var projectsArrayController: NSArrayController!
+	@objc dynamic var projects = [ProjectViewModel]()
+	
+	@IBOutlet weak var collectionView: NSCollectionView!
+	
+	func open(project: ProjectViewModel) {
+		switch project.projectType {
+		case .add:
+			let emptyProject = Project(name: "Test")
+			let operation = CKModifyRecordsOperation(recordsToSave: [emptyProject.record], recordIDsToDelete: nil)
+			CKContainer.default().publicCloudDatabase.add(operation)
+		case .project(let project):
+			performSegue(withIdentifier: .openProject, sender: project)
+		}
+	}
+	
+	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+		guard let project = sender as? Project else {
+			fatalError()
+		}
+		
+		(segue.destinationController as? IssuesVC)?.project = project
+	}
+	
+	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+		return projects.count
+	}
+	
+	func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+		guard let result = collectionView.makeItem(withIdentifier: .projectItemID, for: indexPath) as? ProjectCollectionItem else {
+			fatalError()
+		}
+		result.viewModel = projects[indexPath.item]
+		return result
+	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		projectsArrayController.bind(.contentArray, to: self, withKeyPath: #keyPath(projects))
+		projects = [ProjectViewModel(projectType: .add, openHandler: open)]
+		collectionView.reloadData()
 		
 		let operation = CKQueryOperation(errorHandler: { _ in }) { [weak self] (project: Project) in
-			self?.projects.append(project)
+			guard let strongSelf = self else { return }
+			let newVM = ProjectViewModel(projectType: .project(project), openHandler: strongSelf.open)
+			strongSelf.projects.insert(newVM, at: strongSelf.projects.count - 1)
+			strongSelf.collectionView.reloadData()
+	
 		}
 		CKContainer.default().publicCloudDatabase.add(operation)
     }
-	
-	@IBAction func createProjectButtonPressed(_ sender: NSButton) {
-		let emptyProject = Project(name: "Test")
-		let operation = CKModifyRecordsOperation(recordsToSave: [emptyProject.record], recordIDsToDelete: nil)
-		CKContainer.default().publicCloudDatabase.add(operation)
-	}
 	
 }

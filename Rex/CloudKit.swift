@@ -29,3 +29,34 @@ extension CKContainer {
 		}
 	}
 }
+
+protocol RecordRepresentable {
+	init?(record: CKRecord)
+	var record: CKRecord { get }
+	static var recordType: String { get }
+}
+
+extension RecordRepresentable {
+	static func query(for predicate: NSPredicate = NSPredicate(value: true)) -> CKQuery {
+		return CKQuery(recordType: recordType, predicate: predicate)
+	}
+}
+
+extension CKRecord {
+	
+	static func unarchivedSystemFields(from data: Data) -> CKRecord? {
+		let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+		unarchiver.requiresSecureCoding = true
+		return CKRecord(coder: unarchiver)
+	}
+	
+	func archivedSystemFields() -> Data {
+		let data = NSMutableData()
+		let archiver = NSKeyedArchiver(forWritingWith: data)
+		archiver.requiresSecureCoding = true
+		encodeSystemFields(with: archiver)
+		archiver.finishEncoding()
+		return data as Data
+	}
+}
+

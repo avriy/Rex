@@ -15,6 +15,8 @@ let defaultErrorHandler: (Error) -> Void = { error in
 
 final class IssuesVC: NSViewController {
 	
+	var project: Project? 
+	
 	private let database = CKContainer.default().publicCloudDatabase
 	
 	@objc dynamic var issues = [Issue]()

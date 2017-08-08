@@ -8,6 +8,7 @@
 
 import CloudKit
 
+@objc
 class Project: NSObject, RecordRepresentable {
 	
 	@objc var name: String
