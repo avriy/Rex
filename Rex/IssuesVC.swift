@@ -15,7 +15,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 
 final class IssuesVC: NSViewController {
 	
-	var project: Project? 
+	var project: Project?
 	
 	private let database = CKContainer.default().publicCloudDatabase
 	
@@ -24,6 +24,7 @@ final class IssuesVC: NSViewController {
 	@objc dynamic var sortDescriptors = [NSSortDescriptor(key: #keyPath(Issue.creationDate), ascending: false)]
 	
 	@IBOutlet var issuesArrayController: NSArrayController!
+	
 	@objc class func keyPathsForValuesAffectingSelectedIssue() -> Set<String> {
 		return Set([#keyPath(selectionIndexes)])
 	}
@@ -76,7 +77,9 @@ final class IssuesVC: NSViewController {
 	
 	@IBAction func addIssueButtonPressed(_ sender: NSButton) {
 		//	FIXME:
-		let project = Project(name: "Empty for now")
+		guard let project = project else {
+			fatalError("Project should be present")
+		}
 		let newIssue = Issue(name: "New issue", description: "", resolution: .open, project: project)
 		issues.append(newIssue)
 		selectionIndexes = NSIndexSet(index: issues.count - 1)
@@ -93,6 +96,11 @@ final class IssuesVC: NSViewController {
 	}
 	
 	func fetchIssues() {
+		guard let project = project else {
+			fatalError("Project is not selected")
+		}
+		let reference = CKReference(record: project.record, action: .none)
+		let predicate = NSPredicate(format: "projectID == %@", reference)
 		let query = Issue.query()
 		let op = CKQueryOperation(query: query)
 		op.recordFetchedBlock = { [weak self] record in

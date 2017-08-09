@@ -73,6 +73,7 @@ class Issue: NSObject, RecordRepresentable {
 		result[CodingKeys.description.rawValue] = details as CKRecordValue
 		result[CodingKeys.resolution.rawValue] = resolution.rawValue as CKRecordValue
 		result[CodingKeys.assigneeID.rawValue] = assigneeID.map { CKReference(recordID: $0, action: .deleteSelf) }
+		result[CodingKeys.projectID.rawValue] = CKReference(recordID: projectID, action: .deleteSelf)
 		return result
 	}
 }

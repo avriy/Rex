@@ -32,6 +32,8 @@ final class RecordSaver<ValueType: RecordRepresentable & Hashable> {
 		database.save(record) { (record, error) in
 			if let error = error {
 				debugPrint("Error happened \(error)")
+			} else {
+				debugPrint("Saved record")
 			}
 		}
 	}
