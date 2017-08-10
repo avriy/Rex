@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -718,15 +718,14 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <scrollView wantsLayer="YES" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQz-FK-FCu">
-                                <rect key="frame" x="50" y="54" width="250" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="69C-il-1iZ">
-                                    <rect key="frame" x="1" y="1" width="248" height="158"/>
+                            <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQz-FK-FCu">
+                                <rect key="frame" x="20" y="20" width="410" height="222"/>
+                                <clipView key="contentView" drawsBackground="NO" id="69C-il-1iZ">
+                                    <rect key="frame" x="1" y="1" width="408" height="220"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <collectionView ambiguous="YES" id="mMh-FN-ZAj">
-                                            <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
+                                        <collectionView id="mMh-FN-ZAj">
+                                            <rect key="frame" x="0.0" y="0.0" width="408" height="158"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="cxh-4o-Px2">
                                                 <size key="itemSize" width="100" height="100"/>
@@ -740,29 +739,107 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="spb-6F-OBh">
-                                    <rect key="frame" x="1" y="144" width="233" height="15"/>
+                                    <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="OLO-di-JTh">
-                                    <rect key="frame" x="234" y="1" width="15" height="143"/>
+                                    <rect key="frame" x="-15" y="1" width="16" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="UQz-FK-FCu" secondAttribute="trailing" constant="20" symbolic="YES" id="6lK-ls-qEa"/>
+                            <constraint firstAttribute="bottom" secondItem="UQz-FK-FCu" secondAttribute="bottom" constant="20" symbolic="YES" id="Nw1-xp-52v"/>
                             <constraint firstItem="Bxz-hz-QMf" firstAttribute="top" secondItem="7gF-MC-rHu" secondAttribute="top" constant="13" id="SYH-Xc-EVA"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Bxz-hz-QMf" secondAttribute="trailing" symbolic="YES" id="cxA-rf-shA"/>
+                            <constraint firstItem="UQz-FK-FCu" firstAttribute="top" secondItem="Bxz-hz-QMf" secondAttribute="bottom" constant="20" id="St2-4o-5oU"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Bxz-hz-QMf" secondAttribute="trailing" constant="20" symbolic="YES" id="cxA-rf-shA"/>
                             <constraint firstItem="Bxz-hz-QMf" firstAttribute="leading" secondItem="7gF-MC-rHu" secondAttribute="leading" constant="30" id="dQP-3P-0rq"/>
+                            <constraint firstItem="UQz-FK-FCu" firstAttribute="leading" secondItem="7gF-MC-rHu" secondAttribute="leading" constant="20" id="u8J-OX-2eS"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="mMh-FN-ZAj" id="rm9-Bq-b02"/>
                         <segue destination="XfG-lQ-9wD" kind="show" identifier="OpenProjectSID" id="mkW-gL-Ndt"/>
+                        <segue destination="lf3-G8-Rd3" kind="show" identifier="CreateProjectSID" id="5sM-Fg-lFz"/>
                     </connections>
                 </viewController>
                 <customObject id="ouL-er-MKp" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="613" y="243"/>
+        </scene>
+        <!--Create ProjectVC-->
+        <scene sceneID="U7t-57-JYD">
+            <objects>
+                <viewController id="lf3-G8-Rd3" customClass="CreateProjectVC" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="SFP-EQ-AIH">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7z8-kJ-0lR">
+                                <rect key="frame" x="355" y="13" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1K1-Ki-keX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="lf3-G8-Rd3" name="target" keyPath="self" id="NLJ-aB-5G5">
+                                        <dictionary key="options">
+                                            <string key="NSSelectorName">create</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pjc-ka-uZS">
+                                <rect key="frame" x="274" y="13" width="82" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ngG-7Y-dY4">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="lf3-G8-Rd3" name="target" keyPath="view.window" id="grj-ry-TUu">
+                                        <dictionary key="options">
+                                            <string key="NSSelectorName">close</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="goh-Gv-Ku8">
+                                <rect key="frame" x="20" y="234" width="410" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Yst-SU-mdt">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jle-SF-AvG">
+                                <rect key="frame" x="18" y="264" width="119" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Create new proejct" id="uoz-TT-dLc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="createButton" destination="7z8-kJ-0lR" id="EUO-hU-5Rc"/>
+                        <outlet property="textField" destination="goh-Gv-Ku8" id="fs5-3k-I08"/>
+                    </connections>
+                </viewController>
+                <customObject id="NCE-V8-r0p" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1150" y="243"/>
         </scene>
         <!--IssuesVC-->
         <scene sceneID="hIz-AP-VOD">

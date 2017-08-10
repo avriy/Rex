@@ -39,31 +39,43 @@ extension NSUserInterfaceItemIdentifier {
 
 extension NSStoryboardSegue.Identifier {
 	static let openProject = NSStoryboardSegue.Identifier(rawValue: "OpenProjectSID")
+	static let createProject = NSStoryboardSegue.Identifier(rawValue: "CreateProjectSID")
 }
 
 class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 	
 	@objc dynamic var projects = [ProjectViewModel]()
+	private let database = CKContainer.default().publicCloudDatabase
 	
 	@IBOutlet weak var collectionView: NSCollectionView!
 	
 	func open(project: ProjectViewModel) {
 		switch project.projectType {
 		case .add:
-			let emptyProject = Project(name: "Test")
-			let operation = CKModifyRecordsOperation(recordsToSave: [emptyProject.record], recordIDsToDelete: nil)
-			CKContainer.default().publicCloudDatabase.add(operation)
+			performSegue(withIdentifier: .createProject, sender: nil)
 		case .project(let project):
 			performSegue(withIdentifier: .openProject, sender: project)
 		}
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-		guard let project = sender as? Project else {
-			fatalError()
+		guard let identifier = segue.identifier else {
+			return
 		}
-		
-		(segue.destinationController as? IssuesVC)?.project = project
+		switch identifier {
+		case .openProject:
+			guard let project = sender as? Project else {
+				fatalError()
+			}
+			
+			(segue.destinationController as? IssuesVC)?.project = project
+			
+		case .createProject:
+			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(database: database)
+			
+		default:
+			fatalError("Undefined segue")
+		}
 	}
 	
 	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -91,7 +103,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 			strongSelf.collectionView.reloadData()
 	
 		}
-		CKContainer.default().publicCloudDatabase.add(operation)
+		database.add(operation)
     }
 	
 }

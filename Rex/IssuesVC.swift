@@ -101,7 +101,7 @@ final class IssuesVC: NSViewController {
 		}
 		let reference = CKReference(record: project.record, action: .none)
 		let predicate = NSPredicate(format: "projectID == %@", reference)
-		let query = Issue.query()
+		let query = Issue.query(for: predicate)
 		let op = CKQueryOperation(query: query)
 		op.recordFetchedBlock = { [weak self] record in
 			
