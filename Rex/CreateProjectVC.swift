@@ -9,6 +9,7 @@
 import Cocoa
 import CloudKit
 
+
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""
 	private let database: CKDatabase

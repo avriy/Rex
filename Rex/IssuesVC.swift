@@ -17,7 +17,7 @@ final class IssuesVC: NSViewController {
 	
 	var project: Project?
 	
-	private let database = CKContainer.default().publicCloudDatabase
+	private let rex = Rex()
 	
 	@objc dynamic var issues = [Issue]()
 	@objc dynamic var userIdentities = [CKUserIdentity]()
@@ -90,30 +90,19 @@ final class IssuesVC: NSViewController {
 		guard selectionIndexes.count > 0 else {
 			return
 		}
-		let issue = issues.remove(at: selectionIndexes.firstIndex)
-		let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [issue.record.recordID])
-		database.add(operation)
+		let indexToRemove = selectionIndexes.firstIndex
+		rex.remove(issues[indexToRemove]) { [weak self] in
+			self?.issues.remove(at: indexToRemove)
+		}
 	}
 	
 	func fetchIssues() {
 		guard let project = project else {
 			fatalError("Project is not selected")
 		}
-		let reference = CKReference(record: project.record, action: .none)
-		let predicate = NSPredicate(format: "projectID == %@", reference)
-		let query = Issue.query(for: predicate)
-		let op = CKQueryOperation(query: query)
-		op.recordFetchedBlock = { [weak self] record in
-			
-			guard let issue = Issue(record: record) else {
-				return
-			}
-			
-			DispatchQueue.main.async { [weak self] in
-				self?.issues.append(issue)
-			}
-		}
 		
-		database.add(op)
+		rex.issues(for: project) { [weak self] in
+			self?.issues = $0
+		}
 	}
 }
