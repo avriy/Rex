@@ -13,9 +13,9 @@ let defaultErrorHandler: (Error) -> Void = { error in
 	debugPrint("Error happened \(error)")
 }
 
-final class IssuesVC: NSViewController {
+@objc class IssuesVC: NSViewController {
 	
-	var project: Project?
+	@objc dynamic var project: Project?
 	
 	private let rex = Rex()
 	
@@ -41,7 +41,7 @@ final class IssuesVC: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		fetchIssues()
-		
+
 		CKContainer.default().requestPermissionsIfNeeded(errorHandler: defaultErrorHandler) { [weak self] in
 			var identities = [CKUserIdentity]()
 			let operation = CKDiscoverAllUserIdentitiesOperation()
@@ -66,6 +66,9 @@ final class IssuesVC: NSViewController {
 	
 	override func viewDidAppear() {
 		super.viewDidAppear()
+		
+		view.window?.title = project?.name ?? ""
+		
 		for vc in childViewControllers {
 			if let vc = vc as? IssueDetailsVC {
 				vc.bind(NSBindingName(rawValue: #keyPath(IssueDetailsVC.issue)), to: self, withKeyPath: #keyPath(selectedIssue))

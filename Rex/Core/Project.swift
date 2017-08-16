@@ -11,7 +11,7 @@ import CloudKit
 @objc
 class Project: NSObject, RecordRepresentable {
 	
-	@objc var name: String
+	@objc dynamic var name: String
 	
 	static let recordType: String = "Project"
 	var recordID: CKRecordID {

@@ -17,9 +17,8 @@ extension CKQueryOperation {
 			guard let model = T(record: record) else {
 				return
 			}
-			DispatchQueue.main.async {
-				handler(model)
-			}
+			handler(model)
+			
 		}
 		queryCompletionBlock = { (cursor, error) in
 			if let error = error {
@@ -99,9 +98,11 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 		let operation = CKQueryOperation(errorHandler: { _ in }) { [weak self] (project: Project) in
 			guard let strongSelf = self else { return }
 			let newVM = ProjectViewModel(projectType: .project(project), openHandler: strongSelf.open)
-			strongSelf.projects.insert(newVM, at: strongSelf.projects.count - 1)
-			strongSelf.collectionView.reloadData()
-	
+			DispatchQueue.main.async { [weak self] in
+				guard let strongSelf = self else { return }
+				strongSelf.projects.insert(newVM, at: strongSelf.projects.count - 1)
+				strongSelf.collectionView.reloadData()
+			}
 		}
 		database.add(operation)
     }

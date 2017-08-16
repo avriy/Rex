@@ -23,16 +23,5 @@ class RexUITests: XCTestCase {
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
     
-	func testCreateIssue() {
-		
-		let window = XCUIApplication().windows["Window"]
-		window.buttons["add"].click()
-		
-		let cell = window/*@START_MENU_TOKEN@*/.tables/*[[".scrollViews.tables",".tables"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.children(matching: .tableRow).element(boundBy: 0).children(matching: .cell).element
-		cell.typeText("Yo!")
-		window.children(matching: .scrollView).element(boundBy: 1).children(matching: .textView).element.click()
-		cell.typeText("description")
-		
-	}
     
 }

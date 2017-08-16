@@ -8,18 +8,35 @@
 
 import CloudKit
 
-class Rex {
+public class Rex {
 	
-	static let debugErrorHandler: (Error) -> Void = { error in
+	public static let debugErrorHandler: (Error) -> Void = { error in
 		debugPrint("Error happened \(error)")
 	}
 	
 	let database: CKDatabase
 	let errorHandler: (Error) -> Void
 	
-	init(database: CKDatabase = CKContainer.default().publicCloudDatabase, errorHandler: @escaping (Error) -> Void = Rex.debugErrorHandler) {
+	public init(database: CKDatabase = CKContainer.default().publicCloudDatabase, errorHandler: @escaping (Error) -> Void = Rex.debugErrorHandler) {
 		self.database = database
 		self.errorHandler = errorHandler
+	}
+	
+	func projects(handler: @escaping ([Project]) -> Void) {
+		var result = [Project]()
+		let operation = CKQueryOperation(errorHandler: errorHandler) { (project: Project) in
+			debugPrint("Fetched project with id \(project.recordID.recordName)")
+			result.append(project)
+		}
+		operation.queryCompletionBlock = { [eh = errorHandler] (cursor, error) in
+			if let error = error {
+				eh(error)
+			} else {
+				handler(result)
+			}
+		}
+		
+		database.add(operation)
 	}
 	
 	func issues(for project: Project, handler: @escaping ([Issue]) -> Void) {
@@ -48,8 +65,26 @@ class Rex {
 		database.add(op)
 	}
 	
-	func remove<Value: RecordRepresentable>(_ value: Value, completionHandler: @escaping () -> Void) {
-		let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: [value.record.recordID])
+	func remove<Value: RecordRepresentable>(_ values: [Value], completionHandler: @escaping () -> Void) {
+		let idsToDelete = values.map { $0.record.recordID }
+		let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: idsToDelete)
+		operation.modifyRecordsCompletionBlock = { [weak self] (_, _, error) in
+			if let error = error {
+				self?.errorHandler(error)
+			} else {
+				completionHandler()
+			}
+		}
+		database.add(operation)
+	}
+	
+	func remove<Value: RecordRepresentable>(_ values: Value..., completionHandler: @escaping () -> Void) {
+		remove(values, completionHandler: completionHandler)
+	}
+	
+	func save<Value: RecordRepresentable>(_ values: Value..., completionHandler: @escaping () -> Void) {
+		let recordsToSave = values.map { $0.record }
+		let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
 		operation.modifyRecordsCompletionBlock = { [weak self] (_, _, error) in
 			if let error = error {
 				self?.errorHandler(error)
