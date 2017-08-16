@@ -30,6 +30,25 @@ extension CKContainer {
 	}
 }
 
+extension CKQueryOperation {
+	convenience init<T: RecordRepresentable>(errorHandler eh: @escaping (Error) -> Void, handler: @escaping (T) -> Void) {
+		let query = T.query()
+		self.init(query: query)
+		recordFetchedBlock = { record in
+			guard let model = T(record: record) else {
+				return
+			}
+			handler(model)
+			
+		}
+		queryCompletionBlock = { (cursor, error) in
+			if let error = error {
+				eh(error)
+			}
+		}
+	}
+}
+
 protocol RecordRepresentable {
 	init?(record: CKRecord)
 	var record: CKRecord { get }

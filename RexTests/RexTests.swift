@@ -12,7 +12,7 @@ import CloudKit
 @testable import Rex
 
 extension TimeInterval {
-	static let timeout: TimeInterval = 10
+	static let timeout: TimeInterval = 30
 }
 
 class RexTests: XCTestCase {

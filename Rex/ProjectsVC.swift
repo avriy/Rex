@@ -9,25 +9,6 @@
 import Cocoa
 import CloudKit
 
-extension CKQueryOperation {
-	convenience init<T: RecordRepresentable>(errorHandler eh: @escaping (Error) -> Void, handler: @escaping (T) -> Void) {
-		let query = T.query()
-		self.init(query: query)
-		recordFetchedBlock = { record in
-			guard let model = T(record: record) else {
-				return
-			}
-			handler(model)
-			
-		}
-		queryCompletionBlock = { (cursor, error) in
-			if let error = error {
-				eh(error)
-			}
-		}
-	}
-}
-
 extension NSNib.Name {
 	static let projectCollectionItem = NSNib.Name(rawValue: "ProjectCollectionItem")
 }
@@ -44,7 +25,7 @@ extension NSStoryboardSegue.Identifier {
 class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 	
 	@objc dynamic var projects = [ProjectViewModel]()
-	private let database = CKContainer.default().publicCloudDatabase
+	private let rex = Rex()
 	
 	@IBOutlet weak var collectionView: NSCollectionView!
 	
@@ -70,7 +51,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 			(segue.destinationController as? IssuesVC)?.project = project
 			
 		case .createProject:
-			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(database: database)
+			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(rex: rex)
 			
 		default:
 			fatalError("Undefined segue")
@@ -95,16 +76,17 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 		projects = [ProjectViewModel(projectType: .add, openHandler: open)]
 		collectionView.reloadData()
 		
-		let operation = CKQueryOperation(errorHandler: { _ in }) { [weak self] (project: Project) in
-			guard let strongSelf = self else { return }
-			let newVM = ProjectViewModel(projectType: .project(project), openHandler: strongSelf.open)
+		rex.projects { [weak self] projects in
 			DispatchQueue.main.async { [weak self] in
 				guard let strongSelf = self else { return }
-				strongSelf.projects.insert(newVM, at: strongSelf.projects.count - 1)
+				for project in projects {
+					let newVM = ProjectViewModel(projectType: .project(project), openHandler: strongSelf.open)
+					
+					strongSelf.projects.insert(newVM, at: strongSelf.projects.count - 1)
+				}
 				strongSelf.collectionView.reloadData()
 			}
 		}
-		database.add(operation)
     }
 	
 }

@@ -12,14 +12,14 @@ import CloudKit
 
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""
-	private let database: CKDatabase
-	init(database: CKDatabase) {
-		self.database = database
+	private let rex: Rex
+	init(rex: Rex) {
+		self.rex = rex
 	}
 	
 	func create(errorHandler: @escaping (Error) -> Void, successHandler: @escaping () -> Void) {
 		let project = Project(name: name)
-		database.save(project.record) { (record, error) in
+		rex.database.save(project.record) { (record, error) in
 			if let error = error {
 				errorHandler(error)
 			} else {
