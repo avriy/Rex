@@ -75,6 +75,8 @@ public class Rex {
 				completionHandler()
 			}
 		}
+		
+		
 		database.add(operation)
 	}
 	
@@ -88,12 +90,42 @@ public class Rex {
 		operation.modifyRecordsCompletionBlock = { [weak self] (_, _, error) in
 			if let error = error {
 				self?.errorHandler(error)
-			} else {
-				completionHandler()
 			}
 		}
+		operation.completionBlock = completionHandler
+		
 		database.add(operation)
 	}
 	
+}
+
+extension Array where Element: RecordRepresentable {
+	func saveOperation() -> CKModifyRecordsOperation {
+		let recordsToSave = map { $0.record }
+		return CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
+	}
+}
+
+extension RecordRepresentable {
+	static func fetchOperation(predicate: NSPredicate = NSPredicate(value: true), handler: @escaping ([Self]) -> Void) -> CKQueryOperation {
+		let query = Self.query(for: predicate)
+		let op = CKQueryOperation(query: query)
+		
+		var result = [Self]()
+		
+		op.recordFetchedBlock = { record in
+			debugPrint("record was fetched")
+			guard let model = Self(record: record) else {
+				fatalError()
+			}
+			result.append(model)
+		}
+		
+		op.queryCompletionBlock = { (cursor, error) in
+			handler(result)
+		}
+		
+		return op
+	}
 }
 

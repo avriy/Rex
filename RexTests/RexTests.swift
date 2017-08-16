@@ -50,22 +50,6 @@ class RexTests: XCTestCase {
 		waitForExpectations(timeout: .timeout, handler: nil)
 	}
 	
-	func testCreateAndFetchProject() {
-		let project = Project(name: "Dummy")
-		let exp = expectation(description: "Can create and fetch project")
-		let rex = createRex(for: exp)
-		
-		rex.save(project) {
-			debugPrint("Project with id \(project.recordID.recordName) is saved")
-			rex.projects { projects in
-				let result = projects.contains { $0.recordID.recordName == project.recordID.recordName }
-				XCTAssert(result, "Fetched projects should contain project that was saved")
-				exp.fulfill()
-			}
-		}
-		waitForExpectations(timeout: .timeout, handler: nil)
-	}
-	
 	override func tearDown() {
 		super.tearDown()
 		let exp = expectation(description: "Can tear down the projects")
