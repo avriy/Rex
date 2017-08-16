@@ -72,7 +72,9 @@ public class Rex {
 			if let error = error {
 				self?.errorHandler(error)
 			} else {
-				completionHandler()
+				DispatchQueue.main.async {
+					completionHandler()
+				}
 			}
 		}
 		

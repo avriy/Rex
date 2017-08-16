@@ -24,6 +24,7 @@ final class RecordSaver<ValueType: RecordRepresentable & Hashable> {
 				save(record: oldValue.record)
 			}
 			valueHash = value?.hashValue
+			debugPrint("Record saver has new value")
 		}
 	}
 	
@@ -46,6 +47,8 @@ final class RecordSaver<ValueType: RecordRepresentable & Hashable> {
 	}
 	
 	deinit {
-		saveIfNeeded()
+		if let record = value?.record {
+			save(record: record)
+		}
 	}
 }

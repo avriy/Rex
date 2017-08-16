@@ -95,6 +95,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 		}
 		let indexToRemove = selectionIndexes.firstIndex
 		rex.remove(issues[indexToRemove]) { [weak self] in
+			
 			self?.issues.remove(at: indexToRemove)
 		}
 	}
