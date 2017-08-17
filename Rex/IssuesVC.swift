@@ -17,7 +17,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 	
 	@objc dynamic var project: Project?
 	
-	private let rex = Rex()
+	private let context = AppContext()
 	
 	@objc dynamic var issues = [Issue]()
 	@objc dynamic var userIdentities = [CKUserIdentity]()
@@ -94,7 +94,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 			return
 		}
 		let indexToRemove = selectionIndexes.firstIndex
-		rex.remove(issues[indexToRemove]) { [weak self] in
+		context.remove(issues[indexToRemove]) { [weak self] in
 			
 			self?.issues.remove(at: indexToRemove)
 		}
@@ -105,7 +105,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 			fatalError("Project is not selected")
 		}
 		
-		rex.issues(for: project) { [weak self] in
+		context.issues(for: project) { [weak self] in
 			self?.issues = $0
 		}
 	}

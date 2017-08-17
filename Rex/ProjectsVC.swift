@@ -25,7 +25,7 @@ extension NSStoryboardSegue.Identifier {
 class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 	
 	@objc dynamic var projects = [ProjectViewModel]()
-	private let rex = Rex()
+	private let rex = AppContext()
 	
 	@IBOutlet weak var collectionView: NSCollectionView!
 	
@@ -51,7 +51,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 			(segue.destinationController as? IssuesVC)?.project = project
 			
 		case .createProject:
-			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(rex: rex)
+			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(context: rex)
 			
 		default:
 			fatalError("Undefined segue")
@@ -70,12 +70,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 		return result
 	}
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-		
-		projects = [ProjectViewModel(projectType: .add, openHandler: open)]
-		collectionView.reloadData()
-		
+	func fetchProjects() {
 		rex.projects { [weak self] projects in
 			DispatchQueue.main.async { [weak self] in
 				guard let strongSelf = self else { return }
@@ -87,6 +82,42 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 				strongSelf.collectionView.reloadData()
 			}
 		}
+	}
+	
+    override func viewDidLoad() {
+        super.viewDidLoad()
+		
+		projects = [ProjectViewModel(projectType: .add, openHandler: open)]
+		collectionView.reloadData()
+		
+		fetchProjects()
+		
+		let subscription = CKQuerySubscription(recordType: "Project", predicate: NSPredicate(value: true), options: .firesOnRecordCreation)
+		let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: nil)
+		
+		operation.modifySubscriptionsCompletionBlock = { (saved, deleted, error) in
+			if let error = error {
+				debugPrint("Failed to save subscription with error \(error)")
+			}
+		}
+		rex.database.add(operation)
+		
+		NotificationCenter.default.addObserver(forName: .recordWasCreated, object: nil, queue: .main) { [unowned self] (notification) in
+			debugPrint("Did receive notification from notification center")
+			guard let record = notification.userInfo?["record"] as? CKRecord else {
+				fatalError("Failed to create record from notification")
+			}
+			
+			guard let project = Project(record: record) else {
+				return
+			}
+			
+			let newViewModel = ProjectViewModel(projectType: .project(project), openHandler: self.open)
+			
+			self.projects.insert(newViewModel, at: self.projects.count - 1)
+			self.collectionView.reloadData()
+		}
+		
     }
 	
 }

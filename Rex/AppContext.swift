@@ -8,7 +8,7 @@
 
 import CloudKit
 
-public class Rex {
+public class AppContext {
 	
 	public static let debugErrorHandler: (Error) -> Void = { error in
 		debugPrint("Error happened \(error)")
@@ -17,7 +17,7 @@ public class Rex {
 	let database: CKDatabase
 	let errorHandler: (Error) -> Void
 	
-	public init(database: CKDatabase = CKContainer.default().publicCloudDatabase, errorHandler: @escaping (Error) -> Void = Rex.debugErrorHandler) {
+	public init(database: CKDatabase = CKContainer.default().publicCloudDatabase, errorHandler: @escaping (Error) -> Void = AppContext.debugErrorHandler) {
 		self.database = database
 		self.errorHandler = errorHandler
 	}

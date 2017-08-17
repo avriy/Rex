@@ -19,8 +19,8 @@ class RexTests: XCTestCase {
 	
 	let database = CKContainer.default().privateCloudDatabase
 	
-	func createRex(for expectaion: XCTestExpectation) -> Rex {
-		return Rex(database: database) { error in
+	func createRex(for expectaion: XCTestExpectation) -> AppContext {
+		return AppContext(database: database) { error in
 			XCTFail("Failed with \(error)")
 			expectaion.fulfill()
 		}

@@ -9,25 +9,12 @@
 import Cocoa
 import CloudKit
 
-
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""
-	private let rex: Rex
-	init(rex: Rex) {
-		self.rex = rex
+	let context: AppContext
+	init(context: AppContext) {
+		self.context = context
 	}
-	
-	func create(errorHandler: @escaping (Error) -> Void, successHandler: @escaping () -> Void) {
-		let project = Project(name: name)
-		rex.database.save(project.record) { (record, error) in
-			if let error = error {
-				errorHandler(error)
-			} else {
-				successHandler()
-			}
-		}
-	}
-	
 }
 
 class CreateProjectVC: NSViewController {
@@ -42,8 +29,13 @@ class CreateProjectVC: NSViewController {
     }
 	
 	@objc func create() {
-		viewModel.create(errorHandler: { _ in }) { [weak self] in
+		let project = Project(name: viewModel.name)
+		let saveOperation = [project].saveOperation()
+		let closeOperation = BlockOperation { [weak self] in
 			self?.view.window?.close()
 		}
+		closeOperation.addDependency(saveOperation)
+		viewModel.context.database.add(saveOperation)
+		OperationQueue.main.addOperation(closeOperation)
 	}
 }
