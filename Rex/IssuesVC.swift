@@ -83,7 +83,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 		guard let project = project else {
 			fatalError("Project should be present")
 		}
-		let newIssue = Issue(name: "New issue", description: "", resolution: .open, project: project)
+		let newIssue = Issue(project: project, name: "New issue", description: "", resolution: .open, priority: .low)
 		issues.append(newIssue)
 		selectionIndexes = NSIndexSet(index: issues.count - 1)
 		newIssueSelector?()

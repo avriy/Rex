@@ -14,12 +14,19 @@ class Issue: NSObject, RecordRepresentable {
 		case open, resolved, reopened
 	}
 	
+	@objc enum Priority: Int {
+		case low, medium, high
+	}
+	
 	@objc dynamic var name: String
 	@objc dynamic var details: String
 	
 	@objc dynamic var resolution: Resolution
+	@objc dynamic var priority: Priority
+	
 	@objc dynamic var assigneeID: CKRecordID?
 	@objc dynamic let projectID: CKRecordID
+	
 	
 	@objc var creationDate: Date? {
 		return record.creationDate
@@ -30,7 +37,7 @@ class Issue: NSObject, RecordRepresentable {
 	private var systemFields: Data
 	
 	private enum CodingKeys: String {
-		case name, description, resolution, assigneeID, projectID
+		case name, description, resolution, assigneeID, projectID, priority
 	}
 	
 	override var hashValue: Int {
@@ -39,12 +46,13 @@ class Issue: NSObject, RecordRepresentable {
 		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolution.hashValue ^ assigneeHash ^ projectHash
 	}
 	
-	init(name: String, description: String, resolution: Resolution, project: Project) {
+	init(project: Project, name: String, description: String, resolution: Resolution, priority: Priority) {
 		let record = CKRecord(recordType: "Issue")
 		self.name = name
 		self.details = description
 		self.resolution = resolution
 		self.projectID = project.recordID
+		self.priority = priority
 		systemFields = record.archivedSystemFields()
 	}
 	
@@ -54,12 +62,15 @@ class Issue: NSObject, RecordRepresentable {
 			let description = record[CodingKeys.description.rawValue] as? String,
 			let rawResolution = record[CodingKeys.resolution.rawValue] as? Int,
 			let resolution = Resolution(rawValue: rawResolution),
+			let rawPriority = record[CodingKeys.priority.rawValue] as? Int,
+			let priority = Priority(rawValue: rawPriority),
 			let projectID = record[CodingKeys.projectID.rawValue] as? CKReference else {
 				return nil
 		}
 		self.name = name
 		self.details = description
 		self.resolution = resolution
+		self.priority = priority
 		self.projectID = projectID.recordID
 		self.assigneeID = (record[CodingKeys.assigneeID.rawValue] as? CKReference)?.recordID
 	}
@@ -72,6 +83,7 @@ class Issue: NSObject, RecordRepresentable {
 		result[CodingKeys.name.rawValue] = name as CKRecordValue
 		result[CodingKeys.description.rawValue] = details as CKRecordValue
 		result[CodingKeys.resolution.rawValue] = resolution.rawValue as CKRecordValue
+		result[CodingKeys.priority.rawValue] = priority.rawValue as CKRecordValue
 		result[CodingKeys.assigneeID.rawValue] = assigneeID.map { CKReference(recordID: $0, action: .deleteSelf) }
 		result[CodingKeys.projectID.rawValue] = CKReference(recordID: projectID, action: .deleteSelf)
 		return result

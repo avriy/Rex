@@ -34,7 +34,7 @@ class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate
 		}
 	}
 	
-	let recordSaver = RecordSaver<Issue>(database: CKContainer.default().publicCloudDatabase)
+	private let recordSaver = RecordSaver<Issue>(database: CKContainer.default().publicCloudDatabase)
 	
 	@IBOutlet weak var titleTextField: NSTextField!
 	@IBOutlet weak var comboBox: NSComboBox!
