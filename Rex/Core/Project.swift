@@ -10,9 +10,13 @@ import CloudKit
 
 extension Project {
 	struct Schema: Codable {
-		let priority = ["low", "medium", "high"]
-		let resolution = ["open", "resolved", "reopened"]
-		let version = 1
+		let priority: [Int : String]
+		let resolution: [Int : String]
+		let version: Int
+		
+		static let start = Schema(priority: [0 : "low", 1 : "medium", 2 : "high"],
+		                          resolution: [1 : "open", 2 : "resolved", 3 : "reopened"],
+		                          version: 1)
 	}
 }
 
@@ -20,6 +24,7 @@ extension Project {
 class Project: NSObject, RecordRepresentable {
 	
 	@objc dynamic var name: String
+	let schema: Schema
 	
 	static let recordType: String = "Project"
 	var recordID: CKRecordID {
@@ -31,10 +36,11 @@ class Project: NSObject, RecordRepresentable {
 	
 	private var systemFields: Data
 	
-	init(name: String) {
+	init(name: String, schema: Schema = .start) {
 		self.name = name
+		self.schema = schema
 		let record = CKRecord(recordType: "Project")
-		self.systemFields = record.archivedSystemFields()
+		systemFields = record.archivedSystemFields()
 	}
 
 	required init?(record: CKRecord) {
@@ -42,7 +48,13 @@ class Project: NSObject, RecordRepresentable {
 			return nil
 		}
 		self.name = name
-		self.systemFields = record.archivedSystemFields()
+		let decoder = JSONDecoder()
+		if let schemaData = record["schema"] as? Data, let schema = try? decoder.decode(Schema.self, from: schemaData) {
+			self.schema = schema
+		} else {
+			self.schema = .start
+		}
+		systemFields = record.archivedSystemFields()
 	}
 	
 	var record: CKRecord {
@@ -50,6 +62,9 @@ class Project: NSObject, RecordRepresentable {
 			fatalError()
 		}
 		result["name"] = name as CKRecordValue
+		if let data = try? JSONEncoder().encode(schema) {
+			result["schema"] = data as CKRecordValue
+		}
 		
 		return result
 	}

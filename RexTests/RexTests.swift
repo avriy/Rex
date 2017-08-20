@@ -40,7 +40,7 @@ class RexTests: XCTestCase {
 		let exp = expectation(description: "Can create issue")
 		let rex = createAppContext(for: exp)
 		let project = Project(name: "New project")
-		let issue = Issue(project: project, name: "New issue", description: "Need to do something", resolution: .open, priority: .low)
+		let issue = Issue(project: project, name: "New issue", description: "Need to do something", resolution: 0, priority: 0)
 		
 		rex.save(project) {
 			rex.save(issue) {
