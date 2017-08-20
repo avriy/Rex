@@ -25,7 +25,7 @@ extension NSStoryboardSegue.Identifier {
 class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 	
 	@objc dynamic var projects = [ProjectViewModel]()
-	private let rex = AppContext()
+	private let appContext = AppContext()
 	
 	@IBOutlet weak var collectionView: NSCollectionView!
 	
@@ -51,7 +51,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 			(segue.destinationController as? IssuesVC)?.project = project
 			
 		case .createProject:
-			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(context: rex)
+			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(context: appContext)
 			
 		default:
 			fatalError("Undefined segue")
@@ -71,7 +71,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 	}
 	
 	func fetchProjects() {
-		rex.projects { [weak self] projects in
+		appContext.projects { [weak self] projects in
 			DispatchQueue.main.async { [weak self] in
 				guard let strongSelf = self else { return }
 				for project in projects {
@@ -86,12 +86,14 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
 		projects = [ProjectViewModel(projectType: .add, openHandler: open)]
 		collectionView.reloadData()
 		
 		fetchProjects()
-		
+		setupSubscription()
+    }
+	
+	func setupSubscription() {
 		let subscription = CKQuerySubscription(recordType: "Project", predicate: NSPredicate(value: true), options: .firesOnRecordCreation)
 		let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: nil)
 		
@@ -100,7 +102,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 				debugPrint("Failed to save subscription with error \(error)")
 			}
 		}
-		rex.database.add(operation)
+		appContext.database.add(operation)
 		
 		NotificationCenter.default.addObserver(forName: .recordWasCreated, object: nil, queue: .main) { [unowned self] (notification) in
 			debugPrint("Did receive notification from notification center")
@@ -117,7 +119,5 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 			self.projects.insert(newViewModel, at: self.projects.count - 1)
 			self.collectionView.reloadData()
 		}
-		
-    }
-	
+	}
 }

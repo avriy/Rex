@@ -19,7 +19,7 @@ class RexTests: XCTestCase {
 	
 	let database = CKContainer.default().privateCloudDatabase
 	
-	func createRex(for expectaion: XCTestExpectation) -> AppContext {
+	func createAppContext(for expectaion: XCTestExpectation) -> AppContext {
 		return AppContext(database: database) { error in
 			XCTFail("Failed with \(error)")
 			expectaion.fulfill()
@@ -28,7 +28,7 @@ class RexTests: XCTestCase {
 	
     func testCreateProject() {
 		let exp = expectation(description: "Can create project")
-		let rex = createRex(for: exp)
+		let rex = createAppContext(for: exp)
 		let project = Project(name: "Dummy")
 		rex.save(project) {
 			exp.fulfill()
@@ -38,9 +38,9 @@ class RexTests: XCTestCase {
 	
 	func testCanCreateIssue() {
 		let exp = expectation(description: "Can create issue")
-		let rex = createRex(for: exp)
+		let rex = createAppContext(for: exp)
 		let project = Project(name: "New project")
-		let issue = Issue(name: "New issue", description: "Need to do something", resolution: .open, project: project)
+		let issue = Issue(project: project, name: "New issue", description: "Need to do something", resolution: .open, priority: .low)
 		
 		rex.save(project) {
 			rex.save(issue) {
@@ -50,10 +50,32 @@ class RexTests: XCTestCase {
 		waitForExpectations(timeout: .timeout, handler: nil)
 	}
 	
+	func testCreateAndFetchProject() {
+		let exp = expectation(description: "Can create and fetch project")
+		let rex = createAppContext(for: exp)
+		let project = Project(name: "Test project")
+		
+		let saveOperation = [project].saveOperation()
+		
+		let fetchOperation = CKFetchRecordsOperation(recordIDs: [project.record.recordID])
+		fetchOperation.addDependency(saveOperation)
+		
+		fetchOperation.fetchRecordsCompletionBlock = { (dictionary, error) in
+			if let error = error {
+				XCTFail("Failed with error \(error)")
+			}
+			exp.fulfill()
+		}
+
+		rex.database.add(saveOperation)
+		rex.database.add(fetchOperation)
+		waitForExpectations(timeout: .timeout, handler: nil)
+	}
+	
 	override func tearDown() {
 		super.tearDown()
 		let exp = expectation(description: "Can tear down the projects")
-		let rex = createRex(for: exp)
+		let rex = createAppContext(for: exp)
 		rex.projects { result in
 			rex.remove(result) {
 				exp.fulfill()

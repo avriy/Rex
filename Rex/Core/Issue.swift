@@ -27,7 +27,6 @@ class Issue: NSObject, RecordRepresentable {
 	@objc dynamic var assigneeID: CKRecordID?
 	@objc dynamic let projectID: CKRecordID
 	
-	
 	@objc var creationDate: Date? {
 		return record.creationDate
 	}
@@ -43,7 +42,7 @@ class Issue: NSObject, RecordRepresentable {
 	override var hashValue: Int {
 		let assigneeHash = assigneeID?.hashValue ?? 0
 		let projectHash = projectID.hashValue
-		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolution.hashValue ^ assigneeHash ^ projectHash
+		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolution.hashValue ^ assigneeHash ^ projectHash ^ priority.hashValue
 	}
 	
 	init(project: Project, name: String, description: String, resolution: Resolution, priority: Priority) {

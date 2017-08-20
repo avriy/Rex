@@ -8,6 +8,14 @@
 
 import CloudKit
 
+extension Project {
+	struct Schema: Codable {
+		let priority = ["low", "medium", "high"]
+		let resolution = ["open", "resolved", "reopened"]
+		let version = 1
+	}
+}
+
 @objc
 class Project: NSObject, RecordRepresentable {
 	
@@ -21,7 +29,7 @@ class Project: NSObject, RecordRepresentable {
 		return record.recordID
 	}
 	
-	var systemFields: Data
+	private var systemFields: Data
 	
 	init(name: String) {
 		self.name = name
