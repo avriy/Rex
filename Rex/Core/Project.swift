@@ -10,12 +10,31 @@ import CloudKit
 
 extension Project {
 	struct Schema: Codable {
-		let priority: [Int : String]
-		let resolution: [Int : String]
+		
+		struct Priority: Codable {
+			let identifier: Int
+			let title: String
+			
+			static let low = Priority(identifier: 0, title: "low")
+			static let medium = Priority(identifier: 1, title: "medium")
+			static let high = Priority(identifier: 2, title: "high")
+		}
+		
+		struct Resolution: Codable {
+			let identifier: Int
+			let title: String
+			
+			static let open = Resolution(identifier: 0, title: "open")
+			static let resolved = Resolution(identifier: 1, title: "resolved")
+			static let reopened = Resolution(identifier: 2, title: "reopened")
+		}
+		
+		let priorities: [Priority]
+		let resolution: [Resolution]
 		let version: Int
 		
-		static let start = Schema(priority: [0 : "low", 1 : "medium", 2 : "high"],
-		                          resolution: [1 : "open", 2 : "resolved", 3 : "reopened"],
+		static let start = Schema(priorities: [.low, .medium, .high],
+		                          resolution: [.open, .resolved, .reopened],
 		                          version: 1)
 	}
 }
