@@ -47,8 +47,6 @@ final class RecordSaver<ValueType: RecordRepresentable & Hashable> {
 	}
 	
 	deinit {
-		if let record = value?.record {
-			save(record: record)
-		}
+		saveIfNeeded()
 	}
 }

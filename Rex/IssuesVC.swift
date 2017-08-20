@@ -72,6 +72,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 		for vc in childViewControllers {
 			if let vc = vc as? IssueDetailsVC {
 				vc.bind(NSBindingName(rawValue: #keyPath(IssueDetailsVC.issue)), to: self, withKeyPath: #keyPath(selectedIssue))
+				vc.viewModel.bind(NSBindingName(rawValue: #keyPath(IssueDetailsVM.project)), to: self, withKeyPath: #keyPath(project))
 				vc.bind(NSBindingName(rawValue: #keyPath(IssueDetailsVC.identities)), to: self, withKeyPath: #keyPath(userIdentities))
 				newIssueSelector = vc.performSelection
 			}

@@ -33,15 +33,28 @@ class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate
 			return (components.givenName ?? "") + " " + (components.familyName ?? "")
 		}
 	}
-	
-	private let recordSaver = RecordSaver<Issue>(database: CKContainer.default().publicCloudDatabase)
+	private var resolutionsListObserver: NSKeyValueObservation!
+
+	@objc let viewModel = IssueDetailsVM()
 	
 	@IBOutlet weak var titleTextField: NSTextField!
 	@IBOutlet weak var comboBox: NSComboBox!
+	@IBOutlet weak var resolution: NSPopUpButton!
+	@IBOutlet weak var priority: NSPopUpButton!
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		viewModel.bind(NSBindingName("issue"), to: self, withKeyPath: #keyPath(issue))
+		resolutionsListObserver = viewModel.observe(\.resolutionList, options: [.new, .initial]) { [weak self] (object, value) in
+			guard let strongSelf = self else { return }
+			strongSelf.resolution.removeAllItems()
+			strongSelf.resolution.addItems(withTitles: object.resolutionList)
+		}
+	}
+	
 	
 	@objc dynamic var issue: Issue? {
 		didSet {
-			recordSaver.value = issue
 			reloadComboBox()
 		}
 	}
@@ -83,24 +96,5 @@ class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate
 	
 	func performSelection() {
 		titleTextField.becomeFirstResponder()
-	}
-	
-	@objc class func keyPathsForValuesAffectingDetails() -> Set<String> {
-		return Set([#keyPath(issue.details)])
-	}
-	
-	@objc var details: NSAttributedString? {
-		get {
-			guard let value = issue?.details else {
-				return nil
-			}
-			return NSAttributedString(string: value)
-		} set {
-			guard let string = newValue?.string else {
-				issue?.details = ""
-				return
-			}
-			issue?.details = string
-		}
 	}
 }

@@ -999,7 +999,7 @@ Gw
                                             <size key="maxSize" width="463" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <connections>
-                                                <binding destination="NcH-hA-0cL" name="attributedString" keyPath="self.details" id="zom-Lw-Qfb">
+                                                <binding destination="NcH-hA-0cL" name="attributedString" keyPath="viewModel.details" id="dGs-V3-g8N">
                                                     <dictionary key="options">
                                                         <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                     </dictionary>
@@ -1035,7 +1035,7 @@ Gw
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <binding destination="NcH-hA-0cL" name="selectedIndex" keyPath="self.issue.resolution" id="aXd-Iu-nmu"/>
+                                    <binding destination="NcH-hA-0cL" name="selectedIndex" keyPath="viewModel.selectedResolution" id="Scm-OT-lEO"/>
                                 </connections>
                             </popUpButton>
                             <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Vm-bh-NxN">
@@ -1086,6 +1086,8 @@ Gw
                     </view>
                     <connections>
                         <outlet property="comboBox" destination="9Vm-bh-NxN" id="kaN-Ts-rV4"/>
+                        <outlet property="priority" destination="V9C-ut-FFz" id="ljS-QM-ZzO"/>
+                        <outlet property="resolution" destination="1nl-P1-Tbn" id="DKY-G6-a8E"/>
                         <outlet property="titleTextField" destination="2jd-0h-QID" id="xBh-PK-28g"/>
                     </connections>
                 </viewController>
