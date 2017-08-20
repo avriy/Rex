@@ -11,31 +11,52 @@ import CloudKit
 extension Project {
 	struct Schema: Codable {
 		
-		struct Priority: Codable {
-			let identifier: Int
+		typealias Identifier = Int
+		
+		struct Priority: Codable, Equatable {
+			let identifier: Identifier
 			let title: String
+			
+			static func == (lhs: Priority, rhs: Priority) -> Bool {
+				return lhs.identifier == rhs.identifier && lhs.title == rhs.title
+			}
 			
 			static let low = Priority(identifier: 0, title: "low")
 			static let medium = Priority(identifier: 1, title: "medium")
 			static let high = Priority(identifier: 2, title: "high")
 		}
 		
-		struct Resolution: Codable {
-			let identifier: Int
+		struct Resolution: Codable, Equatable {
+			let identifier: Identifier
 			let title: String
+			
+			static func == (lhs: Resolution, rhs: Resolution) -> Bool {
+				return lhs.identifier == rhs.identifier && lhs.title == rhs.title
+			}
 			
 			static let open = Resolution(identifier: 0, title: "open")
 			static let resolved = Resolution(identifier: 1, title: "resolved")
 			static let reopened = Resolution(identifier: 2, title: "reopened")
 		}
 		
-		let priorities: [Priority]
-		let resolution: [Resolution]
-		let version: Int
+		var priorities: [Priority]
+		var resolutions: [Resolution]
+		var defaultPriority: Priority
+		var defaultResolution: Resolution
 		
 		static let start = Schema(priorities: [.low, .medium, .high],
-		                          resolution: [.open, .resolved, .reopened],
-		                          version: 1)
+		                          resolutions: [.open, .resolved, .reopened],
+		                          defaultPriority: .medium,
+		                          defaultResolution: .open)
+		
+		enum MigrationError: Error {
+			case invalidSchema
+			case emptySchema
+		}
+		
+		func resolution(for issue: Issue) -> Resolution? {
+			return resolutions.first { $0.identifier == issue.resolution }
+		}
 	}
 }
 
@@ -43,7 +64,7 @@ extension Project {
 class Project: NSObject, RecordRepresentable {
 	
 	@objc dynamic var name: String
-	let schema: Schema
+	private(set) var schema: Schema
 	
 	static let recordType: String = "Project"
 	var recordID: CKRecordID {
@@ -86,5 +107,64 @@ class Project: NSObject, RecordRepresentable {
 		}
 		
 		return result
+	}
+	
+	/// Creates issue with default `Priority` and default `Resolution`
+	///
+	/// - Parameters:
+	///   - title: Title of an issue
+	///   - description: Descrition of a new issue
+	/// - Returns: new `Issue`
+	func newIssue(_ title: String, description: String) -> Issue {
+		return Issue(project: self, name: title, description: description, resolution: schema.defaultResolution, priority: schema.defaultPriority)
+	}
+	
+	// MARK: - Project migration
+	/// Migrates project to a new schema with validating migration
+	///
+	/// - Parameter targetSchema: new `Schema` to migrate to
+	/// - Throws: all possible values of `Project.Schema.MigrationError`
+	func migrate(to targetSchema: Schema) throws {
+		guard !targetSchema.priorities.isEmpty else {
+			throw Schema.MigrationError.emptySchema
+		}
+		
+		guard !targetSchema.resolutions.isEmpty else {
+			throw Schema.MigrationError.emptySchema
+		}
+		
+		let currentSchema = self.schema
+		
+		if currentSchema.resolutions != targetSchema.resolutions {
+			
+			let targetResolutionIDs = Set(targetSchema.resolutions.map { $0.identifier })
+			let currentResolutionIDs = Set(currentSchema.resolutions.map { $0.identifier })
+			
+			guard targetResolutionIDs.count == targetSchema.resolutions.count else {
+				// dublicating resolutions
+				throw Schema.MigrationError.invalidSchema
+			}
+			
+			let idsToCreate = targetResolutionIDs.subtracting(currentResolutionIDs)
+			let maxCurrentID = currentResolutionIDs.max()!
+			for idToCreate in idsToCreate {
+				guard maxCurrentID < idToCreate else {
+					throw Schema.MigrationError.invalidSchema
+				}
+			}
+		}
+		
+		if currentSchema.priorities != targetSchema.priorities {
+			//	new priorities must be in ascending order
+			_ = try targetSchema.priorities.reduce(-1) {
+				guard $0 < $1.identifier else {
+					throw Schema.MigrationError.invalidSchema
+				}
+				return $1.identifier
+			}
+		}
+		
+		schema = targetSchema
+		
 	}
 }

@@ -37,14 +37,16 @@ class Issue: NSObject, RecordRepresentable {
 		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolution.hashValue ^ assigneeHash ^ projectHash ^ priority.hashValue
 	}
 	
-	init(project: Project, name: String, description: String, resolution: Int, priority: Int) {
+	init(project: Project, name: String, description: String, resolution: Project.Schema.Resolution, priority: Project.Schema.Priority) {
 		let record = CKRecord(recordType: "Issue")
 		self.name = name
 		self.details = description
-		self.resolution = resolution
+		self.resolution = resolution.identifier
 		self.projectID = project.recordID
-		self.priority = priority
+		self.priority = priority.identifier
 		systemFields = record.archivedSystemFields()
+		assert(project.schema.resolutions.contains(resolution))
+		assert(project.schema.priorities.contains(priority))
 	}
 	
 	required init?(record: CKRecord) {

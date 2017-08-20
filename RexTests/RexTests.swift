@@ -15,6 +15,28 @@ extension TimeInterval {
 	static let timeout: TimeInterval = 30
 }
 
+struct TestContext {
+	let expectation: XCTestExpectation
+	let appContext: AppContext
+	let database = CKContainer.default().privateCloudDatabase
+	let test: XCTestCase
+	
+	init(test: XCTestCase, description: String) {
+		self.test = test
+		let exp = test.expectation(description: description)
+		appContext = AppContext(database: database) { error in
+			XCTFail("Failed with \(error)")
+			exp.fulfill()
+		}
+		expectation = exp
+	}
+	
+	func saveAndWait<Representable: RecordRepresentable>(_ value: Representable) {
+		appContext.save(value, completionHandler: expectation.fulfill)
+		test.waitForExpectations(timeout: .timeout, handler: nil)
+	}
+}
+
 class RexTests: XCTestCase {
 	
 	let database = CKContainer.default().privateCloudDatabase
@@ -27,21 +49,17 @@ class RexTests: XCTestCase {
 	}
 	
     func testCreateProject() {
-		let exp = expectation(description: "Can create project")
-		let rex = createAppContext(for: exp)
+		let testContext = TestContext(test: self, description: "Can create project")
 		let project = Project(name: "Dummy")
-		rex.save(project) {
-			exp.fulfill()
-		}
-		waitForExpectations(timeout: .timeout, handler: nil)
+		testContext.saveAndWait(project)
     }
 	
 	func testCanCreateIssue() {
 		let exp = expectation(description: "Can create issue")
 		let rex = createAppContext(for: exp)
 		let project = Project(name: "New project")
-		let issue = Issue(project: project, name: "New issue", description: "Need to do something", resolution: 0, priority: 0)
-		
+		let issue = project.newIssue("New issue", description: "Need to do something")
+
 		rex.save(project) {
 			rex.save(issue) {
 				exp.fulfill()
@@ -70,6 +88,15 @@ class RexTests: XCTestCase {
 		rex.database.add(saveOperation)
 		rex.database.add(fetchOperation)
 		waitForExpectations(timeout: .timeout, handler: nil)
+	}
+	
+	func testSaveProjectWithCustomSchema() {
+		var schema = Project.Schema.start
+		let invalid = Project.Schema.Resolution(identifier: 4, title: "Invalid")
+		schema.resolutions.append(invalid)
+		let testContext = TestContext(test: self, description: "Can create project with custom schema")
+		let project = Project(name: "Custom schema project", schema: schema)
+		testContext.saveAndWait(project)
 	}
 	
 	override func tearDown() {

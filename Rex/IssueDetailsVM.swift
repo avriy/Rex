@@ -28,12 +28,12 @@ class IssueDetailsVM: NSObject {
 			guard let project = project, let issue = issue else {
 				return -1
 			}
-			for (i, id) in project.schema.resolution.enumerated() where id.identifier == issue.resolution {
+			for (i, id) in project.schema.resolutions.enumerated() where id.identifier == issue.resolution {
 				return i
 			}
 			fatalError("Resolution must be present in schema")
 		} set {
-			issue.resolution = project.schema.resolution[newValue].identifier
+			issue.resolution = project.schema.resolutions[newValue].identifier
 		}
 	}
 	
@@ -42,7 +42,7 @@ class IssueDetailsVM: NSObject {
 	}
 	
 	@objc var resolutionList: [String] {
-		return project?.schema.resolution.map { $0.title.capitalized } ?? []
+		return project?.schema.resolutions.map { $0.title.capitalized } ?? []
 	}
 	
 	@objc class func keyPathsForValuesAffectingDetails() -> Set<String> {
