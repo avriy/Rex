@@ -13,8 +13,8 @@ class Issue: NSObject, RecordRepresentable {
 	@objc dynamic var name: String
 	@objc dynamic var details: String
 	
-	@objc dynamic var resolution: Int
-	@objc dynamic var priority: Int
+	@objc dynamic var resolutionID: Schema.Resolution.Identifier
+	@objc dynamic var priorityID: Schema.Priority.Identifier
 	
 	@objc dynamic var assigneeID: CKRecordID?
 	@objc dynamic let projectID: CKRecordID
@@ -34,16 +34,16 @@ class Issue: NSObject, RecordRepresentable {
 	override var hashValue: Int {
 		let assigneeHash = assigneeID?.hashValue ?? 0
 		let projectHash = projectID.hashValue
-		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolution.hashValue ^ assigneeHash ^ projectHash ^ priority.hashValue
+		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolutionID.hashValue ^ assigneeHash ^ projectHash ^ priorityID.hashValue
 	}
 	
-	init(project: Project, name: String, description: String, resolution: Project.Schema.Resolution, priority: Project.Schema.Priority) {
+	init(project: Project, name: String, description: String, resolution: Schema.Resolution, priority: Schema.Priority) {
 		let record = CKRecord(recordType: "Issue")
 		self.name = name
 		self.details = description
-		self.resolution = resolution.identifier
+		self.resolutionID = resolution.identifier
 		self.projectID = project.recordID
-		self.priority = priority.identifier
+		self.priorityID = priority.identifier
 		systemFields = record.archivedSystemFields()
 		assert(project.schema.resolutions.contains(resolution))
 		assert(project.schema.priorities.contains(priority))
@@ -60,8 +60,8 @@ class Issue: NSObject, RecordRepresentable {
 		}
 		self.name = name
 		self.details = description
-		self.resolution = resolution
-		self.priority = priority
+		self.resolutionID = resolution
+		self.priorityID = priority
 		self.projectID = projectID.recordID
 		self.assigneeID = (record[CodingKeys.assigneeID.rawValue] as? CKReference)?.recordID
 	}
@@ -73,8 +73,8 @@ class Issue: NSObject, RecordRepresentable {
 		
 		result[CodingKeys.name.rawValue] = name as CKRecordValue
 		result[CodingKeys.description.rawValue] = details as CKRecordValue
-		result[CodingKeys.resolution.rawValue] = resolution as CKRecordValue
-		result[CodingKeys.priority.rawValue] = priority as CKRecordValue
+		result[CodingKeys.resolution.rawValue] = resolutionID as CKRecordValue
+		result[CodingKeys.priority.rawValue] = priorityID as CKRecordValue
 		result[CodingKeys.assigneeID.rawValue] = assigneeID.map { CKReference(recordID: $0, action: .deleteSelf) }
 		result[CodingKeys.projectID.rawValue] = CKReference(recordID: projectID, action: .deleteSelf)
 		return result

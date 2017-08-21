@@ -91,8 +91,8 @@ class RexTests: XCTestCase {
 	}
 	
 	func testSaveProjectWithCustomSchema() {
-		var schema = Project.Schema.start
-		let invalid = Project.Schema.Resolution(identifier: 4, title: "Invalid")
+		var schema = Schema.start
+		let invalid = Schema.Resolution(identifier: 4, title: "Invalid")
 		schema.resolutions.append(invalid)
 		let testContext = TestContext(test: self, description: "Can create project with custom schema")
 		let project = Project(name: "Custom schema project", schema: schema)

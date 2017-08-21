@@ -28,12 +28,13 @@ class IssueDetailsVM: NSObject {
 			guard let project = project, let issue = issue else {
 				return -1
 			}
-			for (i, id) in project.schema.resolutions.enumerated() where id.identifier == issue.resolution {
-				return i
+			
+			guard let index = project.schema.resolutions.selectedIndex(of: issue.resolutionID) else {
+				fatalError("Resolution must be present in schema")
 			}
-			fatalError("Resolution must be present in schema")
+			return index
 		} set {
-			issue.resolution = project.schema.resolutions[newValue].identifier
+			issue.resolutionID = project.schema.resolutions[newValue].identifier
 		}
 	}
 	
@@ -43,6 +44,33 @@ class IssueDetailsVM: NSObject {
 	
 	@objc var resolutionList: [String] {
 		return project?.schema.resolutions.map { $0.title.capitalized } ?? []
+	}
+	
+	@objc class func keyPathsForValuesAffectingSelectedPriority() -> Set<String> {
+		return Set([#keyPath(project), #keyPath(issue)])
+	}
+	
+	@objc var selectedPriority: Int {
+		get {
+			guard let project = project, let issue = issue else {
+				return -1
+			}
+			
+			guard let index = project.schema.priorities.selectedIndex(of: issue.priorityID) else {
+				fatalError("Resolution must be present in schema")
+			}
+			return index
+		} set {
+			issue.priorityID = project.schema.priorities[newValue].identifier
+		}
+	}
+	
+	@objc class func keyPathsForValuesAffectingPriorityList() -> Set<String> {
+		return Set([#keyPath(project)])
+	}
+	
+	@objc var priorityList: [String] {
+		return project?.schema.priorities.map { $0.title.capitalized } ?? []
 	}
 	
 	@objc class func keyPathsForValuesAffectingDetails() -> Set<String> {

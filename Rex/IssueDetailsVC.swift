@@ -33,8 +33,10 @@ class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate
 			return (components.givenName ?? "") + " " + (components.familyName ?? "")
 		}
 	}
+	
 	private var resolutionsListObserver: NSKeyValueObservation!
-
+	private var priorityListObserver: NSKeyValueObservation!
+	
 	@objc let viewModel = IssueDetailsVM()
 	
 	@IBOutlet weak var titleTextField: NSTextField!
@@ -45,13 +47,21 @@ class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		viewModel.bind(NSBindingName("issue"), to: self, withKeyPath: #keyPath(issue))
+		
 		resolutionsListObserver = viewModel.observe(\.resolutionList, options: [.new, .initial]) { [weak self] (object, value) in
 			guard let strongSelf = self else { return }
 			strongSelf.resolution.removeAllItems()
 			strongSelf.resolution.addItems(withTitles: object.resolutionList)
 		}
+		priorityListObserver = viewModel.observe(\.priorityList, options: [.new, .initial]) { [weak self] (object, value) in
+			guard let strongSelf = self else { return }
+			strongSelf.priority.removeAllItems()
+			strongSelf.priority.addItems(withTitles: object.priorityList)
+		}
+		
+		resolution.bind(.selectedIndex, to: viewModel, withKeyPath: #keyPath(IssueDetailsVM.selectedResolution))
+		priority.bind(.selectedIndex, to: viewModel, withKeyPath: #keyPath(IssueDetailsVM.selectedPriority))
 	}
-	
 	
 	@objc dynamic var issue: Issue? {
 		didSet {

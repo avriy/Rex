@@ -1034,9 +1034,6 @@ Gw
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
-                                <connections>
-                                    <binding destination="NcH-hA-0cL" name="selectedIndex" keyPath="viewModel.selectedResolution" id="Scm-OT-lEO"/>
-                                </connections>
                             </popUpButton>
                             <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Vm-bh-NxN">
                                 <rect key="frame" x="223" y="226" width="210" height="26"/>
@@ -1063,9 +1060,6 @@ Gw
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
-                                <connections>
-                                    <binding destination="NcH-hA-0cL" name="selectedIndex" keyPath="self.issue.priority" id="Wpv-wh-8Bk"/>
-                                </connections>
                             </popUpButton>
                         </subviews>
                         <constraints>

@@ -13,8 +13,8 @@ class SchemeMigrationTests: XCTestCase {
 
     func testAddNewResolution() {
 		let project = Project(name: "Test project")
-		var schema = Project.Schema.start
-		let newResolution = Project.Schema.Resolution(identifier: 4, title: "New resolution")
+		var schema = Schema.start
+		let newResolution = Schema.Resolution(identifier: 4, title: "New resolution")
 		schema.resolutions.append(newResolution)
 		do {
 			try project.migrate(to: schema)
@@ -25,34 +25,34 @@ class SchemeMigrationTests: XCTestCase {
 	
 	func testEmptyResolutionsMigration() {
 		let project = Project(name: "Test project")
-		var emtyResolutionsSchema = Project.Schema.start
+		var emtyResolutionsSchema = Schema.start
 		emtyResolutionsSchema.resolutions = []
 		do {
 			try project.migrate(to: emtyResolutionsSchema)
-			XCTFail("Migration should fail with \(Project.Schema.MigrationError.emptySchema)")
-		} catch Project.Schema.MigrationError.emptySchema {
+			XCTFail("Migration should fail with \(Schema.MigrationError.emptySchema)")
+		} catch Schema.MigrationError.emptySchema {
 		} catch {
-			XCTFail("Migration should fail with \(Project.Schema.MigrationError.emptySchema), not with \(error)")
+			XCTFail("Migration should fail with \(Schema.MigrationError.emptySchema), not with \(error)")
 		}
 	}
 	
 	func testEmptyPrioritiesMigration() {
 		let project = Project(name: "Test project")
-		var emtyResolutionsSchema = Project.Schema.start
+		var emtyResolutionsSchema = Schema.start
 		emtyResolutionsSchema.priorities = []
 		do {
 			try project.migrate(to: emtyResolutionsSchema)
-			XCTFail("Migration should fail with \(Project.Schema.MigrationError.emptySchema)")
-		} catch Project.Schema.MigrationError.emptySchema {
+			XCTFail("Migration should fail with \(Schema.MigrationError.emptySchema)")
+		} catch Schema.MigrationError.emptySchema {
 		} catch {
-			XCTFail("Migration should fail with \(Project.Schema.MigrationError.emptySchema), not with \(error)")
+			XCTFail("Migration should fail with \(Schema.MigrationError.emptySchema), not with \(error)")
 		}
 	}
 
 	func testIssueMigration() {
 		let project = Project(name: "Test project")
 		let issue = project.newIssue("New issue", description: "")
-		var schema = Project.Schema.start
+		var schema = Schema.start
 		schema.resolutions.remove(at: 0)
 		XCTAssert(project.schema.resolution(for: issue) != nil, "Issue must have a resolution")
 

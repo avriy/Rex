@@ -8,58 +8,6 @@
 
 import CloudKit
 
-extension Project {
-	struct Schema: Codable {
-		
-		typealias Identifier = Int
-		
-		struct Priority: Codable, Equatable {
-			let identifier: Identifier
-			let title: String
-			
-			static func == (lhs: Priority, rhs: Priority) -> Bool {
-				return lhs.identifier == rhs.identifier && lhs.title == rhs.title
-			}
-			
-			static let low = Priority(identifier: 0, title: "low")
-			static let medium = Priority(identifier: 1, title: "medium")
-			static let high = Priority(identifier: 2, title: "high")
-		}
-		
-		struct Resolution: Codable, Equatable {
-			let identifier: Identifier
-			let title: String
-			
-			static func == (lhs: Resolution, rhs: Resolution) -> Bool {
-				return lhs.identifier == rhs.identifier && lhs.title == rhs.title
-			}
-			
-			static let open = Resolution(identifier: 0, title: "open")
-			static let resolved = Resolution(identifier: 1, title: "resolved")
-			static let reopened = Resolution(identifier: 2, title: "reopened")
-		}
-		
-		var priorities: [Priority]
-		var resolutions: [Resolution]
-		var defaultPriority: Priority
-		var defaultResolution: Resolution
-		
-		static let start = Schema(priorities: [.low, .medium, .high],
-		                          resolutions: [.open, .resolved, .reopened],
-		                          defaultPriority: .medium,
-		                          defaultResolution: .open)
-		
-		enum MigrationError: Error {
-			case invalidSchema
-			case emptySchema
-		}
-		
-		func resolution(for issue: Issue) -> Resolution? {
-			return resolutions.first { $0.identifier == issue.resolution }
-		}
-	}
-}
-
 @objc
 class Project: NSObject, RecordRepresentable {
 	
@@ -165,6 +113,5 @@ class Project: NSObject, RecordRepresentable {
 		}
 		
 		schema = targetSchema
-		
 	}
 }
