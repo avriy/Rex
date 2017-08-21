@@ -31,8 +31,16 @@ import Cocoa
 		}
 	}
 	
-	@objc var image: NSImage {
-		return NSImage(named: NSImage.Name.addTemplate)!
+	@objc var image: NSImage? {
+		switch projectType {
+		case .add:
+			return NSImage(named: NSImage.Name.addTemplate)
+		case .project(let project):
+			guard let imageURL = project.imageURL else {
+				return nil
+			}
+			return NSImage(byReferencing: imageURL)
+		}
 	}
 
 	func open() {
@@ -46,6 +54,7 @@ class ProjectCollectionItem: NSCollectionViewItem {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		textField?.bind(.value, to: self, withKeyPath: #keyPath(viewModel.title))
+		imageView?.bind(.value, to: self, withKeyPath: #keyPath(viewModel.image))
 	}
 	
 	override func mouseUp(with event: NSEvent) {

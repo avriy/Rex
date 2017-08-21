@@ -11,11 +11,7 @@ import CloudKit
 
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""
-	@objc dynamic var image: NSImage? {
-		didSet {
-			
-		}
-	}
+	@objc dynamic var image: NSImage?
 	
 	let context: AppContext
 	init(context: AppContext) {
@@ -42,12 +38,22 @@ class CreateProjectVC: NSViewController, ModernView {
 	}
 	
 	@objc func create() {
-		let project = Project(name: viewModel.name)
+		let url = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("tmp")
+		let project = Project(name: viewModel.name, imageURL: url)
+		
+		let writeImageToFile = BlockOperation { [weak self] in
+			guard let imageData = self?.viewModel.image?.tiffRepresentation else { return }
+			try! imageData.write(to: url)
+		}
+		
 		let saveOperation = [project].saveOperation()
 		let closeOperation = BlockOperation { [weak self] in
 			self?.view.window?.close()
 		}
+		
+		saveOperation.addDependency(writeImageToFile)
 		closeOperation.addDependency(saveOperation)
+		OperationQueue().addOperation(writeImageToFile)
 		viewModel.context.database.add(saveOperation)
 		OperationQueue.main.addOperation(closeOperation)
 	}

@@ -12,11 +12,12 @@ import Cocoa
 @objc
 class Project: NSObject, RecordRepresentable {
 	
+	static let recordType: String = "Project"
+	
 	@objc dynamic var name: String
 	private(set) var schema: Schema
-	var imageData: Data?
+	var imageURL: URL?
 	
-	static let recordType: String = "Project"
 	var recordID: CKRecordID {
 		guard let record = CKRecord.unarchivedSystemFields(from: systemFields) else {
 			fatalError()
@@ -26,9 +27,10 @@ class Project: NSObject, RecordRepresentable {
 	
 	private var systemFields: Data
 	
-	init(name: String, schema: Schema = .start, image: NSImage? = nil) {
+	init(name: String, schema: Schema = .start, imageURL: URL? = nil) {
 		self.name = name
 		self.schema = schema
+		self.imageURL = imageURL
 		let record = CKRecord(recordType: "Project")
 		systemFields = record.archivedSystemFields()
 	}
@@ -44,6 +46,9 @@ class Project: NSObject, RecordRepresentable {
 		} else {
 			self.schema = .start
 		}
+		
+		self.imageURL = (record["imageAsset"] as? CKAsset)?.fileURL
+		
 		systemFields = record.archivedSystemFields()
 	}
 	
@@ -54,6 +59,10 @@ class Project: NSObject, RecordRepresentable {
 		result["name"] = name as CKRecordValue
 		if let data = try? JSONEncoder().encode(schema) {
 			result["schema"] = data as CKRecordValue
+		}
+
+		if let imageURL = imageURL {
+			result["imageAsset"] = CKAsset(fileURL: imageURL)
 		}
 		
 		return result
