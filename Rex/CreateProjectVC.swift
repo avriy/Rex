@@ -11,22 +11,35 @@ import CloudKit
 
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""
+	@objc dynamic var image: NSImage? {
+		didSet {
+			
+		}
+	}
+	
 	let context: AppContext
 	init(context: AppContext) {
 		self.context = context
 	}
 }
 
-class CreateProjectVC: NSViewController {
+class CreateProjectVC: NSViewController, ModernView {
 	@IBOutlet weak var textField: NSTextField!
 	@IBOutlet weak var createButton: NSButton!
+	@IBOutlet weak var projectImage: NSImageView!
 	
 	var viewModel: CreateProjectViewModel!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		textField.bind(.value, to: viewModel, withKeyPath: #keyPath(CreateProjectViewModel.name))
+		projectImage.bind(.value, to: viewModel, withKeyPath: #keyPath(CreateProjectViewModel.image))
     }
+	
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		apply(windowStyle: .dialog)
+	}
 	
 	@objc func create() {
 		let project = Project(name: viewModel.name)

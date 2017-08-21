@@ -22,7 +22,7 @@ extension NSStoryboardSegue.Identifier {
 	static let createProject = NSStoryboardSegue.Identifier(rawValue: "CreateProjectSID")
 }
 
-class ProjectsVC: NSViewController, NSCollectionViewDataSource {
+class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView {
 	
 	@objc dynamic var projects = [ProjectViewModel]()
 	private let appContext = AppContext()
@@ -92,6 +92,11 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource {
 		fetchProjects()
 		setupSubscription()
     }
+	
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		apply(windowStyle: .dialog, adding: [.resizable, .miniaturizable])
+	}
 	
 	func setupSubscription() {
 		let subscription = CKQuerySubscription(recordType: "Project", predicate: NSPredicate(value: true), options: .firesOnRecordCreation)

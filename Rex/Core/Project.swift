@@ -7,12 +7,14 @@
 //
 
 import CloudKit
+import Cocoa
 
 @objc
 class Project: NSObject, RecordRepresentable {
 	
 	@objc dynamic var name: String
 	private(set) var schema: Schema
+	var imageData: Data?
 	
 	static let recordType: String = "Project"
 	var recordID: CKRecordID {
@@ -24,7 +26,7 @@ class Project: NSObject, RecordRepresentable {
 	
 	private var systemFields: Data
 	
-	init(name: String, schema: Schema = .start) {
+	init(name: String, schema: Schema = .start, image: NSImage? = nil) {
 		self.name = name
 		self.schema = schema
 		let record = CKRecord(recordType: "Project")

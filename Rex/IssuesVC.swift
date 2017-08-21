@@ -13,7 +13,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 	debugPrint("Error happened \(error)")
 }
 
-@objc class IssuesVC: NSViewController {
+@objc class IssuesVC: NSViewController, ModernView {
 	
 	@objc dynamic var project: Project?
 	
@@ -66,7 +66,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 	
 	override func viewDidAppear() {
 		super.viewDidAppear()
-		
+		apply(windowStyle: .editor)
 		view.window?.title = project?.name ?? ""
 		
 		for vc in childViewControllers {
