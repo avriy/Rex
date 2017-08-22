@@ -71,7 +71,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView {
 	}
 	
 	func fetchProjects() {
-		appContext.projects { [weak self] projects in
+		appContext.myProjects { [weak self] projects in
 			DispatchQueue.main.async { [weak self] in
 				guard let strongSelf = self else { return }
 				for project in projects {
@@ -90,11 +90,12 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView {
 		collectionView.reloadData()
 		
 		fetchProjects()
-		setupSubscription()
+//		setupSubscription()
     }
 	
 	override func viewDidAppear() {
 		super.viewDidAppear()
+		
 		apply(windowStyle: .dialog, adding: [.resizable, .miniaturizable])
 	}
 	

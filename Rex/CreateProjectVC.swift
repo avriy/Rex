@@ -24,12 +24,12 @@ class CreateProjectVC: NSViewController, ModernView {
 	@IBOutlet weak var createButton: NSButton!
 	@IBOutlet weak var projectImage: NSImageView!
 	
-	var viewModel: CreateProjectViewModel!
+	@objc dynamic var viewModel: CreateProjectViewModel!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		textField.bind(.value, to: viewModel, withKeyPath: #keyPath(CreateProjectViewModel.name))
-		projectImage.bind(.value, to: viewModel, withKeyPath: #keyPath(CreateProjectViewModel.image))
+		textField.bind(.value, to: self, withKeyPath: #keyPath(viewModel.name), options: [.continuouslyUpdatesValue : true])
+		projectImage.bind(.value, to: self, withKeyPath: #keyPath(viewModel.image))
     }
 	
 	override func viewDidAppear() {
@@ -37,16 +37,17 @@ class CreateProjectVC: NSViewController, ModernView {
 		apply(windowStyle: .dialog)
 	}
 	
-	@objc func create() {
+	private func create(forUser recordID: CKRecordID) {
 		let url = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("tmp")
 		let project = Project(name: viewModel.name, imageURL: url)
+		let junction = Junction(userRecordID: recordID, projectID: project.recordID)
 		
 		let writeImageToFile = BlockOperation { [weak self] in
 			guard let imageData = self?.viewModel.image?.tiffRepresentation else { return }
 			try! imageData.write(to: url)
 		}
 		
-		let saveOperation = [project].saveOperation()
+		let saveOperation = CKModifyRecordsOperation(recordsToSave: [project.record, junction.record], recordIDsToDelete: nil)
 		let closeOperation = BlockOperation { [weak self] in
 			self?.view.window?.close()
 		}
@@ -56,5 +57,16 @@ class CreateProjectVC: NSViewController, ModernView {
 		OperationQueue().addOperation(writeImageToFile)
 		viewModel.context.database.add(saveOperation)
 		OperationQueue.main.addOperation(closeOperation)
+	}
+	
+	@objc func create() {
+		CKContainer.default().fetchUserRecordID { [weak self] (recordID, error) in
+			if let recordID = recordID {
+				self?.create(forUser: recordID)
+			}
+			if let error = error {
+				fatalError("Failed with error \(error)")
+			}
+		}
 	}
 }
