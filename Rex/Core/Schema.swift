@@ -6,8 +6,6 @@
 //  Copyright © 2017 splyshka. All rights reserved.
 //
 
-import Foundation
-
 struct Schema: Codable {
 	
 	struct Priority: Codable, Equatable, IdentifiedTitle {

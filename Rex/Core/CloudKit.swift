@@ -35,7 +35,7 @@ extension CKQueryOperation {
 		let query = T.query()
 		self.init(query: query)
 		recordFetchedBlock = { record in
-			guard let model = T(record: record) else {
+			guard let model = try? T(record: record) else {
 				return
 			}
 			handler(model)
@@ -50,7 +50,7 @@ extension CKQueryOperation {
 }
 
 protocol RecordRepresentable {
-	init?(record: CKRecord)
+	init(record: CKRecord) throws
 	var record: CKRecord { get }
 	static var recordType: String { get }
 }

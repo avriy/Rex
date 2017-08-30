@@ -27,7 +27,7 @@ class Issue: NSObject, RecordRepresentable {
 	
 	private var systemFields: Data
 	
-	private enum CodingKeys: String {
+	private enum CodingKeys: String, KeyCodable {
 		case name, description, resolution, assigneeID, projectID, priority
 	}
 	
@@ -49,21 +49,13 @@ class Issue: NSObject, RecordRepresentable {
 		assert(project.schema.priorities.contains(priority))
 	}
 	
-	required init?(record: CKRecord) {
+	required init(record: CKRecord) throws {
 		systemFields = record.archivedSystemFields()
-		guard let name = record[CodingKeys.name.rawValue] as? String,
-			let description = record[CodingKeys.description.rawValue] as? String,
-			let resolution = record[CodingKeys.resolution.rawValue] as? Int,
-			let priority = record[CodingKeys.priority.rawValue] as? Int,
-			let projectID = record[CodingKeys.projectID.rawValue] as? CKReference else {
-				return nil
-		}
-		self.name = name
-		self.details = description
-		self.resolutionID = resolution
-		self.priorityID = priority
-		self.projectID = projectID.recordID
-		self.assigneeID = (record[CodingKeys.assigneeID.rawValue] as? CKReference)?.recordID
+        name = try record.getValue(for: CodingKeys.name)        
+        details = try record.getValue(for: CodingKeys.description)
+        resolutionID = try record.getValue(for: CodingKeys.resolution)
+        priorityID = try record.getValue(for: CodingKeys.priority)
+		projectID = try record.getRecordID(for: CodingKeys.projectID)
 	}
 	
 	var record: CKRecord {
@@ -71,12 +63,12 @@ class Issue: NSObject, RecordRepresentable {
 			fatalError()
 		}
 		
-		result[CodingKeys.name.rawValue] = name as CKRecordValue
-		result[CodingKeys.description.rawValue] = details as CKRecordValue
-		result[CodingKeys.resolution.rawValue] = resolutionID as CKRecordValue
-		result[CodingKeys.priority.rawValue] = priorityID as CKRecordValue
-		result[CodingKeys.assigneeID.rawValue] = assigneeID.map { CKReference(recordID: $0, action: .deleteSelf) }
-		result[CodingKeys.projectID.rawValue] = CKReference(recordID: projectID, action: .deleteSelf)
+		result[CodingKeys.name] = name as CKRecordValue
+		result[CodingKeys.description] = details as CKRecordValue
+		result[CodingKeys.resolution] = resolutionID as CKRecordValue
+		result[CodingKeys.priority] = priorityID as CKRecordValue
+		result[CodingKeys.assigneeID] = assigneeID.map { CKReference(recordID: $0, action: .deleteSelf) }
+		result[CodingKeys.projectID] = CKReference(recordID: projectID, action: .deleteSelf)
 		return result
 	}
 }

@@ -17,6 +17,10 @@ class Project: NSObject, RecordRepresentable {
 	@objc dynamic var name: String
 	private(set) var schema: Schema
 	var imageURL: URL?
+    
+    private enum CodingKeys: String, KeyCodable {
+        case name, schema, imageAsset
+    }
 	
 	var recordID: CKRecordID {
 		guard let record = CKRecord.unarchivedSystemFields(from: systemFields) else {
@@ -35,11 +39,11 @@ class Project: NSObject, RecordRepresentable {
 		systemFields = record.archivedSystemFields()
 	}
 
-	required init?(record: CKRecord) {
-		guard let name = record["name"] as? String else {
-			return nil
-		}
-		self.name = name
+	required init(record: CKRecord) throws {
+        
+        name = try record.getValue(for: CodingKeys.name)
+        systemFields = record.archivedSystemFields()
+		
 		let decoder = JSONDecoder()
 		if let schemaData = record["schema"] as? Data, let schema = try? decoder.decode(Schema.self, from: schemaData) {
 			self.schema = schema
@@ -49,20 +53,21 @@ class Project: NSObject, RecordRepresentable {
 		
 		self.imageURL = (record["imageAsset"] as? CKAsset)?.fileURL
 		
-		systemFields = record.archivedSystemFields()
 	}
 	
 	var record: CKRecord {
 		guard let result = CKRecord.unarchivedSystemFields(from: systemFields) else {
 			fatalError()
 		}
-		result["name"] = name as CKRecordValue
+        
+        result[CodingKeys.name] = name as CKRecordValue
+        
 		if let data = try? JSONEncoder().encode(schema) {
-			result["schema"] = data as CKRecordValue
+			result[CodingKeys.schema] = data as CKRecordValue
 		}
 
 		if let imageURL = imageURL {
-			result["imageAsset"] = CKAsset(fileURL: imageURL)
+			result[CodingKeys.imageAsset] = CKAsset(fileURL: imageURL)
 		}
 		
 		return result

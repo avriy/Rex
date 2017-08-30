@@ -37,7 +37,7 @@ struct TestContext {
 	}
 }
 
-class RexTests: XCTestCase {
+class BasicIntegrationTests: XCTestCase {
 	
 	let database = CKContainer.default().privateCloudDatabase
 	

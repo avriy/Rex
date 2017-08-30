@@ -47,7 +47,8 @@ public class AppContext {
 		
 		var result = [Issue]()
 		op.recordFetchedBlock = { record in
-			guard let issue = Issue(record: record) else {
+            //  TODO: handle this error
+			guard let issue = try? Issue(record: record) else {
 				return
 			}
 			
@@ -107,27 +108,3 @@ extension Array where Element: RecordRepresentable {
 		return CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
 	}
 }
-
-extension RecordRepresentable {
-	static func fetchOperation(predicate: NSPredicate = NSPredicate(value: true), handler: @escaping ([Self]) -> Void) -> CKQueryOperation {
-		let query = Self.query(for: predicate)
-		let op = CKQueryOperation(query: query)
-		
-		var result = [Self]()
-		
-		op.recordFetchedBlock = { record in
-			debugPrint("record was fetched")
-			guard let model = Self(record: record) else {
-				fatalError()
-			}
-			result.append(model)
-		}
-		
-		op.queryCompletionBlock = { (cursor, error) in
-			handler(result)
-		}
-		
-		return op
-	}
-}
-

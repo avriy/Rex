@@ -116,7 +116,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView {
 				fatalError("Failed to create record from notification")
 			}
 			
-			guard let project = Project(record: record) else {
+			guard let project = try? Project(record: record) else {
 				return
 			}
 			
