@@ -12,23 +12,21 @@ import XCTest
 class SchemeMigrationTests: XCTestCase {
 
     func testAddNewResolution() {
-		let project = Project(name: "Test project")
 		var schema = Schema.start
 		let newResolution = Schema.Resolution(identifier: 4, title: "New resolution")
 		schema.resolutions.append(newResolution)
 		do {
-			try project.migrate(to: schema)
+			try BasicSchemaMigrator().migrate(from: .start, to: schema)
 		} catch {
 			XCTFail("Failed with error \(error)")
 		}
     }
 	
 	func testEmptyResolutionsMigration() {
-		let project = Project(name: "Test project")
 		var emtyResolutionsSchema = Schema.start
 		emtyResolutionsSchema.resolutions = []
 		do {
-			try project.migrate(to: emtyResolutionsSchema)
+            try BasicSchemaMigrator().migrate(from: .start, to: emtyResolutionsSchema)
 			XCTFail("Migration should fail with \(Schema.MigrationError.emptySchema)")
 		} catch Schema.MigrationError.emptySchema {
 		} catch {
@@ -37,11 +35,10 @@ class SchemeMigrationTests: XCTestCase {
 	}
 	
 	func testEmptyPrioritiesMigration() {
-		let project = Project(name: "Test project")
 		var emtyResolutionsSchema = Schema.start
 		emtyResolutionsSchema.priorities = []
 		do {
-			try project.migrate(to: emtyResolutionsSchema)
+			try BasicSchemaMigrator().migrate(from: .start, to: emtyResolutionsSchema)
 			XCTFail("Migration should fail with \(Schema.MigrationError.emptySchema)")
 		} catch Schema.MigrationError.emptySchema {
 		} catch {
