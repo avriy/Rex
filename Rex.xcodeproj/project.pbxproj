@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		459FE91F1F56C8FB00B0335A /* SchemaMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FE91E1F56C8FB00B0335A /* SchemaMigration.swift */; };
 		6310C87D1F03A5B000490EF4 /* RecordSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6310C87C1F03A5B000490EF4 /* RecordSaver.swift */; };
 		6319C91D1F2A5245006260D2 /* ProjectCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6319C91B1F2A5245006260D2 /* ProjectCollectionItem.swift */; };
 		6319C91E1F2A5245006260D2 /* ProjectCollectionItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6319C91C1F2A5245006260D2 /* ProjectCollectionItem.xib */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		459FE91E1F56C8FB00B0335A /* SchemaMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaMigration.swift; sourceTree = "<group>"; };
 		6310C87C1F03A5B000490EF4 /* RecordSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSaver.swift; sourceTree = "<group>"; };
 		6319C91B1F2A5245006260D2 /* ProjectCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionItem.swift; sourceTree = "<group>"; };
 		6319C91C1F2A5245006260D2 /* ProjectCollectionItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectCollectionItem.xib; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				63CB0CB11F27985700781998 /* Project.swift */,
 				632F651F1F4A3FDA00F4C60C /* Schema.swift */,
 				632AA8C11F0435E500D0C2AD /* CloudKit.swift */,
+				459FE91E1F56C8FB00B0335A /* SchemaMigration.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				639B42C01F4CC8A8009A48C6 /* Junction.swift in Sources */,
 				632AA8C21F0435E500D0C2AD /* CloudKit.swift in Sources */,
 				632F65221F4B7E0600F4C60C /* ModernVC.swift in Sources */,
+				459FE91F1F56C8FB00B0335A /* SchemaMigration.swift in Sources */,
 				63CB0CB21F27985700781998 /* Project.swift in Sources */,
 				6395BACD1F28F0FA002210B9 /* ProjectsVC.swift in Sources */,
 				632F65201F4A3FDA00F4C60C /* Schema.swift in Sources */,
