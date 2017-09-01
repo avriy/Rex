@@ -11,38 +11,12 @@ import CloudKit
 
 @testable import Rex
 
-extension TimeInterval {
-	static let timeout: TimeInterval = 30
-}
-
-struct TestContext {
-	let expectation: XCTestExpectation
-	let appContext: AppContext
-	let database = CKContainer.default().privateCloudDatabase
-	let test: XCTestCase
-	
-	init(test: XCTestCase, description: String) {
-		self.test = test
-		let exp = test.expectation(description: description)
-		appContext = AppContext(database: database) { error in
-			XCTFail("Failed with \(error)")
-			exp.fulfill()
-		}
-		expectation = exp
-	}
-	
-	func saveAndWait<Representable: RecordRepresentable>(_ value: Representable) {
-		appContext.save(value, completionHandler: expectation.fulfill)
-		test.waitForExpectations(timeout: .timeout, handler: nil)
-	}
-}
-
 class BasicIntegrationTests: XCTestCase {
 	
 	let database = CKContainer.default().privateCloudDatabase
 	
 	func createAppContext(for expectaion: XCTestExpectation) -> AppContext {
-		return AppContext(database: database) { error in
+		return AppContext(databaseScope: .private) { error in
 			XCTFail("Failed with \(error)")
 			expectaion.fulfill()
 		}
@@ -111,4 +85,31 @@ class BasicIntegrationTests: XCTestCase {
 		waitForExpectations(timeout: .timeout, handler: nil)
 	}
 	
+}
+
+
+extension TimeInterval {
+    static let timeout: TimeInterval = 30
+}
+
+struct TestContext {
+    let expectation: XCTestExpectation
+    let appContext: AppContext
+    let database = CKContainer.default().privateCloudDatabase
+    let test: XCTestCase
+    
+    init(test: XCTestCase, description: String) {
+        self.test = test
+        let exp = test.expectation(description: description)
+        appContext = AppContext(databaseScope: .private) { error in
+            XCTFail("Failed with \(error)")
+            exp.fulfill()
+        }
+        expectation = exp
+    }
+    
+    func saveAndWait<Representable: RecordRepresentable>(_ value: Representable) {
+        appContext.save(value, completionHandler: expectation.fulfill)
+        test.waitForExpectations(timeout: .timeout, handler: nil)
+    }
 }

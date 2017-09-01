@@ -45,13 +45,14 @@ class Project: NSObject, RecordRepresentable {
         systemFields = record.archivedSystemFields()
 		
 		let decoder = JSONDecoder()
-		if let schemaData = record["schema"] as? Data, let schema = try? decoder.decode(Schema.self, from: schemaData) {
+		if let schemaData = record[CodingKeys.schema.rawValue] as? Data,
+            let schema = try? decoder.decode(Schema.self, from: schemaData) {
 			self.schema = schema
 		} else {
 			self.schema = .start
 		}
 		
-		self.imageURL = (record["imageAsset"] as? CKAsset)?.fileURL
+		self.imageURL = (record[CodingKeys.imageAsset.rawValue] as? CKAsset)?.fileURL
 		
 	}
 	

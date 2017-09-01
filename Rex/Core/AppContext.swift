@@ -8,18 +8,24 @@
 
 import CloudKit
 
-public class AppContext {
-	
-	public static let debugErrorHandler: (Error) -> Void = { error in
+public class AppContext: NSObject {
+
+    public static let debugErrorHandler: (Error) -> Void = { error in
 		debugPrint("Error happened \(error)")
 	}
 	
 	let database: CKDatabase
+    let container: CKContainer
 	let errorHandler: (Error) -> Void
 	
-	public init(database: CKDatabase = CKContainer.default().publicCloudDatabase, errorHandler: @escaping (Error) -> Void = AppContext.debugErrorHandler) {
-		self.database = database
+    let accountCoordinator: CloudAccountCoordinator<CloudKitUserRecordFetcher>
+    
+    public init(container: CKContainer = .default(), databaseScope: CKDatabaseScope = .public, errorHandler: @escaping (Error) -> Void = AppContext.debugErrorHandler) {
+		self.container = container
+        self.database = container.database(with: databaseScope)
 		self.errorHandler = errorHandler
+        let fetcher = CloudKitUserRecordFetcher(container: container)
+        accountCoordinator = CloudAccountCoordinator(store: UserDefaults.standard, fetcher: fetcher)
 	}
 	
 	func projects(handler: @escaping ([Project]) -> Void) {
