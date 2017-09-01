@@ -9,23 +9,9 @@
 import Cocoa
 import CloudKit
 
-extension NSNib.Name {
-	static let projectCollectionItem = NSNib.Name(rawValue: "ProjectCollectionItem")
-}
-
-extension NSUserInterfaceItemIdentifier {
-	static let projectItemID = NSUserInterfaceItemIdentifier(rawValue: "ProjectCollectionItem")
-}
-
-extension NSStoryboardSegue.Identifier {
-	static let openProject = NSStoryboardSegue.Identifier(rawValue: "OpenProjectSID")
-	static let createProject = NSStoryboardSegue.Identifier(rawValue: "CreateProjectSID")
-}
-
-class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView {
+class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, ContextDepending {
 	
 	@objc dynamic var projects = [ProjectViewModel]()
-	private let appContext = AppContext()
 	
 	@IBOutlet weak var collectionView: NSCollectionView!
 	
@@ -51,7 +37,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView {
 			(segue.destinationController as? IssuesVC)?.project = project
 			
 		case .createProject:
-			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(context: appContext)
+			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(context: context)
 			
 		default:
 			fatalError("Undefined segue")
@@ -71,7 +57,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView {
 	}
 	
 	func fetchProjects() {
-		appContext.myProjects { [weak self] projects in
+		context.myProjects { [weak self] projects in
 			DispatchQueue.main.async { [weak self] in
 				guard let strongSelf = self else { return }
 				for project in projects {
@@ -108,7 +94,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView {
 				debugPrint("Failed to save subscription with error \(error)")
 			}
 		}
-		appContext.database.add(operation)
+		context.database.add(operation)
 		
 		NotificationCenter.default.addObserver(forName: .recordWasCreated, object: nil, queue: .main) { [unowned self] (notification) in
 			debugPrint("Did receive notification from notification center")

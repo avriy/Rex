@@ -9,59 +9,37 @@
 import Foundation
 import CloudKit
 
-protocol KeyValueStore: class {
-    subscript <T>(value: String) -> T? { get set }
-    
-    func deleteAllEntities()
-}
-
-extension UserDefaults: KeyValueStore {
-    
-    subscript <T>(key: String) -> T? {
-        get {
-            return value(forKey: key) as? T
-        } set {
-            setValue(newValue, forKey: key)
-        }
-    }
-
-    func deleteAllEntities() {
-        fatalError("Not implemented yet")
-    }
-    
-}
-
 protocol UserIdentityFetcher {
-    associatedtype UserIDType: Equatable
-    
-    func fetch(queue: DispatchQueue, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (UserIDType) -> Void)
+	associatedtype UserIDType: Equatable
+	
+	func fetch(queue: DispatchQueue, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (UserIDType) -> Void)
 }
 
 struct CloudKitUserRecordFetcher: UserIdentityFetcher {
-    let container: CKContainer
-    
-    func fetch(queue: DispatchQueue, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (CKRecordID) -> Void) {
-        
-        container.fetchUserRecordID { (userRecordID, error) in
-            queue.async {
-                if let error = error {
-                    errorHandler(error)
-                    return
-                }
-                
-                if let urid = userRecordID {
-                    successHandler(urid)
-                }
-            }
-        }
-    }
+	let container: CKContainer
+	
+	func fetch(queue: DispatchQueue, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (CKRecordID) -> Void) {
+		
+		container.fetchUserRecordID { (userRecordID, error) in
+			queue.async {
+				if let error = error {
+					errorHandler(error)
+					return
+				}
+				
+				if let urid = userRecordID {
+					successHandler(urid)
+				}
+			}
+		}
+	}
 }
 
 public let CloudAccountCoordinatorAccountKey = "accountID"
 
 class CloudAccountCoordinator<Fetcher: UserIdentityFetcher> {
     
-    enum AccountState: Int {
+    enum AccountState {
         case notActive, pending, active
     }
     
@@ -96,7 +74,7 @@ class CloudAccountCoordinator<Fetcher: UserIdentityFetcher> {
         }
     }
     
-    func activateAccountIfNeeded(errorHandler: @escaping (Error) -> Void, completion: @escaping () -> Void) {
+	func activateAccountIfNeeded(errorHandler: @escaping (Error) -> Void, completion: @escaping () -> Void = {}) {
         
         guard accountState == .notActive else {
             return
@@ -119,4 +97,23 @@ class CloudAccountCoordinator<Fetcher: UserIdentityFetcher> {
     
 }
 
+protocol KeyValueStore: class {
+	subscript <T>(value: String) -> T? { get set }
+	
+	func deleteAllEntities()
+}
 
+extension UserDefaults: KeyValueStore {
+	
+	subscript <T>(key: String) -> T? {
+		get {
+			return value(forKey: key) as? T
+		} set {
+			setValue(newValue, forKey: key)
+		}
+	}
+	
+	func deleteAllEntities() {
+		fatalError("Not implemented yet")
+	}
+}

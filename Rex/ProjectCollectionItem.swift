@@ -49,11 +49,25 @@ import Cocoa
 }
 
 class ProjectCollectionItem: NSCollectionViewItem {
+	
+	static func textFieldAccessilityIdentifier(for text: String) -> String {
+		return String(reflecting: self) + "textField" + text
+	}
+	
+	private var labelObservation: NSKeyValueObservation!
+	
 	@objc dynamic var viewModel: ProjectViewModel?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		textField?.bind(.value, to: self, withKeyPath: #keyPath(viewModel.title))
+		labelObservation = observe(\.viewModel, options: [.new, .initial]) { [unowned self] (object, value) in
+			guard let viewModel = self.viewModel else { return }
+			self.textField?.stringValue = viewModel.title
+			let textFieldAccessibility = ProjectCollectionItem.textFieldAccessilityIdentifier(for: viewModel.title)
+			self.textField?.setAccessibilityIdentifier(textFieldAccessibility)
+			return
+		}
+		
 		imageView?.bind(.value, to: self, withKeyPath: #keyPath(viewModel.image))
 	}
 	

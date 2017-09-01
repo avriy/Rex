@@ -19,9 +19,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		NSApplication.shared.registerForRemoteNotifications(matching: [.alert, .badge, .sound])
-		
-		
-		
 	}
 	
 	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

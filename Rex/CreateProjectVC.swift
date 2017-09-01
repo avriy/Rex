@@ -28,7 +28,7 @@ class CreateProjectVC: NSViewController, ModernView {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		textField.bind(.value, to: self, withKeyPath: #keyPath(viewModel.name), options: [.continuouslyUpdatesValue : true])
+		textField.bind(.value, to: self, withKeyPath: #keyPath(viewModel.name), options: [.continuouslyUpdatesValue : true, .nullPlaceholder : "New project name"])
 		projectImage.bind(.value, to: self, withKeyPath: #keyPath(viewModel.image))
     }
 	

@@ -695,12 +695,28 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="TrQ-Lo-jxW" kind="relationship" relationship="window.shadowedContentViewController" id="Cdb-v4-ftV"/>
+                        <segue destination="qte-ZR-yN7" kind="relationship" relationship="window.shadowedContentViewController" id="CeI-Na-6yP"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="-408" y="228"/>
+        </scene>
+        <!--InitializationVC-->
+        <scene sceneID="yZA-EZ-mTc">
+            <objects>
+                <viewController id="qte-ZR-yN7" customClass="InitializationVC" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="mQ7-30-9uK">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                    <connections>
+                        <segue destination="TrQ-Lo-jxW" kind="show" identifier="OpenProjectsList" customClass="ReplaceSegue" customModule="Rex" customModuleProvider="target" id="pv6-TW-XaS"/>
+                    </connections>
+                </viewController>
+                <customObject id="m0B-ph-t3c" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="219"/>
         </scene>
         <!--Projects-->
         <scene sceneID="YKG-dZ-stZ">
@@ -766,12 +782,12 @@
                 </viewController>
                 <customObject id="ouL-er-MKp" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="613" y="243"/>
+            <point key="canvasLocation" x="688" y="219"/>
         </scene>
-        <!--Create ProjectVC-->
+        <!--Create new project-->
         <scene sceneID="U7t-57-JYD">
             <objects>
-                <viewController id="lf3-G8-Rd3" customClass="CreateProjectVC" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Create new project" id="lf3-G8-Rd3" customClass="CreateProjectVC" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="SFP-EQ-AIH">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -815,7 +831,7 @@ Gw
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="goh-Gv-Ku8">
                                 <rect key="frame" x="20" y="210" width="410" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Yst-SU-mdt">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="New project name" drawsBackground="YES" id="Yst-SU-mdt">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -853,7 +869,7 @@ Gw
                 </viewController>
                 <customObject id="NCE-V8-r0p" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1150" y="243"/>
+            <point key="canvasLocation" x="1248" y="219"/>
         </scene>
         <!--IssuesVC-->
         <scene sceneID="hIz-AP-VOD">

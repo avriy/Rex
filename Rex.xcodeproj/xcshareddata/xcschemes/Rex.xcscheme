@@ -33,7 +33,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "635BF7911F03E7140020F0E0"
+               BlueprintIdentifier = "636FBC851F59B9640030ADD6"
                BuildableName = "RexUITests.xctest"
                BlueprintName = "RexUITests"
                ReferencedContainer = "container:Rex.xcodeproj">
@@ -83,6 +83,12 @@
             ReferencedContainer = "container:Rex.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "TEST"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "CA_DEBUG_TRANSACTIONS"
