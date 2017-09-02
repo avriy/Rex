@@ -19,21 +19,44 @@ extension ProcessInfo {
 
 /// Starting VC stat should be shown during initialization
 class InitializationVC: NSViewController, ModernView {
+	@IBOutlet weak var progressIndicator: NSProgressIndicator!
+	
+	private let initializationGroup = DispatchGroup()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		let databaseScope = ProcessInfo.processInfo.isTestEnvironment ? CKDatabaseScope.private : .public
 		applicationContext = AppContext(databaseScope: databaseScope)
+		
+		initializationGroup.enter()
+		initializationGroup.enter()		
+		
+		applicationContext.accountCoordinator.activateAccountIfNeeded(errorHandler: { error in
+			self.initializationGroup.leave()
+		}) { [unowned self] in
+			self.initializationGroup.leave()
+		}
+		
+		initializationGroup.notify(queue: .main) { [unowned self] in
+			switch applicationContext.accountCoordinator.accountState {
+			case .active:
+				self.performSegue(withIdentifier: .openProjectList, sender: nil)
+			case .notActive:
+				//	show activate button and label that account was not activated
+				return
+			case .pending:
+				fatalError("Account is still pending after activation handler is called")
+			}
+		}
 	}
 	
 	override func viewDidAppear() {
 		super.viewDidAppear()
+		progressIndicator.startAnimation(nil)
 		
 		apply(windowStyle: .dialog)
-		applicationContext.accountCoordinator.activateAccountIfNeeded(errorHandler: defaultErrorHandler) { [unowned self] in
-			self.performSegue(withIdentifier: .openProjectList, sender: nil)
-		}
+		initializationGroup.leave()
 	}
 }
 
