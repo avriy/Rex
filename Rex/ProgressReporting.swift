@@ -20,9 +20,7 @@ extension Progress {
 extension NSProgressIndicator {
 	
 	func bind(to progress: Progress) {
-		fatalError("Not implemented")
-//		bind(NSAnimateBinding, to: self, withKeyPath: #keyPath(progress), options: [NSValueTransformerNameBindingOption: NSValueTransformerName.isNotNilTransformerName])
-//		bind(.animate, to: progress, withKeyPath: #keyPath(Progress.isActive))
+		bind(.animate, to: progress, withKeyPath: #keyPath(Progress.isFinished), options: [.valueTransformerName: NSValueTransformerName.isNotNilTransformerName])
 	}
 	
 }

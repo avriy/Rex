@@ -52,24 +52,27 @@ class CloudAccountCoordinator<Fetcher: UserIdentityFetcher> {
         self.store = store; self.fetcher = fetcher
     }
     
-    var userRecordID: Fetcher.UserIDType?
+	var userRecordID: Fetcher.UserIDType? {
+		get {
+			guard let valueForKey: Data = store[CloudAccountCoordinatorAccountKey] else {
+				return nil
+			}
+			return NSKeyedUnarchiver.unarchiveObject(with: valueForKey) as? Fetcher.UserIDType
+		} set {
+			store[CloudAccountCoordinatorAccountKey] = newValue.flatMap(NSKeyedArchiver.archivedData(withRootObject:))
+		}
+	}
     
     func handle(userRecordID: Fetcher.UserIDType) {
-        
-        guard let previousRecordIDData: Data = store[CloudAccountCoordinatorAccountKey] else {
-            store[CloudAccountCoordinatorAccountKey] = NSKeyedArchiver.archivedData(withRootObject: userRecordID)
-            self.userRecordID = userRecordID
-            return
+
+        guard let previousRecordID = self.userRecordID else {
+			self.userRecordID = userRecordID
+			return
         }
-        
-        guard let previousRecordID = NSKeyedUnarchiver.unarchiveObject(with: previousRecordIDData) as? Fetcher.UserIDType else {
-            fatalError()
-        }
+		
         //  account has changed
-        
         if previousRecordID != userRecordID {
             store.deleteAllEntities()
-            store[CloudAccountCoordinatorAccountKey] = NSKeyedArchiver.archivedData(withRootObject: userRecordID)
             self.userRecordID = userRecordID
         }
     }

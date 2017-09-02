@@ -9,20 +9,26 @@
 import Cocoa
 import CloudKit
 
+extension OperationQueue {
+	static let io = OperationQueue()
+}
+
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""
 	@objc dynamic var image: NSImage?
-	let creationHandler: (Project) -> Void
-	let context: AppContext
+	private let creationHandler: (Project) -> Void
+	private let context: AppContext
 	
-	func create(completion: (Void)) -> Progress {
+	func create(completion: @escaping () -> Void) -> Progress {
 		let result = Progress()
+		result.becomeCurrent(withPendingUnitCount: 0)
 		
 		guard let userRecordID = context.accountCoordinator.userRecordID else {
 			fatalError("User should be logged in to create a project")
 		}
-	
-		let url = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("tmp")
+		
+		
+		let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
 		let project = Project(name: name, imageURL: url)
 		let junction = Junction(userRecordID: userRecordID, projectID: project.recordID)
 		
@@ -34,13 +40,22 @@ class CreateProjectViewModel: NSObject {
 		let saveOperation = CKModifyRecordsOperation(recordsToSave: [project.record, junction.record], recordIDsToDelete: nil)
 		let closeOperation = BlockOperation { [handler = creationHandler] in
 			handler(project)
+			completion()
+			result.resignCurrent()
+		}
+		
+		let cleanupOperation = BlockOperation {
+			try? FileManager.default.removeItem(at: url)
 		}
 		
 		saveOperation.addDependency(writeImageToFile)
 		closeOperation.addDependency(saveOperation)
-		OperationQueue().addOperation(writeImageToFile)
+		cleanupOperation.addDependency(closeOperation)
+		
+		OperationQueue.io.addOperation(writeImageToFile)
 		context.database.add(saveOperation)
 		OperationQueue.main.addOperation(closeOperation)
+		OperationQueue.io.addOperation(cleanupOperation)
 		
 		return result
 	}
@@ -69,41 +84,12 @@ class CreateProjectVC: NSViewController, ModernView {
 		super.viewDidAppear()
 		apply(windowStyle: .dialog)
 	}
-	
-	private func create(forUser recordID: CKRecordID) {
-		let url = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("tmp")
-		let project = Project(name: viewModel.name, imageURL: url)
-		let junction = Junction(userRecordID: recordID, projectID: project.recordID)
-		
-		let writeImageToFile = BlockOperation { [weak self] in
-			guard let imageData = self?.viewModel.image?.tiffRepresentation else { return }
-			try! imageData.write(to: url)
-		}
-		
-		let saveOperation = CKModifyRecordsOperation(recordsToSave: [project.record, junction.record], recordIDsToDelete: nil)
-		let closeOperation = BlockOperation { [weak self] in
-			self?.view.window?.close()
-			self?.viewModel.creationHandler(project)
-		}
-		
-		saveOperation.addDependency(writeImageToFile)
-		closeOperation.addDependency(saveOperation)
-		OperationQueue().addOperation(writeImageToFile)
-		viewModel.context.database.add(saveOperation)
-		OperationQueue.main.addOperation(closeOperation)
-	}
-	
+
 	@objc func create() {
-//		let progress = viewModel.create()
-//		progressIndicator.bind(<#T##binding: NSBindingName##NSBindingName#>, to: <#T##Any#>, withKeyPath: <#T##String#>, options: <#T##[NSBindingOption : Any]?#>)
-		
-		CKContainer.default().fetchUserRecordID { [weak self] (recordID, error) in
-			if let recordID = recordID {
-				self?.create(forUser: recordID)
-			}
-			if let error = error {
-				fatalError("Failed with error \(error)")
-			}
+		let progress = viewModel.create { [weak self] in
+			self?.view.window?.close()
 		}
+		
+		progressIndicator.bind(to: progress)
 	}
 }
