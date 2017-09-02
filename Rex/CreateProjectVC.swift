@@ -12,10 +12,10 @@ import CloudKit
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""
 	@objc dynamic var image: NSImage?
-	
+	let creationHandler: (Project) -> Void
 	let context: AppContext
-	init(context: AppContext) {
-		self.context = context
+	init(context: AppContext, creationHandler: @escaping (Project) -> Void) {
+		self.context = context; self.creationHandler = creationHandler
 	}
 }
 
@@ -50,6 +50,7 @@ class CreateProjectVC: NSViewController, ModernView {
 		let saveOperation = CKModifyRecordsOperation(recordsToSave: [project.record, junction.record], recordIDsToDelete: nil)
 		let closeOperation = BlockOperation { [weak self] in
 			self?.view.window?.close()
+			self?.viewModel.creationHandler(project)
 		}
 		
 		saveOperation.addDependency(writeImageToFile)

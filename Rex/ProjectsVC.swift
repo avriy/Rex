@@ -37,11 +37,17 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, Cont
 			(segue.destinationController as? IssuesVC)?.project = project
 			
 		case .createProject:
-			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(context: context)
+			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(context: context, creationHandler: add)
 			
 		default:
 			fatalError("Undefined segue")
 		}
+	}
+	
+	func add(project: Project) {
+		let viewModel = ProjectViewModel(project: project, openHandler: open)
+		projects.append(viewModel)
+		collectionView.reloadData()
 	}
 	
 	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -61,7 +67,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, Cont
 			DispatchQueue.main.async { [weak self] in
 				guard let strongSelf = self else { return }
 				for project in projects {
-					let newVM = ProjectViewModel(projectType: .project(project), openHandler: strongSelf.open)
+					let newVM = ProjectViewModel(project: project, openHandler: strongSelf.open)
 					
 					strongSelf.projects.insert(newVM, at: strongSelf.projects.count - 1)
 				}

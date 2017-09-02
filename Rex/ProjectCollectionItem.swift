@@ -22,6 +22,11 @@ import Cocoa
 		self.openHandler = openHandler
 	}
 	
+	convenience init(project: Project, openHandler: @escaping (ProjectViewModel) -> Void) {
+		let type = ProjectType.project(project)
+		self.init(projectType: type, openHandler: openHandler)
+	}
+	
 	@objc var title: String {
 		switch projectType {
 		case .add:
@@ -49,11 +54,7 @@ import Cocoa
 }
 
 class ProjectCollectionItem: NSCollectionViewItem {
-	
-	static func textFieldAccessilityIdentifier(for text: String) -> String {
-		return String(reflecting: self) + "textField" + text
-	}
-	
+
 	private var labelObservation: NSKeyValueObservation!
 	
 	@objc dynamic var viewModel: ProjectViewModel?
@@ -63,7 +64,7 @@ class ProjectCollectionItem: NSCollectionViewItem {
 		labelObservation = observe(\.viewModel, options: [.new, .initial]) { [unowned self] (object, value) in
 			guard let viewModel = self.viewModel else { return }
 			self.textField?.stringValue = viewModel.title
-			let textFieldAccessibility = ProjectCollectionItem.textFieldAccessilityIdentifier(for: viewModel.title)
+			let textFieldAccessibility = viewModel.title
 			self.textField?.setAccessibilityIdentifier(textFieldAccessibility)
 			return
 		}

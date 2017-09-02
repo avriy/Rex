@@ -23,14 +23,15 @@ class RexUITests: XCTestCase {
 		let textEnterResult = XCTContext.runActivity(named: "Creating project") { (activity) -> String in
 			let textField = application.windows["Create new project"].children(matching: .textField).element
 			textField.click()
-			let text = "1234"
-			textField.typeText(text + "\r")
+			let text = String(UUID().uuidString.suffix(6))
+			textField.typeText(text)
+			textField.typeKey(.enter, modifierFlags: [])
 			return text
 		}
 		
 		XCTContext.runActivity(named: "Wait till project will appear") { (activity) in
-			let acessibility = ProjectCollectionItem.textFieldAccessilityIdentifier(for: textEnterResult)
-			let result = application.windows["Projects"].staticTexts[acessibility].waitForExistence(timeout: 20)
+			print("Waiting for \(textEnterResult)")
+			let result = application.windows["Projects"].staticTexts[textEnterResult].waitForExistence(timeout: 10)
 			XCTAssert(result, "Newly created project should appear in project list")
 		}
     }
