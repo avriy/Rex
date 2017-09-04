@@ -50,20 +50,19 @@ extension AppContext {
             
             let fetchProjectsOperation = CKFetchRecordsOperation(recordIDs: projectIDs)
             fetchProjectsOperation.fetchRecordsCompletionBlock = { (dictionary, error) in
+				
+				if let dictionary = dictionary {
+					do {
+						let projects = try dictionary.values.map(Project.init)
+						completion(projects)
+					} catch {
+						self?.errorHandler(error)
+					}
+				}
+				
                 if let error = error {
                     self?.errorHandler(error)
                     return
-                }
-                
-                guard let dictionary = dictionary else {
-                    return
-                }
-                
-                do {
-                    let projects = try dictionary.values.map(Project.init)
-                    completion(projects)
-                } catch {
-                    self?.errorHandler(error)
                 }
             }
             

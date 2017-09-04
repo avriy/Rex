@@ -9,10 +9,6 @@
 import Cocoa
 import CloudKit
 
-let defaultErrorHandler: (Error) -> Void = { error in
-	debugPrint("Error happened \(error)")
-}
-
 @objc class IssuesVC: NSViewController, ModernView {
 	
 	@objc dynamic var project: Project?
@@ -42,7 +38,7 @@ let defaultErrorHandler: (Error) -> Void = { error in
 		super.viewDidLoad()
 		fetchIssues()
 
-		CKContainer.default().requestPermissionsIfNeeded(errorHandler: defaultErrorHandler) { [weak self] in
+		CKContainer.default().requestPermissionsIfNeeded(errorHandler: AppContext.debugErrorHandler) { [weak self] in
 			var identities = [CKUserIdentity]()
 			let operation = CKDiscoverAllUserIdentitiesOperation()
 			operation.qualityOfService = .userInitiated

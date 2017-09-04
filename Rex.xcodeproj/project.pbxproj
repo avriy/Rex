@@ -42,6 +42,9 @@
 		63ADAACE1F02FF9900DEA2FD /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ADAACD1F02FF9800DEA2FD /* Issue.swift */; };
 		63ADAAD01F0305A200DEA2FD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63ADAACF1F0305A200DEA2FD /* CloudKit.framework */; };
 		63CB0CB21F27985700781998 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB0CB11F27985700781998 /* Project.swift */; };
+		63E9A3C21F5CA6BA0050F7B5 /* CreateProjectVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */; };
+		63E9A3C51F5CB1130050F7B5 /* CreateProjectVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */; };
+		63E9A3C71F5DF4950050F7B5 /* CloudKitProjectSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C61F5DF4950050F7B5 /* CloudKitProjectSaver.swift */; };
 		63F3E4A01F03135100D191CF /* IssueDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F3E49F1F03135100D191CF /* IssueDetailsVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +108,9 @@
 		63ADAACD1F02FF9800DEA2FD /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		63ADAACF1F0305A200DEA2FD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		63CB0CB11F27985700781998 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVM.swift; sourceTree = "<group>"; };
+		63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVMTests.swift; sourceTree = "<group>"; };
+		63E9A3C61F5DF4950050F7B5 /* CloudKitProjectSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitProjectSaver.swift; sourceTree = "<group>"; };
 		63F3E49F1F03135100D191CF /* IssueDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,6 +165,7 @@
 				635670F01F44B72500E94A23 /* BasicIntegrationTests.swift */,
 				454A026D1F575F2B007C36BD /* CloudKitTests.swift */,
 				454A026F1F576D86007C36BD /* CloudAccountCoordinatorTests.swift */,
+				63E9A3C31F5CB0F50050F7B5 /* ViewModelTests */,
 				454A02731F57F04D007C36BD /* MockUserIdentityFetcher.swift */,
 				454A02751F57F08B007C36BD /* DictionaryKeyValueStore.swift */,
 				454A02711F57ED70007C36BD /* String.swift */,
@@ -208,6 +215,8 @@
 				63ADAABC1F02FD9D00DEA2FD /* IssuesVC.swift */,
 				632F65211F4B7E0600F4C60C /* ModernVC.swift */,
 				6390377C1F3BB13800C3BB81 /* CreateProjectVC.swift */,
+				63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */,
+				63E9A3C61F5DF4950050F7B5 /* CloudKitProjectSaver.swift */,
 				6319C91F1F2B80CA006260D2 /* Core */,
 				63ADAABE1F02FD9D00DEA2FD /* Assets.xcassets */,
 				63ADAAC01F02FD9D00DEA2FD /* Main.storyboard */,
@@ -229,6 +238,14 @@
 				63ADAACF1F0305A200DEA2FD /* CloudKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		63E9A3C31F5CB0F50050F7B5 /* ViewModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */,
+			);
+			path = ViewModelTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,6 +395,7 @@
 				454A02721F57ED70007C36BD /* String.swift in Sources */,
 				635670F11F44B72500E94A23 /* BasicIntegrationTests.swift in Sources */,
 				454A02741F57F04D007C36BD /* MockUserIdentityFetcher.swift in Sources */,
+				63E9A3C51F5CB1130050F7B5 /* CreateProjectVMTests.swift in Sources */,
 				6383F7761F4A29BF009684A3 /* SchemeMigrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,8 +415,10 @@
 				6390377D1F3BB13800C3BB81 /* CreateProjectVC.swift in Sources */,
 				63643F631F4A000D0016AD73 /* IssueDetailsVM.swift in Sources */,
 				639037811F3CF84700C3BB81 /* AppContext.swift in Sources */,
+				63E9A3C71F5DF4950050F7B5 /* CloudKitProjectSaver.swift in Sources */,
 				454A026A1F5753E4007C36BD /* InitializationVC.swift in Sources */,
 				636FBC811F59ACFC0030ADD6 /* ReplaceSegue.swift in Sources */,
+				63E9A3C21F5CA6BA0050F7B5 /* CreateProjectVM.swift in Sources */,
 				455B72161F57452C0071E3B1 /* KeyCodable.swift in Sources */,
 				636FBC911F5A9E590030ADD6 /* ProgressReporting.swift in Sources */,
 				63ADAABD1F02FD9D00DEA2FD /* IssuesVC.swift in Sources */,

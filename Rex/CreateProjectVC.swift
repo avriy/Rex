@@ -7,62 +7,9 @@
 //
 
 import Cocoa
-import CloudKit
 
 extension OperationQueue {
 	static let io = OperationQueue()
-}
-
-class CreateProjectViewModel: NSObject {
-	@objc dynamic var name: String = ""
-	@objc dynamic var image: NSImage?
-	private let creationHandler: (Project) -> Void
-	private let context: AppContext
-	
-	func create(completion: @escaping () -> Void) -> Progress {
-		let result = Progress()
-		result.becomeCurrent(withPendingUnitCount: 0)
-		
-		guard let userRecordID = context.accountCoordinator.userRecordID else {
-			fatalError("User should be logged in to create a project")
-		}
-		
-		
-		let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
-		let project = Project(name: name, imageURL: url)
-		let junction = Junction(userRecordID: userRecordID, projectID: project.recordID)
-		
-		let writeImageToFile = BlockOperation { [image] in
-			guard let imageData = image?.tiffRepresentation else { return }
-			try! imageData.write(to: url)
-		}
-		
-		let saveOperation = CKModifyRecordsOperation(recordsToSave: [project.record, junction.record], recordIDsToDelete: nil)
-		let closeOperation = BlockOperation { [handler = creationHandler] in
-			handler(project)
-			completion()
-			result.resignCurrent()
-		}
-		
-		let cleanupOperation = BlockOperation {
-			try? FileManager.default.removeItem(at: url)
-		}
-		
-		saveOperation.addDependency(writeImageToFile)
-		closeOperation.addDependency(saveOperation)
-		cleanupOperation.addDependency(closeOperation)
-		
-		OperationQueue.io.addOperation(writeImageToFile)
-		context.database.add(saveOperation)
-		OperationQueue.main.addOperation(closeOperation)
-		OperationQueue.io.addOperation(cleanupOperation)
-		
-		return result
-	}
-	
-	init(context: AppContext, creationHandler: @escaping (Project) -> Void) {
-		self.context = context; self.creationHandler = creationHandler
-	}
 }
 
 class CreateProjectVC: NSViewController, ModernView {
@@ -77,7 +24,14 @@ class CreateProjectVC: NSViewController, ModernView {
         super.viewDidLoad()
 		textField.bind(.value, to: self, withKeyPath: #keyPath(viewModel.name),
 		               options: [.continuouslyUpdatesValue : true, .nullPlaceholder : "New project name"])
+		
 		projectImage.bind(.value, to: self, withKeyPath: #keyPath(viewModel.image))
+		
+		textField.bind(.enabled, to: self, withKeyPath: #keyPath(viewModel.isProcessing),
+		               options: [.valueTransformerName : NSValueTransformerName.negateBooleanTransformerName])
+		
+		createButton.bind(.enabled, to: self, withKeyPath: #keyPath(viewModel.canCreateProject))
+
     }
 	
 	override func viewDidAppear() {

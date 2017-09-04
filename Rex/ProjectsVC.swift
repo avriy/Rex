@@ -37,7 +37,9 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, Cont
 			(segue.destinationController as? IssuesVC)?.project = project
 			
 		case .createProject:
-			(segue.destinationController as? CreateProjectVC)?.viewModel = CreateProjectViewModel(context: context, creationHandler: add)
+			let cloudProjectSaver = CloudKitProjectSaver(context: context)
+			let createProjectViewModel = CreateProjectViewModel(projectSaver: cloudProjectSaver, creationHandler: add)
+			(segue.destinationController as? CreateProjectVC)?.viewModel = createProjectViewModel
 			
 		default:
 			fatalError("Undefined segue")

@@ -715,7 +715,7 @@
                                 <rect key="frame" x="20" y="20" width="224" height="47"/>
                                 <subviews>
                                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="SJ8-au-xgu">
-                                        <rect key="frame" x="0.0" y="8" width="32" height="32"/>
+                                        <rect key="frame" x="0.0" y="7.5" width="32" height="32"/>
                                     </progressIndicator>
                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TC9-TT-9pw">
                                         <rect key="frame" x="38" y="10" width="188" height="27"/>
@@ -884,23 +884,23 @@ Gw
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OHg-Lb-N52">
+                            <imageView focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OHg-Lb-N52">
                                 <rect key="frame" x="299" y="237" width="54" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="x4A-zW-DHa"/>
+                                <imageCell key="cell" selectable="YES" editable="YES" focusRingType="none" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="x4A-zW-DHa"/>
                             </imageView>
-                            <button fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FCo-Ag-yqc">
-                                <rect key="frame" x="77" y="154" width="117" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="radio" title="Default schema" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="c6J-of-Uut">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="XmN-x1-lkZ">
                                 <rect key="frame" x="400" y="256" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
+                            <button fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FCo-Ag-yqc">
+                                <rect key="frame" x="19" y="180" width="117" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Default schema" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="c6J-of-Uut">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -913,6 +913,39 @@ Gw
                 <customObject id="NCE-V8-r0p" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1248" y="219"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="tWC-Vt-GJB">
+            <objects>
+                <viewController id="XMx-HQ-5cF" sceneMemberID="viewController">
+                    <view key="view" id="vH2-sv-4B4">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Keq-aN-vVf">
+                                <rect key="frame" x="18" y="248" width="244" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Invite members to..." id="Asb-W6-uag">
+                                    <font key="font" metaFont="system" size="21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wQ3-M3-4W6">
+                                <rect key="frame" x="20" y="218" width="410" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="d8F-98-COG">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="fca-LT-9Su" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1752" y="219"/>
         </scene>
         <!--IssuesVC-->
         <scene sceneID="hIz-AP-VOD">

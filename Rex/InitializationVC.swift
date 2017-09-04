@@ -30,7 +30,7 @@ class InitializationVC: NSViewController, ModernView {
 		applicationContext = AppContext(databaseScope: databaseScope)
 		
 		initializationGroup.enter()
-		initializationGroup.enter()		
+		initializationGroup.enter()
 		
 		applicationContext.accountCoordinator.activateAccountIfNeeded(errorHandler: { error in
 			self.initializationGroup.leave()
