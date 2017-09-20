@@ -41,6 +41,7 @@
 		63ADAAC21F02FD9D00DEA2FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63ADAAC01F02FD9D00DEA2FD /* Main.storyboard */; };
 		63ADAACE1F02FF9900DEA2FD /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ADAACD1F02FF9800DEA2FD /* Issue.swift */; };
 		63ADAAD01F0305A200DEA2FD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63ADAACF1F0305A200DEA2FD /* CloudKit.framework */; };
+		63C46C861F72FF6900328F93 /* ProjectSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C46C851F72FF6900328F93 /* ProjectSaver.swift */; };
 		63CB0CB21F27985700781998 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB0CB11F27985700781998 /* Project.swift */; };
 		63E9A3C21F5CA6BA0050F7B5 /* CreateProjectVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */; };
 		63E9A3C51F5CB1130050F7B5 /* CreateProjectVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */; };
@@ -110,6 +111,7 @@
 		63ADAAC41F02FD9D00DEA2FD /* Rex.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Rex.entitlements; sourceTree = "<group>"; };
 		63ADAACD1F02FF9800DEA2FD /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		63ADAACF1F0305A200DEA2FD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		63C46C851F72FF6900328F93 /* ProjectSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSaver.swift; sourceTree = "<group>"; };
 		63CB0CB11F27985700781998 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVM.swift; sourceTree = "<group>"; };
 		63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVMTests.swift; sourceTree = "<group>"; };
@@ -216,11 +218,12 @@
 			children = (
 				63ADAABA1F02FD9D00DEA2FD /* AppDelegate.swift */,
 				636FBC7E1F59A98C0030ADD6 /* StoryboardIDs.swift */,
-				454A02691F5753E4007C36BD /* InitializationVC.swift */,
+				63C46C841F72FF4900328F93 /* OperationProtocols */,
+				63C46C821F72FF0500328F93 /* Initialization */,
 				6395BACB1F28F0FA002210B9 /* ProjectsVC.swift */,
 				63E9A3CC1F5E9E6F0050F7B5 /* ProjectsVM.swift */,
 				63ADAABC1F02FD9D00DEA2FD /* IssuesVC.swift */,
-				632F65211F4B7E0600F4C60C /* ModernVC.swift */,
+				63C46C831F72FF1B00328F93 /* Utility */,
 				6390377C1F3BB13800C3BB81 /* CreateProjectVC.swift */,
 				63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */,
 				63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */,
@@ -247,6 +250,30 @@
 				63ADAACF1F0305A200DEA2FD /* CloudKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		63C46C821F72FF0500328F93 /* Initialization */ = {
+			isa = PBXGroup;
+			children = (
+				454A02691F5753E4007C36BD /* InitializationVC.swift */,
+			);
+			path = Initialization;
+			sourceTree = "<group>";
+		};
+		63C46C831F72FF1B00328F93 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				632F65211F4B7E0600F4C60C /* ModernVC.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		63C46C841F72FF4900328F93 /* OperationProtocols */ = {
+			isa = PBXGroup;
+			children = (
+				63C46C851F72FF6900328F93 /* ProjectSaver.swift */,
+			);
+			path = OperationProtocols;
 			sourceTree = "<group>";
 		};
 		63E9A3C31F5CB0F50050F7B5 /* ViewModelTests */ = {
@@ -432,6 +459,7 @@
 				636FBC911F5A9E590030ADD6 /* ProgressReporting.swift in Sources */,
 				63ADAABD1F02FD9D00DEA2FD /* IssuesVC.swift in Sources */,
 				63E9A3CD1F5E9E6F0050F7B5 /* ProjectsVM.swift in Sources */,
+				63C46C861F72FF6900328F93 /* ProjectSaver.swift in Sources */,
 				63E9A3C91F5DFEDC0050F7B5 /* InvitationVM.swift in Sources */,
 				6310C87D1F03A5B000490EF4 /* RecordSaver.swift in Sources */,
 				63ADAABB1F02FD9D00DEA2FD /* AppDelegate.swift in Sources */,
