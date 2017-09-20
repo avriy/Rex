@@ -45,6 +45,9 @@
 		63E9A3C21F5CA6BA0050F7B5 /* CreateProjectVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */; };
 		63E9A3C51F5CB1130050F7B5 /* CreateProjectVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */; };
 		63E9A3C71F5DF4950050F7B5 /* CloudKitProjectSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C61F5DF4950050F7B5 /* CloudKitProjectSaver.swift */; };
+		63E9A3C91F5DFEDC0050F7B5 /* InvitationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */; };
+		63E9A3CB1F5E01670050F7B5 /* InvitationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3CA1F5E01670050F7B5 /* InvitationVC.swift */; };
+		63E9A3CD1F5E9E6F0050F7B5 /* ProjectsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3CC1F5E9E6F0050F7B5 /* ProjectsVM.swift */; };
 		63F3E4A01F03135100D191CF /* IssueDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F3E49F1F03135100D191CF /* IssueDetailsVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +114,9 @@
 		63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVM.swift; sourceTree = "<group>"; };
 		63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVMTests.swift; sourceTree = "<group>"; };
 		63E9A3C61F5DF4950050F7B5 /* CloudKitProjectSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitProjectSaver.swift; sourceTree = "<group>"; };
+		63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationVM.swift; sourceTree = "<group>"; };
+		63E9A3CA1F5E01670050F7B5 /* InvitationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationVC.swift; sourceTree = "<group>"; };
+		63E9A3CC1F5E9E6F0050F7B5 /* ProjectsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsVM.swift; sourceTree = "<group>"; };
 		63F3E49F1F03135100D191CF /* IssueDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -212,10 +218,13 @@
 				636FBC7E1F59A98C0030ADD6 /* StoryboardIDs.swift */,
 				454A02691F5753E4007C36BD /* InitializationVC.swift */,
 				6395BACB1F28F0FA002210B9 /* ProjectsVC.swift */,
+				63E9A3CC1F5E9E6F0050F7B5 /* ProjectsVM.swift */,
 				63ADAABC1F02FD9D00DEA2FD /* IssuesVC.swift */,
 				632F65211F4B7E0600F4C60C /* ModernVC.swift */,
 				6390377C1F3BB13800C3BB81 /* CreateProjectVC.swift */,
 				63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */,
+				63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */,
+				63E9A3CA1F5E01670050F7B5 /* InvitationVC.swift */,
 				63E9A3C61F5DF4950050F7B5 /* CloudKitProjectSaver.swift */,
 				6319C91F1F2B80CA006260D2 /* Core */,
 				63ADAABE1F02FD9D00DEA2FD /* Assets.xcassets */,
@@ -422,6 +431,8 @@
 				455B72161F57452C0071E3B1 /* KeyCodable.swift in Sources */,
 				636FBC911F5A9E590030ADD6 /* ProgressReporting.swift in Sources */,
 				63ADAABD1F02FD9D00DEA2FD /* IssuesVC.swift in Sources */,
+				63E9A3CD1F5E9E6F0050F7B5 /* ProjectsVM.swift in Sources */,
+				63E9A3C91F5DFEDC0050F7B5 /* InvitationVM.swift in Sources */,
 				6310C87D1F03A5B000490EF4 /* RecordSaver.swift in Sources */,
 				63ADAABB1F02FD9D00DEA2FD /* AppDelegate.swift in Sources */,
 				6319C91D1F2A5245006260D2 /* ProjectCollectionItem.swift in Sources */,
@@ -430,6 +441,7 @@
 				632AA8C21F0435E500D0C2AD /* CloudKit.swift in Sources */,
 				455B72181F5745940071E3B1 /* JunctionOperations.swift in Sources */,
 				632F65221F4B7E0600F4C60C /* ModernVC.swift in Sources */,
+				63E9A3CB1F5E01670050F7B5 /* InvitationVC.swift in Sources */,
 				459FE91F1F56C8FB00B0335A /* SchemaMigration.swift in Sources */,
 				63CB0CB21F27985700781998 /* Project.swift in Sources */,
 				6395BACD1F28F0FA002210B9 /* ProjectsVC.swift in Sources */,

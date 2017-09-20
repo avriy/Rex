@@ -48,7 +48,7 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, Cont
 	
 	func add(project: Project) {
 		let viewModel = ProjectViewModel(project: project, openHandler: open)
-		projects.append(viewModel)
+		projects.insert(viewModel, at: projects.count - 1)
 		collectionView.reloadData()
 	}
 	

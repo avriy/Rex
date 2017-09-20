@@ -893,6 +893,17 @@ Gw
                                 <rect key="frame" x="400" y="256" width="16" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sb5-Wh-jwR">
+                                <rect key="frame" x="279" y="72" width="73" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Invite" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TVN-Jh-KLm">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <segue destination="XMx-HQ-5cF" kind="modal" id="ARO-j0-wwa"/>
+                                </connections>
+                            </button>
                             <button fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FCo-Ag-yqc">
                                 <rect key="frame" x="19" y="180" width="117" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -914,10 +925,10 @@ Gw
             </objects>
             <point key="canvasLocation" x="1248" y="219"/>
         </scene>
-        <!--View Controller-->
+        <!--InvitationVC-->
         <scene sceneID="tWC-Vt-GJB">
             <objects>
-                <viewController id="XMx-HQ-5cF" sceneMemberID="viewController">
+                <viewController id="XMx-HQ-5cF" customClass="InvitationVC" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="vH2-sv-4B4">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -939,13 +950,19 @@ Gw
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="XMx-HQ-5cF" id="mYa-yU-fnr"/>
+                                </connections>
                             </textField>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="searchTextField" destination="wQ3-M3-4W6" id="XUa-GK-wzl"/>
+                    </connections>
                 </viewController>
                 <customObject id="fca-LT-9Su" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1752" y="219"/>
+            <point key="canvasLocation" x="1779" y="219"/>
         </scene>
         <!--IssuesVC-->
         <scene sceneID="hIz-AP-VOD">

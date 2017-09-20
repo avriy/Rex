@@ -30,7 +30,7 @@ class CreateProjectViewModel: NSObject {
 	}
 	
 	@objc class func keyPathsForValuesAffectingCanCreateProject() -> Set<String> {
-		return Set([#keyPath(name)])
+		return Set([#keyPath(name), #keyPath(isProcessing)])
 	}
 	
 	@objc dynamic var canCreateProject: Bool {

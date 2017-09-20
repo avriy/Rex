@@ -36,6 +36,13 @@ import Cocoa
 		}
 	}
 	
+	var project: Project? {
+		switch projectType {
+		case .add: return nil
+		case .project(let p): return p
+		}
+	}
+	
 	@objc var image: NSImage? {
 		switch projectType {
 		case .add:
