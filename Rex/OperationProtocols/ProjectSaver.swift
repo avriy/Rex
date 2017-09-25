@@ -6,4 +6,8 @@
 //  Copyright © 2017 splyshka. All rights reserved.
 //
 
-import Foundation
+import Cocoa
+
+protocol ProjectSaver {
+	func saveProjectWithName(_ name: String, image: NSImage?, completion: @escaping (Project) -> Void) -> Progress
+}

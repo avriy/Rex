@@ -9,10 +9,6 @@
 import Cocoa
 import CloudKit
 
-protocol ProjectSaver {
-	func saveProjectWithName(_ name: String, image: NSImage?, completion: @escaping (Project) -> Void) -> Progress
-}
-
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""
 	@objc dynamic var image: NSImage?

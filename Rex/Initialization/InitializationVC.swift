@@ -11,12 +11,6 @@ import CloudKit
 
 private var applicationContext: AppContext!
 
-extension ProcessInfo {
-	var isTestEnvironment: Bool {
-		return arguments.contains("TEST")
-	}
-}
-
 /// Starting VC stat should be shown during initialization
 class InitializationVC: NSViewController, ModernView {
 	@IBOutlet weak var progressIndicator: NSProgressIndicator!
