@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Rex
+@testable import RexKit
 
 class DictionaryKeyValueStore: KeyValueStore {
     var dictionary: [String: Any] = [:]

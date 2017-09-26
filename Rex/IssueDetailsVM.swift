@@ -8,6 +8,7 @@
 
 import Foundation
 import CloudKit
+import RexKit
 
 class IssueDetailsVM: NSObject {
 	

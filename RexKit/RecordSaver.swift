@@ -8,17 +8,17 @@
 
 import CloudKit
 
-final class RecordSaver<ValueType: RecordRepresentable & Hashable> {
+public final class RecordSaver<ValueType: RecordRepresentable & Hashable> {
 	
-	private let database: CKDatabase
+	public let database: CKDatabase
 	
-	init(database: CKDatabase) {
+	public init(database: CKDatabase) {
 		self.database = database
 	}
 	
 	private var valueHash: Int?
 	
-	var value: ValueType? {
+	public var value: ValueType? {
 		didSet {
 			if let oldValue = oldValue, oldValue.hashValue != valueHash {
 				save(record: oldValue.record)

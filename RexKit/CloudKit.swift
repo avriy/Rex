@@ -8,7 +8,7 @@
 
 import CloudKit
 
-extension CKContainer {
+public extension CKContainer {
 	func requestPermissionsIfNeeded(errorHandler eh: @escaping (Error) -> Void, successHandler sh: @escaping () -> Void) {
 		
 		accountStatus { [weak self] (status, error) in
@@ -49,7 +49,7 @@ extension CKQueryOperation {
 	}
 }
 
-protocol RecordRepresentable {
+public protocol RecordRepresentable {
 	init(record: CKRecord) throws
 	var record: CKRecord { get }
 	static var recordType: String { get }

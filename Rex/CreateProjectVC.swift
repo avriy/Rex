@@ -8,10 +8,6 @@
 
 import Cocoa
 
-extension OperationQueue {
-	static let io = OperationQueue()
-}
-
 class CreateProjectVC: NSViewController, ModernView {
 	@IBOutlet weak var textField: NSTextField!
 	@IBOutlet weak var createButton: NSButton!

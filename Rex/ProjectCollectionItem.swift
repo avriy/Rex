@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import RexKit
 
 @objc class ProjectViewModel: NSObject {
 	enum ProjectType {

@@ -8,6 +8,7 @@
 
 import Cocoa
 import CloudKit
+import RexKit
 
 class IssueDetailsVC: NSViewController, NSComboBoxDataSource, NSComboBoxDelegate {
 	

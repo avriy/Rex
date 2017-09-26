@@ -7,7 +7,7 @@
 //
 
 import Foundation
-@testable import Rex
+@testable import RexKit
 
 struct MockUserIdentityFetcher: UserIdentityFetcher {
     

@@ -8,6 +8,6 @@
 
 import Cocoa
 
-protocol ProjectSaver {
-	func saveProjectWithName(_ name: String, image: NSImage?, completion: @escaping (Project) -> Void) -> Progress
+public protocol ProjectSaver {
+    func saveProjectWithName(_ name: String, image: NSImage?, completion: @escaping (Project) -> Void) -> Progress
 }

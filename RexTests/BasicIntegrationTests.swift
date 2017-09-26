@@ -10,6 +10,7 @@ import XCTest
 import CloudKit
 
 @testable import Rex
+@testable import RexKit
 
 class BasicIntegrationTests: XCTestCase {
 	

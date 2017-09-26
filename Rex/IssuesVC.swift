@@ -8,6 +8,7 @@
 
 import Cocoa
 import CloudKit
+import RexKit
 
 @objc class IssuesVC: NSViewController, ModernView {
 	

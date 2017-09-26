@@ -9,14 +9,19 @@
 import CloudKit
 import Cocoa
 
+public
 struct CloudKitProjectSaver: ProjectSaver {
 	let context: AppContext
+    
+    public init(context: AppContext) {
+        self.context = context
+    }
 	
 	private static func newTemporaryURL() -> URL {
 		return URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
 	}
 	
-	func saveProjectWithName(_ name: String, image: NSImage?, completion: @escaping (Project) -> Void) -> Progress {
+    public func saveProjectWithName(_ name: String, image: NSImage?, completion: @escaping (Project) -> Void) -> Progress {
 		let result = Progress()
 		result.becomeCurrent(withPendingUnitCount: 0)
 		

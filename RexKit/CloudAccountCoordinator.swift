@@ -9,16 +9,17 @@
 import Foundation
 import CloudKit
 
-protocol UserIdentityFetcher {
+public protocol UserIdentityFetcher {
 	associatedtype UserIDType: Equatable
 	
 	func fetch(queue: DispatchQueue, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (UserIDType) -> Void)
 }
 
+public
 struct CloudKitUserRecordFetcher: UserIdentityFetcher {
 	let container: CKContainer
 	
-	func fetch(queue: DispatchQueue, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (CKRecordID) -> Void) {
+	public func fetch(queue: DispatchQueue, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (CKRecordID) -> Void) {
 		
 		container.fetchUserRecordID { (userRecordID, error) in
 			queue.async {
@@ -37,22 +38,22 @@ struct CloudKitUserRecordFetcher: UserIdentityFetcher {
 
 public let CloudAccountCoordinatorAccountKey = "accountID"
 
-class CloudAccountCoordinator<Fetcher: UserIdentityFetcher> {
+public class CloudAccountCoordinator<Fetcher: UserIdentityFetcher> {
     
-    enum AccountState {
+    public enum AccountState {
         case notActive, pending, active
     }
     
     private let store: KeyValueStore
     private let fetcher: Fetcher
     
-    var accountState: AccountState = .notActive
+    public private(set) var accountState: AccountState = .notActive
     
-    init(store: KeyValueStore, fetcher: Fetcher) {
+    public init(store: KeyValueStore, fetcher: Fetcher) {
         self.store = store; self.fetcher = fetcher
     }
     
-	var userRecordID: Fetcher.UserIDType? {
+	public var userRecordID: Fetcher.UserIDType? {
 		get {
 			guard let valueForKey: Data = store[CloudAccountCoordinatorAccountKey] else {
 				return nil
@@ -77,7 +78,7 @@ class CloudAccountCoordinator<Fetcher: UserIdentityFetcher> {
         }
     }
     
-	func activateAccountIfNeeded(errorHandler: @escaping (Error) -> Void, completion: @escaping () -> Void = {}) {
+	public func activateAccountIfNeeded(errorHandler: @escaping (Error) -> Void, completion: @escaping () -> Void = {}) {
         
         guard accountState == .notActive else {
             return
@@ -100,7 +101,7 @@ class CloudAccountCoordinator<Fetcher: UserIdentityFetcher> {
     
 }
 
-protocol KeyValueStore: class {
+public protocol KeyValueStore: class {
 	subscript <T>(value: String) -> T? { get set }
 	
 	func deleteAllEntities()
@@ -108,7 +109,7 @@ protocol KeyValueStore: class {
 
 extension UserDefaults: KeyValueStore {
 	
-	subscript <T>(key: String) -> T? {
+	public subscript <T>(key: String) -> T? {
 		get {
 			return value(forKey: key) as? T
 		} set {
@@ -116,7 +117,7 @@ extension UserDefaults: KeyValueStore {
 		}
 	}
 	
-	func deleteAllEntities() {
+	public func deleteAllEntities() {
 		fatalError("Not implemented yet")
 	}
 }

@@ -74,7 +74,7 @@ extension AppContext {
         
     }
     
-    func myProjects(completion: @escaping ([Project]) -> Void) {
+    public func myProjects(completion: @escaping ([Project]) -> Void) {
         
         CKContainer.default().fetchUserRecordID { [weak self] (recordID, error) in
             

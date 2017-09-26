@@ -10,13 +10,13 @@ import CloudKit
 import Cocoa
 
 @objc
-class Project: NSObject, RecordRepresentable {
+public class Project: NSObject, RecordRepresentable {
 	
-	static let recordType: String = "Project"
+    public static let recordType: String = "Project"
 	
-	@objc dynamic var name: String
-	private(set) var schema: Schema
-	var imageURL: URL?
+	@objc public dynamic var name: String
+	public private(set) var schema: Schema
+	public var imageURL: URL?
     
     private enum CodingKeys: String, KeyCodable {
         case name, schema, imageAsset
@@ -39,7 +39,7 @@ class Project: NSObject, RecordRepresentable {
 		systemFields = record.archivedSystemFields()
 	}
 
-	required init(record: CKRecord) throws {
+	required public init(record: CKRecord) throws {
         
         name = try record.getValue(for: CodingKeys.name)
         systemFields = record.archivedSystemFields()
@@ -56,7 +56,7 @@ class Project: NSObject, RecordRepresentable {
 		
 	}
 	
-	var record: CKRecord {
+    public var record: CKRecord {
 		guard let result = CKRecord.unarchivedSystemFields(from: systemFields) else {
 			fatalError()
 		}

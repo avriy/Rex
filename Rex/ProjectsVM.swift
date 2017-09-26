@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RexKit
 
 enum Change<T: Equatable> {
 	case add(T)

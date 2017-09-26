@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import CloudKit
+import RexKit
 
 class CreateProjectViewModel: NSObject {
 	@objc dynamic var name: String = ""

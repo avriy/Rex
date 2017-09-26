@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Rex
+@testable import RexKit
 
 class SchemeMigrationTests: XCTestCase {
 

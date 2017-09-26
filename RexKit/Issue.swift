@@ -8,22 +8,22 @@
 
 import CloudKit
 
-class Issue: NSObject, RecordRepresentable {
+public class Issue: NSObject, RecordRepresentable {
 	
-	@objc dynamic var name: String
-	@objc dynamic var details: String
+	@objc public dynamic var name: String
+	@objc public dynamic var details: String
 	
-	@objc dynamic var resolutionID: Schema.Resolution.Identifier
-	@objc dynamic var priorityID: Schema.Priority.Identifier
+	@objc public dynamic var resolutionID: Schema.Resolution.Identifier
+	@objc public dynamic var priorityID: Schema.Priority.Identifier
 	
-	@objc dynamic var assigneeID: CKRecordID?
-	@objc dynamic let projectID: CKRecordID
+	@objc public dynamic var assigneeID: CKRecordID?
+	@objc public dynamic let projectID: CKRecordID
 	
-	@objc var creationDate: Date? {
+	@objc public var creationDate: Date? {
 		return record.creationDate
 	}
 	
-	static let recordType: String = "Issue"
+    public static let recordType: String = "Issue"
 	
 	private var systemFields: Data
 	
@@ -31,13 +31,13 @@ class Issue: NSObject, RecordRepresentable {
 		case name, description, resolution, assigneeID, projectID, priority
 	}
 	
-	override var hashValue: Int {
+    override public var hashValue: Int {
 		let assigneeHash = assigneeID?.hashValue ?? 0
 		let projectHash = projectID.hashValue
 		return name.hashValue ^ details.hashValue ^ systemFields.hashValue ^ resolutionID.hashValue ^ assigneeHash ^ projectHash ^ priorityID.hashValue
 	}
 	
-	init(project: Project, name: String, description: String, resolution: Schema.Resolution, priority: Schema.Priority) {
+	public init(project: Project, name: String, description: String, resolution: Schema.Resolution, priority: Schema.Priority) {
 		let record = CKRecord(recordType: "Issue")
 		self.name = name
 		self.details = description
@@ -49,7 +49,7 @@ class Issue: NSObject, RecordRepresentable {
 		assert(project.schema.priorities.contains(priority))
 	}
 	
-	required init(record: CKRecord) throws {
+    required public init(record: CKRecord) throws {
 		systemFields = record.archivedSystemFields()
         name = try record.getValue(for: CodingKeys.name)        
         details = try record.getValue(for: CodingKeys.description)
@@ -58,7 +58,7 @@ class Issue: NSObject, RecordRepresentable {
 		projectID = try record.getRecordID(for: CodingKeys.projectID)
 	}
 	
-	var record: CKRecord {
+    public var record: CKRecord {
 		guard let result = CKRecord.unarchivedSystemFields(from: systemFields) else {
 			fatalError()
 		}

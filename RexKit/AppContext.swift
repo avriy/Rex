@@ -18,7 +18,7 @@ public class AppContext: NSObject {
     let container: CKContainer
 	let errorHandler: (Error) -> Void
 	
-    let accountCoordinator: CloudAccountCoordinator<CloudKitUserRecordFetcher>
+    public let accountCoordinator: CloudAccountCoordinator<CloudKitUserRecordFetcher>
     
     public init(container: CKContainer = .default(), databaseScope: CKDatabaseScope = .public, errorHandler: @escaping (Error) -> Void = AppContext.debugErrorHandler) {
 		self.container = container
@@ -28,7 +28,7 @@ public class AppContext: NSObject {
         accountCoordinator = CloudAccountCoordinator(store: UserDefaults.standard, fetcher: fetcher)
 	}
 	
-	func projects(handler: @escaping ([Project]) -> Void) {
+	public func projects(handler: @escaping ([Project]) -> Void) {
 		var result = [Project]()
 		let operation = CKQueryOperation(errorHandler: errorHandler) { (project: Project) in
 			debugPrint("Fetched project with id \(project.recordID.recordName)")
@@ -45,7 +45,7 @@ public class AppContext: NSObject {
 		database.add(operation)
 	}
 	
-	func issues(for project: Project, handler: @escaping ([Issue]) -> Void) {
+	public func issues(for project: Project, handler: @escaping ([Issue]) -> Void) {
 		let reference = CKReference(record: project.record, action: .none)
 		let predicate = NSPredicate(format: "projectID == %@", reference)
 		let query = Issue.query(for: predicate)
@@ -72,7 +72,7 @@ public class AppContext: NSObject {
 		database.add(op)
 	}
 	
-	func remove<Value: RecordRepresentable>(_ values: [Value], completionHandler: @escaping () -> Void) {
+	public func remove<Value: RecordRepresentable>(_ values: [Value], completionHandler: @escaping () -> Void) {
 		let idsToDelete = values.map { $0.record.recordID }
 		let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: idsToDelete)
 		operation.modifyRecordsCompletionBlock = { [weak self] (_, _, error) in
@@ -89,11 +89,11 @@ public class AppContext: NSObject {
 		database.add(operation)
 	}
 	
-	func remove<Value: RecordRepresentable>(_ values: Value..., completionHandler: @escaping () -> Void) {
+	public func remove<Value: RecordRepresentable>(_ values: Value..., completionHandler: @escaping () -> Void) {
 		remove(values, completionHandler: completionHandler)
 	}
 	
-	func save<Value: RecordRepresentable>(_ values: Value..., completionHandler: @escaping () -> Void) {
+	public func save<Value: RecordRepresentable>(_ values: Value..., completionHandler: @escaping () -> Void) {
 		let recordsToSave = values.map { $0.record }
 		let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
 		operation.modifyRecordsCompletionBlock = { [weak self] (_, _, error) in
@@ -108,6 +108,7 @@ public class AppContext: NSObject {
 	
 }
 
+public
 extension Array where Element: RecordRepresentable {
 	func saveOperation() -> CKModifyRecordsOperation {
 		let recordsToSave = map { $0.record }

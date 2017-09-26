@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import RexKit
 @testable import Rex
 
 struct DummyProjectSaver: ProjectSaver {
