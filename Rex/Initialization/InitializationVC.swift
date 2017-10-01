@@ -16,25 +16,13 @@ private var applicationContext: AppContext!
 class InitializationVC: NSViewController, ModernView {
 	@IBOutlet weak var progressIndicator: NSProgressIndicator!
 	
-	private let initializationGroup = DispatchGroup()
+	private let appContextManager = AppContextManager()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		let databaseScope = ProcessInfo.processInfo.isTestEnvironment ? CKDatabaseScope.private : .public
-		applicationContext = AppContext(databaseScope: databaseScope)
-		
-		initializationGroup.enter()
-		initializationGroup.enter()
-		
-		applicationContext.accountCoordinator.activateAccountIfNeeded(errorHandler: { error in
-			self.initializationGroup.leave()
-		}) { [unowned self] in
-			self.initializationGroup.leave()
-		}
-		
-		initializationGroup.notify(queue: .main) { [unowned self] in
-			switch applicationContext.accountCoordinator.accountState {
+
+		appContextManager.start { [unowned self] accountState in
+			switch accountState {
 			case .active:
 				self.performSegue(withIdentifier: .openProjectList, sender: nil)
 			case .notActive:
@@ -44,6 +32,7 @@ class InitializationVC: NSViewController, ModernView {
 				fatalError("Account is still pending after activation handler is called")
 			}
 		}
+		
 	}
 	
 	override func viewDidAppear() {
@@ -51,16 +40,6 @@ class InitializationVC: NSViewController, ModernView {
 		progressIndicator.startAnimation(nil)
 		
 		apply(windowStyle: .dialog)
-		initializationGroup.leave()
-	}
-}
-
-protocol ContextDepending {
-	var context: AppContext { get }
-}
-
-extension ContextDepending where Self: NSViewController {
-	var context: AppContext {
-		return applicationContext
+		appContextManager.proceed()
 	}
 }

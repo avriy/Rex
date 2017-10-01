@@ -72,4 +72,3 @@ public class Issue: NSObject, RecordRepresentable {
 		return result
 	}
 }
-

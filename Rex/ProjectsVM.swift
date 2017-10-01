@@ -9,36 +9,6 @@
 import Foundation
 import RexKit
 
-enum Change<T: Equatable> {
-	case add(T)
-	case remove(T)
-	case update(T)
-}
-
-typealias ListCoordinatorHandler<Item: Equatable> = ([Item]) -> ((Change<Item>) -> Void)
-
-protocol ListCoordinator {
-	associatedtype Item: Equatable
-	func update(handler: @escaping ListCoordinatorHandler<Item>) -> Progress
-}
-
-protocol ProjectListCoordinator: ListCoordinator {
-	associatedtype Item = Project
-}
-
-struct CloudProjectListCoordinator: ListCoordinator {
-	let context: AppContext
-	
-	func update(handler: @escaping ([Project]) -> ((Change<Project>) -> Void)) -> Progress {
-		context.myProjects { projects in
-			
-			
-			
-		}
-		return Progress()
-	}
-}
-
 class ProjectsVM: NSObject {
 	
 	private let update: (@escaping ListCoordinatorHandler<Project>) -> Progress
@@ -49,7 +19,8 @@ class ProjectsVM: NSObject {
 	}
 	
 	func setup(openHandler oh: @escaping (ProjectViewModel) -> Void) {
-		update { [weak self] projects in
+        //  TODO: handle progress reporting here
+		_ = update { [weak self] projects in
 			let pvms = projects.map { ProjectViewModel(project: $0, openHandler: oh) }
 			let addpvm = ProjectViewModel(projectType: .add, openHandler: oh)
 			self?.projectViewModels = Set(pvms + [addpvm])
@@ -77,4 +48,32 @@ class ProjectsVM: NSObject {
 			}
 		}
 	}
+	
+	//    func setupSubscription() {
+	//        let subscription = CKQuerySubscription(recordType: "Project", predicate: NSPredicate(value: true), options: .firesOnRecordCreation)
+	//        let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: nil)
+	//
+	//        operation.modifySubscriptionsCompletionBlock = { (saved, deleted, error) in
+	//            if let error = error {
+	//                debugPrint("Failed to save subscription with error \(error)")
+	//            }
+	//        }
+	//        context.database.add(operation)
+	//
+	//        NotificationCenter.default.addObserver(forName: .recordWasCreated, object: nil, queue: .main) { [unowned self] (notification) in
+	//            debugPrint("Did receive notification from notification center")
+	//            guard let record = notification.userInfo?["record"] as? CKRecord else {
+	//                fatalError("Failed to create record from notification")
+	//            }
+	//
+	//            guard let project = try? Project(record: record) else {
+	//                return
+	//            }
+	//
+	//            let newViewModel = ProjectViewModel(projectType: .project(project), openHandler: self.open)
+	//
+	//            self.projects.insert(newViewModel, at: self.projects.count - 1)
+	//            self.collectionView.reloadData()
+	//        }
+	//    }
 }

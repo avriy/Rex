@@ -7,12 +7,11 @@
 //
 
 import Foundation
-import CloudKit
 import RexKit
 
-class IssueDetailsVM: NSObject {
+class IssueDetailsVM: NSObject, ViewModel, ContextDepending {
 	
-	private let recordSaver = RecordSaver<Issue>(database: CKContainer.default().publicCloudDatabase)
+    lazy var recordSaver: RecordSaver<Issue> = self.context.recordSaver()
 	@objc dynamic var project: Project!
 	@objc dynamic var issue: Issue! {
 		didSet {

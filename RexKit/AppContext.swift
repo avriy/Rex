@@ -85,7 +85,6 @@ public class AppContext: NSObject {
 			}
 		}
 		
-		
 		database.add(operation)
 	}
 	
@@ -106,6 +105,13 @@ public class AppContext: NSObject {
 		database.add(operation)
 	}
 	
+}
+
+public
+extension AppContext {
+    func recordSaver<Value: RecordRepresentable>() -> RecordSaver<Value> {
+        return RecordSaver(database: database)
+    }
 }
 
 public

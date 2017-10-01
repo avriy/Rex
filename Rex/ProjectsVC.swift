@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import CloudKit
 import RexKit
 
 class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, ContextDepending {
@@ -85,7 +84,6 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, Cont
 		collectionView.reloadData()
 		
 		fetchProjects()
-//		setupSubscription()
     }
 	
 	override func viewDidAppear() {
@@ -93,32 +91,4 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, Cont
 		
 		apply(windowStyle: .dialog, adding: [.resizable, .miniaturizable])
 	}
-	
-//    func setupSubscription() {
-//        let subscription = CKQuerySubscription(recordType: "Project", predicate: NSPredicate(value: true), options: .firesOnRecordCreation)
-//        let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: nil)
-//        
-//        operation.modifySubscriptionsCompletionBlock = { (saved, deleted, error) in
-//            if let error = error {
-//                debugPrint("Failed to save subscription with error \(error)")
-//            }
-//        }
-//        context.database.add(operation)
-//        
-//        NotificationCenter.default.addObserver(forName: .recordWasCreated, object: nil, queue: .main) { [unowned self] (notification) in
-//            debugPrint("Did receive notification from notification center")
-//            guard let record = notification.userInfo?["record"] as? CKRecord else {
-//                fatalError("Failed to create record from notification")
-//            }
-//            
-//            guard let project = try? Project(record: record) else {
-//                return
-//            }
-//            
-//            let newViewModel = ProjectViewModel(projectType: .project(project), openHandler: self.open)
-//            
-//            self.projects.insert(newViewModel, at: self.projects.count - 1)
-//            self.collectionView.reloadData()
-//        }
-//    }
 }

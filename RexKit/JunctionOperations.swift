@@ -75,19 +75,10 @@ extension AppContext {
     }
     
     public func myProjects(completion: @escaping ([Project]) -> Void) {
-        
-        CKContainer.default().fetchUserRecordID { [weak self] (recordID, error) in
-            
-            if let error = error {
-                self?.errorHandler(error)
-                return
-            }
-            
-            guard let recordID = recordID else {
-                fatalError()
-            }
-            
-            self?.fetchUnownedProjects(forUser: recordID, completion: completion)
-        }
+		
+		guard let userRecordID = accountCoordinator.userRecordID else {
+			fatalError("User record my be present")
+		}
+		fetchUnownedProjects(forUser: userRecordID, completion: completion)
     }
 }

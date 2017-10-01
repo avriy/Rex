@@ -24,11 +24,13 @@
 		633277DA1F7AD0D0004D848C /* JunctionOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B72171F5745940071E3B1 /* JunctionOperations.swift */; };
 		633277DC1F7AD129004D848C /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633277DB1F7AD129004D848C /* DispatchQueue.swift */; };
 		635670F11F44B72500E94A23 /* BasicIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635670F01F44B72500E94A23 /* BasicIntegrationTests.swift */; };
+		63572E951F7B0D210051DEA3 /* ListCoordination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63572E941F7B0D210051DEA3 /* ListCoordination.swift */; };
 		63643F631F4A000D0016AD73 /* IssueDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63643F621F4A000D0016AD73 /* IssueDetailsVM.swift */; };
 		636FBC7F1F59A98C0030ADD6 /* StoryboardIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FBC7E1F59A98C0030ADD6 /* StoryboardIDs.swift */; };
 		636FBC811F59ACFC0030ADD6 /* ReplaceSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FBC801F59ACFC0030ADD6 /* ReplaceSegue.swift */; };
 		636FBC891F59B9640030ADD6 /* RexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FBC881F59B9640030ADD6 /* RexUITests.swift */; };
 		636FBC911F5A9E590030ADD6 /* ProgressReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FBC901F5A9E590030ADD6 /* ProgressReporting.swift */; };
+		6376F1261F819A8A002BFA01 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6376F1251F819A89002BFA01 /* Project.swift */; };
 		6383F7761F4A29BF009684A3 /* SchemeMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6383F7751F4A29BF009684A3 /* SchemeMigrationTests.swift */; };
 		6390377D1F3BB13800C3BB81 /* CreateProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390377C1F3BB13800C3BB81 /* CreateProjectVC.swift */; };
 		6395BACD1F28F0FA002210B9 /* ProjectsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395BACB1F28F0FA002210B9 /* ProjectsVC.swift */; };
@@ -36,7 +38,6 @@
 		63A947801F7ACA0A005F4034 /* RexKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 63A9477E1F7ACA0A005F4034 /* RexKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63A947831F7ACA0A005F4034 /* RexKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A9477C1F7ACA0A005F4034 /* RexKit.framework */; };
 		63A947841F7ACA0A005F4034 /* RexKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63A9477C1F7ACA0A005F4034 /* RexKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		63A947891F7ACA2D005F4034 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB0CB11F27985700781998 /* Project.swift */; };
 		63A9478A1F7ACA53005F4034 /* CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632AA8C11F0435E500D0C2AD /* CloudKit.swift */; };
 		63A9478B1F7ACA72005F4034 /* KeyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B72151F57452C0071E3B1 /* KeyCodable.swift */; };
 		63A9478C1F7ACA86005F4034 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632F651F1F4A3FDA00F4C60C /* Schema.swift */; };
@@ -48,6 +49,8 @@
 		63ADAABF1F02FD9D00DEA2FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63ADAABE1F02FD9D00DEA2FD /* Assets.xcassets */; };
 		63ADAAC21F02FD9D00DEA2FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63ADAAC01F02FD9D00DEA2FD /* Main.storyboard */; };
 		63ADAAD01F0305A200DEA2FD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63ADAACF1F0305A200DEA2FD /* CloudKit.framework */; };
+		63E694A81F7B0FC300A40EA7 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E694A71F7B0FC300A40EA7 /* ViewModel.swift */; };
+		63E694AC1F7B12CD00A40EA7 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E694AB1F7B12CD00A40EA7 /* Environment.swift */; };
 		63E9A3C21F5CA6BA0050F7B5 /* CreateProjectVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */; };
 		63E9A3C51F5CB1130050F7B5 /* CreateProjectVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */; };
 		63E9A3C91F5DFEDC0050F7B5 /* InvitationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */; };
@@ -115,6 +118,7 @@
 		635670EE1F44B72500E94A23 /* RexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		635670F01F44B72500E94A23 /* BasicIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicIntegrationTests.swift; sourceTree = "<group>"; };
 		635670F21F44B72500E94A23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63572E941F7B0D210051DEA3 /* ListCoordination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoordination.swift; sourceTree = "<group>"; };
 		63643F621F4A000D0016AD73 /* IssueDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailsVM.swift; sourceTree = "<group>"; };
 		636FBC7E1F59A98C0030ADD6 /* StoryboardIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIDs.swift; sourceTree = "<group>"; };
 		636FBC801F59ACFC0030ADD6 /* ReplaceSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceSegue.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 		636FBC881F59B9640030ADD6 /* RexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RexUITests.swift; sourceTree = "<group>"; };
 		636FBC8A1F59B9640030ADD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		636FBC901F5A9E590030ADD6 /* ProgressReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressReporting.swift; sourceTree = "<group>"; };
+		6376F1251F819A89002BFA01 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		6383F7751F4A29BF009684A3 /* SchemeMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemeMigrationTests.swift; sourceTree = "<group>"; };
 		6390377C1F3BB13800C3BB81 /* CreateProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVC.swift; sourceTree = "<group>"; };
 		639037801F3CF84700C3BB81 /* AppContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
@@ -141,7 +146,8 @@
 		63ADAACD1F02FF9800DEA2FD /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		63ADAACF1F0305A200DEA2FD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		63C46C851F72FF6900328F93 /* ProjectSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSaver.swift; sourceTree = "<group>"; };
-		63CB0CB11F27985700781998 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		63E694A71F7B0FC300A40EA7 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		63E694AB1F7B12CD00A40EA7 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVM.swift; sourceTree = "<group>"; };
 		63E9A3C41F5CB1130050F7B5 /* CreateProjectVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVMTests.swift; sourceTree = "<group>"; };
 		63E9A3C61F5DF4950050F7B5 /* CloudKitProjectSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitProjectSaver.swift; sourceTree = "<group>"; };
@@ -223,17 +229,18 @@
 			children = (
 				63A9477E1F7ACA0A005F4034 /* RexKit.h */,
 				639037801F3CF84700C3BB81 /* AppContext.swift */,
+				63E694AB1F7B12CD00A40EA7 /* Environment.swift */,
 				454A026B1F57580F007C36BD /* CloudAccountCoordinator.swift */,
 				633277DB1F7AD129004D848C /* DispatchQueue.swift */,
 				455B72171F5745940071E3B1 /* JunctionOperations.swift */,
 				6310C87C1F03A5B000490EF4 /* RecordSaver.swift */,
 				63E9A3C61F5DF4950050F7B5 /* CloudKitProjectSaver.swift */,
+				6376F1251F819A89002BFA01 /* Project.swift */,
 				639B42BF1F4CC8A8009A48C6 /* Junction.swift */,
 				63C46C851F72FF6900328F93 /* ProjectSaver.swift */,
 				455B72151F57452C0071E3B1 /* KeyCodable.swift */,
 				632F651F1F4A3FDA00F4C60C /* Schema.swift */,
 				459FE91E1F56C8FB00B0335A /* SchemaMigration.swift */,
-				63CB0CB11F27985700781998 /* Project.swift */,
 				63ADAACD1F02FF9800DEA2FD /* Issue.swift */,
 				632AA8C11F0435E500D0C2AD /* CloudKit.swift */,
 				63A9477F1F7ACA0A005F4034 /* Info.plist */,
@@ -269,16 +276,18 @@
 			children = (
 				63ADAABA1F02FD9D00DEA2FD /* AppDelegate.swift */,
 				636FBC7E1F59A98C0030ADD6 /* StoryboardIDs.swift */,
+				63E694A71F7B0FC300A40EA7 /* ViewModel.swift */,
 				63C46C821F72FF0500328F93 /* Initialization */,
 				6395BACB1F28F0FA002210B9 /* ProjectsVC.swift */,
 				63E9A3CC1F5E9E6F0050F7B5 /* ProjectsVM.swift */,
+				63572E941F7B0D210051DEA3 /* ListCoordination.swift */,
 				63ADAABC1F02FD9D00DEA2FD /* IssuesVC.swift */,
 				63C46C831F72FF1B00328F93 /* Utility */,
 				6390377C1F3BB13800C3BB81 /* CreateProjectVC.swift */,
 				63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */,
+				63E9A3CA1F5E01670050F7B5 /* InvitationVC.swift */,
 				63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */,
 				63A947741F7AC9A7005F4034 /* Extensions */,
-				63E9A3CA1F5E01670050F7B5 /* InvitationVC.swift */,
 				63ADAABE1F02FD9D00DEA2FD /* Assets.xcassets */,
 				63ADAAC01F02FD9D00DEA2FD /* Main.storyboard */,
 				636FBC901F5A9E590030ADD6 /* ProgressReporting.swift */,
@@ -536,10 +545,11 @@
 				63A9478C1F7ACA86005F4034 /* Schema.swift in Sources */,
 				63A9478B1F7ACA72005F4034 /* KeyCodable.swift in Sources */,
 				63A9478A1F7ACA53005F4034 /* CloudKit.swift in Sources */,
+				63E694AC1F7B12CD00A40EA7 /* Environment.swift in Sources */,
 				633277D31F7AD027004D848C /* Junction.swift in Sources */,
 				633277DC1F7AD129004D848C /* DispatchQueue.swift in Sources */,
-				63A947891F7ACA2D005F4034 /* Project.swift in Sources */,
 				633277D81F7AD08B004D848C /* AppContext.swift in Sources */,
+				6376F1261F819A8A002BFA01 /* Project.swift in Sources */,
 				633277D51F7AD039004D848C /* RecordSaver.swift in Sources */,
 				633277DA1F7AD0D0004D848C /* JunctionOperations.swift in Sources */,
 				633277D71F7AD080004D848C /* CloudKitProjectSaver.swift in Sources */,
@@ -564,11 +574,13 @@
 				63E9A3C91F5DFEDC0050F7B5 /* InvitationVM.swift in Sources */,
 				63ADAABB1F02FD9D00DEA2FD /* AppDelegate.swift in Sources */,
 				6319C91D1F2A5245006260D2 /* ProjectCollectionItem.swift in Sources */,
+				63E694A81F7B0FC300A40EA7 /* ViewModel.swift in Sources */,
 				632F65221F4B7E0600F4C60C /* ModernVC.swift in Sources */,
 				63A947761F7AC9B5005F4034 /* ProcessInfo.swift in Sources */,
 				63E9A3CB1F5E01670050F7B5 /* InvitationVC.swift in Sources */,
 				6395BACD1F28F0FA002210B9 /* ProjectsVC.swift in Sources */,
 				636FBC7F1F59A98C0030ADD6 /* StoryboardIDs.swift in Sources */,
+				63572E951F7B0D210051DEA3 /* ListCoordination.swift in Sources */,
 				63F3E4A01F03135100D191CF /* IssueDetailsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
