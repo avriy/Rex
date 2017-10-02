@@ -13,7 +13,7 @@ protocol ContextDepending {
 	var context: AppContext { get }
 }
 
-protocol ViewModel {
+protocol ViewModel: class {
 }
 
 extension ContextDepending where Self: ViewModel {

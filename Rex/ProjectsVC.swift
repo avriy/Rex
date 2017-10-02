@@ -9,19 +9,55 @@
 import Cocoa
 import RexKit
 
-class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, ContextDepending {
+class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, ContextDepending, ProjectViewModelOpenDelegate {
 	
-	@objc dynamic var projects = [ProjectViewModel]()
+	@objc dynamic lazy var viewModel = ProjectsVM(projectListCoordinator: CloudProjectListCoordinator(context: self.context))
 	
 	@IBOutlet weak var collectionView: NSCollectionView!
 	
-	func open(project: ProjectViewModel) {
-		switch project.projectType {
+	func openProject(with viewModel: ProjectViewModel) {
+		switch viewModel.projectType {
 		case .add:
 			performSegue(withIdentifier: .createProject, sender: nil)
 		case .project(let project):
 			performSegue(withIdentifier: .openProject, sender: project)
 		}
+	}
+	
+	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+		return viewModel.projectViewModels.count
+	}
+	
+	func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+		guard let result = collectionView.makeItem(withIdentifier: .projectItemID, for: indexPath) as? ProjectCollectionItem else {
+			fatalError()
+		}
+		result.viewModel = (viewModel.arrayController.arrangedObjects as! [ProjectViewModel])[indexPath.item]
+		result.viewModel?.delegate = self
+		return result
+	}
+	
+	func fetchProjects() {
+		viewModel.fetch()
+	}
+	
+	private var objectsOpservation: NSKeyValueObservation!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+		
+		objectsOpservation = viewModel.arrayController.observe(\.arrangedObjects) { [unowned self] (object, change) in
+			self.collectionView.reloadData()
+		}
+		
+		fetchProjects()
+		
+    }
+	
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		
+		apply(windowStyle: .dialog, adding: [.resizable, .miniaturizable])
 	}
 	
 	override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -38,57 +74,11 @@ class ProjectsVC: NSViewController, NSCollectionViewDataSource, ModernView, Cont
 			
 		case .createProject:
 			let cloudProjectSaver = CloudKitProjectSaver(context: context)
-			let createProjectViewModel = CreateProjectViewModel(projectSaver: cloudProjectSaver, creationHandler: add)
+			let createProjectViewModel = CreateProjectViewModel(projectSaver: cloudProjectSaver, creationHandler: viewModel.add)
 			(segue.destinationController as? CreateProjectVC)?.viewModel = createProjectViewModel
 			
 		default:
 			fatalError("Undefined segue")
 		}
-	}
-	
-	func add(project: Project) {
-		let viewModel = ProjectViewModel(project: project, openHandler: open)
-		projects.insert(viewModel, at: projects.count - 1)
-		collectionView.reloadData()
-	}
-	
-	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-		return projects.count
-	}
-	
-	func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-		guard let result = collectionView.makeItem(withIdentifier: .projectItemID, for: indexPath) as? ProjectCollectionItem else {
-			fatalError()
-		}
-		result.viewModel = projects[indexPath.item]
-		return result
-	}
-	
-	func fetchProjects() {
-		context.myProjects { [weak self] projects in
-			DispatchQueue.main.async { [weak self] in
-				guard let strongSelf = self else { return }
-				for project in projects {
-					let newVM = ProjectViewModel(project: project, openHandler: strongSelf.open)
-					
-					strongSelf.projects.insert(newVM, at: strongSelf.projects.count - 1)
-				}
-				strongSelf.collectionView.reloadData()
-			}
-		}
-	}
-	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-		projects = [ProjectViewModel(projectType: .add, openHandler: open)]
-		collectionView.reloadData()
-		
-		fetchProjects()
-    }
-	
-	override func viewDidAppear() {
-		super.viewDidAppear()
-		
-		apply(windowStyle: .dialog, adding: [.resizable, .miniaturizable])
 	}
 }

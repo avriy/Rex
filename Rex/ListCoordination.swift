@@ -33,7 +33,7 @@ struct CloudProjectListCoordinator: ListCoordinator {
 		//	FIXME: add progress initialization
         context.myProjects { projects in
             
-            
+            _ = handler(projects)
             
         }
         return Progress()

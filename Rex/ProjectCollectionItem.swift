@@ -9,6 +9,10 @@
 import Cocoa
 import RexKit
 
+@objc protocol ProjectViewModelOpenDelegate: class {
+	func openProject(with viewModel: ProjectViewModel)
+}
+
 @objc class ProjectViewModel: NSObject {
 	enum ProjectType {
 		case project(Project)
@@ -16,16 +20,18 @@ import RexKit
 	}
 	
 	let projectType: ProjectType
-	let openHandler: (ProjectViewModel) -> Void
+	weak var delegate: ProjectViewModelOpenDelegate?
 	
-	init(projectType: ProjectType, openHandler: @escaping (ProjectViewModel) -> Void) {
-		self.projectType = projectType
-		self.openHandler = openHandler
+	init(project: Project) {
+		self.projectType = .project(project)
 	}
 	
-	convenience init(project: Project, openHandler: @escaping (ProjectViewModel) -> Void) {
-		let type = ProjectType.project(project)
-		self.init(projectType: type, openHandler: openHandler)
+	private init(projectType: ProjectType) {
+		self.projectType = projectType
+	}
+	
+	static var add: ProjectViewModel {
+		return ProjectViewModel(projectType: .add)
 	}
 	
 	@objc var title: String {
@@ -37,7 +43,7 @@ import RexKit
 		}
 	}
 	
-	var project: Project? {
+	@objc var project: Project? {
 		switch projectType {
 		case .add: return nil
 		case .project(let p): return p
@@ -57,7 +63,7 @@ import RexKit
 	}
 
 	func open() {
-		openHandler(self)
+		delegate?.openProject(with: self)
 	}	
 }
 
@@ -82,7 +88,6 @@ class ProjectCollectionItem: NSCollectionViewItem {
 	
 	override func mouseUp(with event: NSEvent) {
 		guard let viewModel = viewModel else { return }
-		viewModel.openHandler(viewModel)
+		viewModel.open()
 	}
-	
 }

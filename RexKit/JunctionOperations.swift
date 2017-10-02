@@ -54,7 +54,10 @@ extension AppContext {
 				if let dictionary = dictionary {
 					do {
 						let projects = try dictionary.values.map(Project.init)
-						completion(projects)
+						DispatchQueue.main.async {
+							completion(projects)
+						}
+						
 					} catch {
 						self?.errorHandler(error)
 					}
