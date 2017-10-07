@@ -11,24 +11,6 @@ import CloudKit
 
 extension Notification.Name {
 	static let recordWasCreated = Notification.Name(rawValue: "record was created notification")
-	
-}
-
-final class RootViewModel: ViewModel {
-	
-}
-
-
-class RootRouter: Router {
-	
-	func showOnbording() {
-		
-	}
-	
-	func showProjects() {
-		
-	}
-	
 }
 
 @NSApplicationMain
@@ -43,26 +25,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 	
 	func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String : Any]) {
-//		debugPrint("Did receive remote notification")
-//		let cknotification = CKNotification(fromRemoteNotificationDictionary: userInfo)
-//		if cknotification.notificationType == .query {
-//			let queryNotification = cknotification as! CKQueryNotification
-//
-//			if queryNotification.queryNotificationReason == .recordCreated {
-//				let database = CKContainer.default().database(with: queryNotification.databaseScope)
-//
-//				database.fetch(withRecordID: queryNotification.recordID!) { (record, error) in
-//					if let record = record {
-//						DispatchQueue.main.async {
-//							debugPrint("Posting notification")
-//							NotificationCenter.default.post(name: .recordWasCreated, object: nil, userInfo: ["record" : record, "notification" : queryNotification])
-//						}
-//					} else if let error = error {
-//						fatalError("Failed to fetch with \(error)")
-//					}
-//				}
-//			}
-//		}
-		
 	}
 }

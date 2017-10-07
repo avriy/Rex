@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13189.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
@@ -708,17 +708,17 @@
             <objects>
                 <viewController id="qte-ZR-yN7" customClass="InitializationVC" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="mQ7-30-9uK">
-                        <rect key="frame" x="0.0" y="0.0" width="264" height="97"/>
+                        <rect key="frame" x="0.0" y="0.0" width="258" height="97"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wIf-Ih-fJc">
-                                <rect key="frame" x="20" y="20" width="224" height="47"/>
+                                <rect key="frame" x="20" y="20" width="218" height="47"/>
                                 <subviews>
                                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="SJ8-au-xgu">
-                                        <rect key="frame" x="0.0" y="7.5" width="32" height="32"/>
+                                        <rect key="frame" x="0.0" y="8" width="32" height="32"/>
                                     </progressIndicator>
                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TC9-TT-9pw">
-                                        <rect key="frame" x="38" y="10" width="188" height="27"/>
+                                        <rect key="frame" x="38" y="10" width="182" height="27"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Checking account " id="0s3-Sm-6G8">
                                             <font key="font" metaFont="system" size="22"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -765,7 +765,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Bxz-hz-QMf">
-                                <rect key="frame" x="28" y="245" width="80" height="25"/>
+                                <rect key="frame" x="28" y="245" width="78" height="25"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Projects" id="Ffj-6l-oR3">
                                     <font key="font" size="21" name=".AppleSystemUIFont"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -969,23 +969,23 @@ Gw
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="IssuesVC" customModule="Rex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="285"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="36" horizontalPageScroll="10" verticalLineScroll="36" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yb9-EW-xaU">
-                                <rect key="frame" x="0.0" y="27" width="180" height="218"/>
+                                <rect key="frame" x="0.0" y="27" width="180" height="233"/>
                                 <clipView key="contentView" id="HIb-F4-pLz">
-                                    <rect key="frame" x="1" y="1" width="178" height="216"/>
+                                    <rect key="frame" x="1" y="1" width="178" height="231"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="34" rowSizeStyle="automatic" viewBased="YES" id="lh8-sf-vJa">
-                                            <rect key="frame" x="0.0" y="0.0" width="178" height="216"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="178" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="175" minWidth="40" maxWidth="1000" id="qjg-p6-yeQ">
+                                                <tableColumn identifier="" width="175" minWidth="40" maxWidth="1000" id="qjg-p6-yeQ">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1042,7 +1042,7 @@ Gw
                                 </scroller>
                             </scrollView>
                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="FFt-zt-c81">
-                                <rect key="frame" x="179" y="0.0" width="301" height="245"/>
+                                <rect key="frame" x="179" y="0.0" width="301" height="260"/>
                                 <connections>
                                     <segue destination="NcH-hA-0cL" kind="embed" id="M5t-UL-Tq6"/>
                                 </connections>
@@ -1097,7 +1097,7 @@ Gw
                     </connections>
                 </arrayController>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="647.5"/>
         </scene>
         <!--Issue DetailsVC-->
         <scene sceneID="KNo-VK-TBF">

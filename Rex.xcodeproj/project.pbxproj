@@ -193,6 +193,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6348059E1F896DB60087874A /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				6395BACB1F28F0FA002210B9 /* ProjectsVC.swift */,
+				63E9A3CC1F5E9E6F0050F7B5 /* ProjectsVM.swift */,
+				6390377C1F3BB13800C3BB81 /* CreateProjectVC.swift */,
+				63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */,
+				6319C91B1F2A5245006260D2 /* ProjectCollectionItem.swift */,
+				6319C91C1F2A5245006260D2 /* ProjectCollectionItem.xib */,
+				63E9A3CA1F5E01670050F7B5 /* InvitationVC.swift */,
+				63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */,
+			);
+			path = Projects;
+			sourceTree = "<group>";
+		};
 		635670EF1F44B72500E94A23 /* RexTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,23 +295,16 @@
 				636FBC7E1F59A98C0030ADD6 /* StoryboardIDs.swift */,
 				63E694A71F7B0FC300A40EA7 /* ViewModel.swift */,
 				63C46C821F72FF0500328F93 /* Initialization */,
-				6395BACB1F28F0FA002210B9 /* ProjectsVC.swift */,
-				63E9A3CC1F5E9E6F0050F7B5 /* ProjectsVM.swift */,
+				6348059E1F896DB60087874A /* Projects */,
 				63572E941F7B0D210051DEA3 /* ListCoordination.swift */,
 				63ADAABC1F02FD9D00DEA2FD /* IssuesVC.swift */,
 				63C46C831F72FF1B00328F93 /* Utility */,
-				6390377C1F3BB13800C3BB81 /* CreateProjectVC.swift */,
-				63E9A3C11F5CA6BA0050F7B5 /* CreateProjectVM.swift */,
 				6376F1271F819D97002BFA01 /* Scene.swift */,
-				63E9A3CA1F5E01670050F7B5 /* InvitationVC.swift */,
-				63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */,
 				63A947741F7AC9A7005F4034 /* Extensions */,
 				63ADAABE1F02FD9D00DEA2FD /* Assets.xcassets */,
 				63ADAAC01F02FD9D00DEA2FD /* Main.storyboard */,
 				636FBC901F5A9E590030ADD6 /* ProgressReporting.swift */,
 				636FBC801F59ACFC0030ADD6 /* ReplaceSegue.swift */,
-				6319C91B1F2A5245006260D2 /* ProjectCollectionItem.swift */,
-				6319C91C1F2A5245006260D2 /* ProjectCollectionItem.xib */,
 				63643F621F4A000D0016AD73 /* IssueDetailsVM.swift */,
 				63F3E49F1F03135100D191CF /* IssueDetailsVC.swift */,
 				63ADAAC31F02FD9D00DEA2FD /* Info.plist */,

@@ -18,6 +18,7 @@ class ProjectsVM: NSObject {
 	init<LCT: ListCoordinator>(projectListCoordinator plc: LCT) where LCT.Item == Project {
 		update = plc.update
 		super.init()
+		projectViewModels.insert(.add)
 		arrayController.sortDescriptors = [ProjectsVM.projectsSortDescriptor]
 		arrayController.bind(.contentSet, to: self, withKeyPath: #keyPath(projectViewModels))
 	}
