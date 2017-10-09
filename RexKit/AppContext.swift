@@ -8,6 +8,30 @@
 
 import CloudKit
 
+struct StringMetadataStore: MetadataStore {
+	let userDefaults: UserDefaults
+	let zoneID: CKRecordZoneID
+	
+	func save(data: Data, forKey key: String) {
+		userDefaults.set(data, forKey: key)
+	}
+	
+	func getData(for key: String) -> Data? {
+		return userDefaults.data(forKey: key)
+	}
+	
+	func recordID(for identifier: String) -> CKRecordID {
+		return CKRecordID(recordName: identifier, zoneID: zoneID)
+	}
+	
+	func identifier(for recordID: CKRecordID) -> String {
+		// TODO: check zoneID
+		return recordID.recordName
+	}
+}
+
+private let metadataStore = StringMetadataStore(userDefaults: .standard, zoneID: CKRecordZone.default().zoneID)
+
 public class AppContext: NSObject {
 
     public static let debugErrorHandler: (Error) -> Void = { error in
@@ -17,6 +41,8 @@ public class AppContext: NSObject {
 	let database: CKDatabase
     let container: CKContainer
 	let errorHandler: (Error) -> Void
+	
+	let cloudKitContext = CloudKitContext(metadataStore: metadataStore)
 	
     public let accountCoordinator: CloudAccountCoordinator<CloudKitUserRecordFetcher>
     

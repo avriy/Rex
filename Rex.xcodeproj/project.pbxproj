@@ -23,6 +23,10 @@
 		633277D91F7AD093004D848C /* CloudAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A026B1F57580F007C36BD /* CloudAccountCoordinator.swift */; };
 		633277DA1F7AD0D0004D848C /* JunctionOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B72171F5745940071E3B1 /* JunctionOperations.swift */; };
 		633277DC1F7AD129004D848C /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633277DB1F7AD129004D848C /* DispatchQueue.swift */; };
+		634805D61F8A9BC90087874A /* ProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805D51F8A9BC90087874A /* ProjectVC.swift */; };
+		634805D81F8A9BD10087874A /* ProjectVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805D71F8A9BD10087874A /* ProjectVM.swift */; };
+		634805DA1F8AA1B20087874A /* CloudKitContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805D91F8AA1B20087874A /* CloudKitContext.swift */; };
+		6348F6F91F8C0F1C00994268 /* CloudKitContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F6F81F8C0F1C00994268 /* CloudKitContextTests.swift */; };
 		635670F11F44B72500E94A23 /* BasicIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635670F01F44B72500E94A23 /* BasicIntegrationTests.swift */; };
 		63572E951F7B0D210051DEA3 /* ListCoordination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63572E941F7B0D210051DEA3 /* ListCoordination.swift */; };
 		63643F631F4A000D0016AD73 /* IssueDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63643F621F4A000D0016AD73 /* IssueDetailsVM.swift */; };
@@ -116,6 +120,10 @@
 		632F651F1F4A3FDA00F4C60C /* Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schema.swift; sourceTree = "<group>"; };
 		632F65211F4B7E0600F4C60C /* ModernVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernVC.swift; sourceTree = "<group>"; };
 		633277DB1F7AD129004D848C /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
+		634805D51F8A9BC90087874A /* ProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectVC.swift; sourceTree = "<group>"; };
+		634805D71F8A9BD10087874A /* ProjectVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectVM.swift; sourceTree = "<group>"; };
+		634805D91F8AA1B20087874A /* CloudKitContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitContext.swift; sourceTree = "<group>"; };
+		6348F6F81F8C0F1C00994268 /* CloudKitContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitContextTests.swift; sourceTree = "<group>"; };
 		635670EE1F44B72500E94A23 /* RexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		635670F01F44B72500E94A23 /* BasicIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicIntegrationTests.swift; sourceTree = "<group>"; };
 		635670F21F44B72500E94A23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -204,6 +212,8 @@
 				6319C91C1F2A5245006260D2 /* ProjectCollectionItem.xib */,
 				63E9A3CA1F5E01670050F7B5 /* InvitationVC.swift */,
 				63E9A3C81F5DFEDC0050F7B5 /* InvitationVM.swift */,
+				634805D51F8A9BC90087874A /* ProjectVC.swift */,
+				634805D71F8A9BD10087874A /* ProjectVM.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -213,6 +223,7 @@
 			children = (
 				635670F01F44B72500E94A23 /* BasicIntegrationTests.swift */,
 				454A026D1F575F2B007C36BD /* CloudKitTests.swift */,
+				6348F6F81F8C0F1C00994268 /* CloudKitContextTests.swift */,
 				454A026F1F576D86007C36BD /* CloudAccountCoordinatorTests.swift */,
 				63E9A3C31F5CB0F50050F7B5 /* ViewModelTests */,
 				454A02731F57F04D007C36BD /* MockUserIdentityFetcher.swift */,
@@ -246,6 +257,7 @@
 			children = (
 				63A9477E1F7ACA0A005F4034 /* RexKit.h */,
 				639037801F3CF84700C3BB81 /* AppContext.swift */,
+				634805D91F8AA1B20087874A /* CloudKitContext.swift */,
 				63E694AB1F7B12CD00A40EA7 /* Environment.swift */,
 				454A026B1F57580F007C36BD /* CloudAccountCoordinator.swift */,
 				633277DB1F7AD129004D848C /* DispatchQueue.swift */,
@@ -531,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				454A02701F576D86007C36BD /* CloudAccountCoordinatorTests.swift in Sources */,
+				6348F6F91F8C0F1C00994268 /* CloudKitContextTests.swift in Sources */,
 				454A026E1F575F2B007C36BD /* CloudKitTests.swift in Sources */,
 				454A02761F57F08B007C36BD /* DictionaryKeyValueStore.swift in Sources */,
 				454A02721F57ED70007C36BD /* String.swift in Sources */,
@@ -557,6 +570,7 @@
 				63A9478C1F7ACA86005F4034 /* Schema.swift in Sources */,
 				63A9478B1F7ACA72005F4034 /* KeyCodable.swift in Sources */,
 				63A9478A1F7ACA53005F4034 /* CloudKit.swift in Sources */,
+				634805DA1F8AA1B20087874A /* CloudKitContext.swift in Sources */,
 				63E694AC1F7B12CD00A40EA7 /* Environment.swift in Sources */,
 				633277D31F7AD027004D848C /* Junction.swift in Sources */,
 				633277DC1F7AD129004D848C /* DispatchQueue.swift in Sources */,
@@ -579,6 +593,7 @@
 				63643F631F4A000D0016AD73 /* IssueDetailsVM.swift in Sources */,
 				454A026A1F5753E4007C36BD /* InitializationVC.swift in Sources */,
 				636FBC811F59ACFC0030ADD6 /* ReplaceSegue.swift in Sources */,
+				634805D61F8A9BC90087874A /* ProjectVC.swift in Sources */,
 				63E9A3C21F5CA6BA0050F7B5 /* CreateProjectVM.swift in Sources */,
 				636FBC911F5A9E590030ADD6 /* ProgressReporting.swift in Sources */,
 				63ADAABD1F02FD9D00DEA2FD /* IssuesVC.swift in Sources */,
@@ -588,6 +603,7 @@
 				6319C91D1F2A5245006260D2 /* ProjectCollectionItem.swift in Sources */,
 				63E694A81F7B0FC300A40EA7 /* ViewModel.swift in Sources */,
 				6376F1281F819D97002BFA01 /* Scene.swift in Sources */,
+				634805D81F8A9BD10087874A /* ProjectVM.swift in Sources */,
 				632F65221F4B7E0600F4C60C /* ModernVC.swift in Sources */,
 				63A947761F7AC9B5005F4034 /* ProcessInfo.swift in Sources */,
 				63E9A3CB1F5E01670050F7B5 /* InvitationVC.swift in Sources */,

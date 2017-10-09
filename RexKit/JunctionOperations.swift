@@ -12,34 +12,39 @@ import CloudKit
 extension AppContext {
     
     func inviteOperation(user: CKRecordID, to project: Project) -> CKDatabaseOperation {
-        let junction = Junction(userRecordID: user, projectID: project.recordID)
-        return [junction].saveOperation()
+		let userID = user.recordName
+		let projectID = project.recordID.recordName
+        let junction = Junction(userRecordID: userID, projectID: projectID)
+		let record = try! cloudKitContext.record(for: junction)
+        return CKModifyRecordsOperation(recordsToSave: [record], recordIDsToDelete: nil)
     }
     
     func acceptInvitationOperation(with junction: Junction) -> CKDatabaseOperation {
         var copy = junction
         copy.isActive = true
-        return [junction].saveOperation()
+		let record = try! cloudKitContext.record(for: junction)
+        return CKModifyRecordsOperation(recordsToSave: [record], recordIDsToDelete: nil)
     }
     
     private func fetchUnownedProjects(forUser recordID: CKRecordID, completion: @escaping ([Project]) -> Void) {
         debugPrint("Fetching unowned projects for user with id \(recordID.recordName)")
         
         // query `Junction` for this user
-        let predicate = NSPredicate(format: "user == %@", CKReference(recordID: recordID, action: .none))
-        let query = Junction.query(for: predicate)
+        let predicate = NSPredicate(format: "userRecordID == %@", CKReference(recordID: recordID, action: .none))
+        let query = CKQuery(recordType: "Junction", predicate: predicate)
         
         let queryJunctionsOperation = CKQueryOperation(query: query)
         
         var projectIDs = [CKRecordID]()
         
         queryJunctionsOperation.recordFetchedBlock = { record in
-            
-            guard let junction = try? Junction(record: record) else {
-                fatalError()
-            }
-            
-            projectIDs.append(junction.projectID)
+			do {
+				let junction: Junction = try self.cloudKitContext.value(from: record)
+				let projectID = self.cloudKitContext.recordID(for: junction.projectID)
+				projectIDs.append(projectID)
+			} catch let error {
+				debugPrint("Failed download with exception \(error)")
+			}
         }
         
         queryJunctionsOperation.queryCompletionBlock = { [weak self, database] (cursor, error) in

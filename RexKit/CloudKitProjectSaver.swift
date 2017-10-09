@@ -31,14 +31,18 @@ struct CloudKitProjectSaver: ProjectSaver {
 		
 		let url = image == nil ? nil : CloudKitProjectSaver.newTemporaryURL()
 		let project = Project(name: name, imageURL: url)
-		let junction = Junction(userRecordID: userRecordID, projectID: project.recordID)
+		
+		let uid = userRecordID.recordName
+		let projectID = project.recordID.recordName
+		let junction = Junction(userRecordID: uid, projectID: projectID)
 		
 		let writeImageToFile = BlockOperation { [image] in
 			guard let imageData = image?.tiffRepresentation, let url = url else { return }
 			try! imageData.write(to: url)
 		}
 		
-		let saveOperation = CKModifyRecordsOperation(recordsToSave: [project.record, junction.record], recordIDsToDelete: nil)
+		let junctionRecord = try! context.cloudKitContext.record(for: junction)
+		let saveOperation = CKModifyRecordsOperation(recordsToSave: [project.record, junctionRecord], recordIDsToDelete: nil)
 		
 		saveOperation.modifyRecordsCompletionBlock = { [eh = context.errorHandler] (_, _, error) in
 			if let error = error {

@@ -964,6 +964,19 @@ Gw
             </objects>
             <point key="canvasLocation" x="1779" y="219"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="1YO-k2-iv2">
+            <objects>
+                <viewController id="FJl-aq-e51" sceneMemberID="viewController">
+                    <view key="view" id="FRg-cw-qQI">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="leO-MU-f9I" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="688" y="678"/>
+        </scene>
         <!--IssuesVC-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
@@ -1097,7 +1110,7 @@ Gw
                     </connections>
                 </arrayController>
             </objects>
-            <point key="canvasLocation" x="75" y="647.5"/>
+            <point key="canvasLocation" x="801" y="1074"/>
         </scene>
         <!--Issue DetailsVC-->
         <scene sceneID="KNo-VK-TBF">
@@ -1222,7 +1235,7 @@ Gw
                 </viewController>
                 <customObject id="xBa-26-kBb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="651" y="670"/>
+            <point key="canvasLocation" x="1377" y="1096"/>
         </scene>
     </scenes>
     <resources>
